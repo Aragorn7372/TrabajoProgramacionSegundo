@@ -1,8 +1,14 @@
 package dev.luisvives.trabajoprogramacionsegundo.pedidos.model;
 
+import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import jakarta.validation.constraints.Min;
 import lombok.*;
 
+/**
+ * Clase que contiene la información de un producto que ha comprado un cliente
+ * @see Cliente
+ * @see Producto
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -11,7 +17,6 @@ public class LineaPedido {
     @Min(value = 1, message = "La cantidad del producto no puede ser negativa")
     @Builder.Default
     private Integer cantidad = 1;
-
     private Long idProducto;
 
     @Min(value = 0, message = "El precio del producto no puede ser negativo")

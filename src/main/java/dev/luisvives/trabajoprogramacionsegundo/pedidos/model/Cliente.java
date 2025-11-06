@@ -6,6 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
+/**
+ * Clase que contiene la información de un cliente en un pedido.
+ * @param nombreCompleto Nombre y apellidos del cliente.
+ * @param email Correo electrónico del cliente.
+ * @param telefono Número de teléfono del cliente.
+ * @param direccion Objeto que define la dirección del cliente
+ * @see Pedido
+ * @see Direccion
+ */
 @Builder
 public record Cliente(
         @Length(min = 3, message = "El nombre debe tener al menos 3 caracteres")

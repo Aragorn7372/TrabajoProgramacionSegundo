@@ -15,13 +15,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.List;
+/**
+ * Clase que contiene la información de los pedidos realizados en el sistema.
+ * @see LineaPedido
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 // Nombre de la colección en MongoDB
 @Document("pedidos")
-
 // Para que sepa con qué clase recuperarlo al traerlo con MongoDB y aplicar polimorfismo
 @TypeAlias("Pedido")
 public class Pedido {

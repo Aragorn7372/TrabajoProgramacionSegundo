@@ -3,8 +3,6 @@ package dev.luisvives.trabajoprogramacionsegundo.productos.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +12,11 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
+/**
+ * Clase que define los productos que pueden existir en la aplicación
+ * @see Categoria
+ */
 @Builder
 @Data
 @AllArgsConstructor
@@ -23,7 +24,7 @@ import java.util.UUID;
 @Entity
 @Table(name="productos")
 @EntityListeners(AuditingEntityListener.class)
-public class Productos {
+public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

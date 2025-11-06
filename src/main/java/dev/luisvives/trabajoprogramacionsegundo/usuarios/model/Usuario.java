@@ -11,7 +11,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
+/**
+ * Clase que representa a los usuarios del sistema.
+ * @see Tipo
+ */
 @Builder
 @Data
 @AllArgsConstructor
@@ -28,6 +31,8 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
+    @ElementCollection(fetch = FetchType.EAGER) // Pocos datos, tipo eaguer para ir mas rapido
+    @Enumerated(EnumType.STRING) // Guardar el nombre del enum en lugar de el "indice" del valor Ej.: Tipo[0] = ADMIN / Tipo[1] = USER
     private List<Tipo> tipo;
     @Column(nullable = false)
     @LastModifiedDate

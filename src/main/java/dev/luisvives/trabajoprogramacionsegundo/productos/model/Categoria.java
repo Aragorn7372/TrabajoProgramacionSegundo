@@ -14,7 +14,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+/**
+ * Clase que representa una categoría de un produco en concreto.
+ * @see Producto
+ */
 @Builder
 @Data
 @AllArgsConstructor
