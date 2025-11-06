@@ -35,10 +35,13 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("com.h2database:h2") // base de datos a usar, puede ser otra
-    //
+    // Websocket
     implementation("org.springframework.boot:spring-boot-starter-websocket")
+    // MongoDB
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    // GraphQL
     implementation("org.springframework.boot:spring-boot-starter-graphql")
+    // Email
     implementation("org.springframework.boot:spring-boot-starter-mail")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
