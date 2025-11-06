@@ -6,7 +6,17 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 
-
+/**
+ * Clase que contiene la información de la dirección especificada por un cliente.
+ * @param calle La calle del cliente.
+ * @param numero Número de la calle.
+ * @param ciudad Ciudad donde se encuentra la calle.
+ * @param provincia Provincia donde se encuentra la ciudad.
+ * @param pais País donde se encuentra la provincia.
+ * @param codigoPostal El código postal de la dirección.
+ * @see Cliente
+ * @see Pedido
+ */
 @Builder
 public record Direccion(
         @Length(min = 3, message = "La calle debe tener al menos 3 caracteres")
