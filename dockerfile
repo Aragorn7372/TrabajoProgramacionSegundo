@@ -12,7 +12,7 @@ COPY src src
 
 # Compila y construye el proyecto, podemos evitar los test evitando con -x test, o cualquier otra tarea de gradle
 # RUN ./gradlew build -x test -x jacocoTestReport -x javadoc
-RUN ./gradlew build javadoc
+RUN ./gradlew build dokkaGenerate jacocoTestReport
 #-----------------------------------------------------------------------------------------------------------------------
 # nginx etapa webTest
 FROM nginx:latest AS testweb
@@ -43,7 +43,7 @@ WORKDIR /app
 RUN rm -rf /usr/local/apache2/htdocs/*
 
 # Copiamos informe de test, si es que se genero
-COPY --from=build /app/build/docs/javadoc /usr/local/apache2/htdocs/
+COPY --from=build /app/build/dokka/html /usr/local/apache2/htdocs/
 
 # Etapa de ejecución, un docker especifico, que se etiqueta como run
 # Con una imagen de java, solo neceistamos el jre
@@ -57,10 +57,5 @@ WORKDIR /app
 # Para copiar un archivo de una etapa a otra, se usa la instrucción COPY --from=etapaOrigen
 COPY --from=build /app/build/libs/*SNAPSHOT.jar /app/my-app.jar
 
-# Copiamos doc javadoc, si es que se genero
-COPY --from=build /app/build/docs/javadoc /app/documentation
-
-# Copiamos informe de cobertura jacoco, si es que se genero
-COPY --from=build /app/build/reports/jacoco/test/html /app/reports/coverage
 # Ejecuta el jar
 ENTRYPOINT ["java","-jar","/app/my-app.jar"]
