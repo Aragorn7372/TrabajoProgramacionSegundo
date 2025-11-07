@@ -4,6 +4,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.7"
     id("io.freefair.lombok") version "9.0.0"
     jacoco
+    id("org.jetbrains.dokka") version "2.1.0"
 }
 
 group = "dev.luisvives"
@@ -45,6 +46,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation(platform("org.jetbrains.dokka:org.jetbrains.dokka.gradle.plugin:2.1.0"))
 
 }
 
