@@ -1,7 +1,13 @@
-package org.example.funkoapi.Funko.service;
+package dev.luisvives.trabajoprogramacionsegundo.productos.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.nio.sctp.Notification;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketConfig;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketHandler;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.dto.productos.ProductoNotificacionDto;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.mapper.NotificacionMapper;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Notificacion;
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.DELETEResponseDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICResponseDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.PATCHRequestDTO;
@@ -11,11 +17,10 @@ import dev.luisvives.trabajoprogramacionsegundo.productos.model.Categoria;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.CategoriesRepository;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
-import dev.luisvives.trabajoprogramacionsegundo.productos.service.ProductoService;
-import dev.luisvives.trabajoprogramacionsegundo.usuarios.model.Tipo;
+import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Tipo;
 import jakarta.persistence.criteria.Join;
 import lombok.val;
-
+import dev.luisvives.trabajoprogramacionsegundo.productos.mapper.ProductoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
@@ -25,6 +30,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -58,7 +64,7 @@ public class ProductoServiceImpl implements ProductoService{
         this.categoryRepository = categoryRepository;
         this.storageService = storageService;
         this.webSocketConfig = webSocketConfig;
-        this.webSocketService = webSocketConfig.webSocketFunkosHandler();
+        this.webSocketService = webSocketConfig.webSocketProductosHandler();
         this.jacksonMapper = new ObjectMapper();
     }
 
@@ -178,7 +184,7 @@ public class ProductoServiceImpl implements ProductoService{
 
         if (foundProducto.isEmpty()) {
             log.warning("SERVICE: No se encontró producto con id: " + id);
-            throw new ProductoException.NotFoundException("SERVICE: No se encontró producto con id: "id); //Si no existe, lanzamos una excepción
+            throw new ProductoException.NotFoundException("SERVICE: No se encontró producto con id: "+id); //Si no existe, lanzamos una excepción
         } //Gracias al ExceptionHandler, esa excepción se transforma en un 404 NotFound
 
         //Si existe
@@ -193,7 +199,7 @@ public class ProductoServiceImpl implements ProductoService{
         //En caso de que NO viole la integridad referencial
 
         //Convertimos el DTO en modelo
-        Producto productoModel = ProductoMapper.postPutDTOToModel();
+        Producto productoModel = ProductoMapper.postPutDTOToModel(productoDto);
 
         //Cambiamos el id para que coincida con el que nos entra por parámetro desde el
         //Controller, es decir, desde la URI de la petición PUT http://localhost:8080/funkos/{id}
@@ -204,7 +210,7 @@ public class ProductoServiceImpl implements ProductoService{
         //Para preservar el createdAt original, dado que estamos creando un nuevo modelo de Funko y
         //hibernate cambiará el valor de este campo, cosa que no queremos ya que esto no es un save
         //sino un update
-        productoModel.setFechaCreacion(foundProducto.get().());
+        productoModel.setFechaCreacion(foundProducto.get().getFechaCreacion());
 
         //Le asignamos el objeto categoría correspondiente
         productoModel.setCategoria(existingCategory.get());
@@ -230,17 +236,17 @@ public class ProductoServiceImpl implements ProductoService{
 
         if (foundProducto.isEmpty()) {
             log.warning("SERVICE: No se encontró Funko con id: " + id);
-            throw new ProductoException.NotFoundException(id); //Si no existe, lanzamos una excepción
+            throw new ProductoException.NotFoundException("SERVICE: No se encontró Funko con id: " +id); //Si no existe, lanzamos una excepción
         } //Gracias al ExceptionHandler, esa excepción se transforma en un 404 NotFound
 
         //Si existe, comprobamos qué campos del dto venían con valores y los cambiamos en el funko que vamos a patchear
 
 
         if (productoDTO.getName() != null) {
-            foundProducto.get().setName(productoDTO.getName());
+            foundProducto.get().setNombre(productoDTO.getName());
         }
         if (productoDTO.getPrice() != null) {
-            foundProducto.get().setPrice(productoDTO.getPrice());
+            foundProducto.get().setPrecio(productoDTO.getPrice());
         }
         if (productoDTO.getCategory() != null) {
 
@@ -311,13 +317,13 @@ public class ProductoServiceImpl implements ProductoService{
         Producto funkoToUpdate = Producto.builder()
                 .id(foundProducto.getId())
 
-                .name(foundProducto.getName())
-                .price(foundProducto.getPrice())
-                .category(foundProducto.getCategory())
-                .releaseDate(foundProducto.getReleaseDate())
-                .image(imageUrl)
-                .createdAt(foundProducto.getCreatedAt())
-                .updatedAt(foundProducto.getUpdatedAt()) // Luego lo cambia el auditor de springboot
+                .nombre(foundProducto.getNombre())
+                .precio(foundProducto.getPrecio())
+                .categoria(foundProducto.getCategoria())
+                .descripcion(foundProducto.getDescripcion())
+                .imagen(imageUrl)
+                .fechaCreacion(foundProducto.getFechaCreacion())
+                .fechaModificacion(foundProducto.getFechaModificacion()) // Luego lo cambia el auditor de springboot
                 .build();
 
         // Lo guardamos en el repositorio
@@ -325,26 +331,27 @@ public class ProductoServiceImpl implements ProductoService{
         // Enviamos la notificación a los clientes ws
         onChange(Tipo.UPDATE, updatedFunko);
         // Devolvemos el producto actualizado
-        return FunkoMapper.modelToGenericResponseDTO(updatedFunko);
+        return ProductoMapper.modelToGenericResponseDTO(updatedFunko);
     }
 
-    void onChange(Tipo tipo, Funko data) {
+    void onChange(Tipo tipo, Producto data) {
         log.info("SERVICE: onChange con tipo: " + tipo + " y datos: " + data);
 
         //Comprobamos que existe una instancia del servicio de notificaciones, si no la hay, la creamos
         if (webSocketService == null) {
             log.warning("SERVICE: No se ha podido enviar la notificación a los clientes ws, no se ha encontrado el servicio");
-            webSocketService = this.webSocketConfig.webSocketFunkosHandler();
+            webSocketService = this.webSocketConfig.webSocketProductosHandler();
         }
 
         //Creamos la notificación que vamos a enviar
         try {
-            Notification<FunkoNotificationDto> notificacion = new Notification<>(
-                    "FUNKOS",
-                    tipo,
-                    FunkoNotificationMapper.toDto(data),
-                    LocalDateTime.now().toString()
-            );
+            NotificacionMapper NotificationMapper = new NotificacionMapper();
+            val notificacion =  Notificacion.builder()
+                    .entity("Producto")
+                    .type(tipo)
+                    .data(NotificacionMapper.toDto(data))
+                    .createdAt(LocalDateTime.now().toString())
+                    .build();
 
             //Lo convertimos a JSON mediante el mapper de Jackson
             String json = jacksonMapper.writeValueAsString((notificacion));
