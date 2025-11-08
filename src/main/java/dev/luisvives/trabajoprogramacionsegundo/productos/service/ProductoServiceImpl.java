@@ -18,6 +18,7 @@ import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.CategoriesRepository;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Tipo;
+import dev.luisvives.trabajoprogramacionsegundo.storage.StorageService;
 import jakarta.persistence.criteria.Join;
 import lombok.val;
 import dev.luisvives.trabajoprogramacionsegundo.productos.mapper.ProductoMapper;
@@ -59,7 +60,7 @@ public class ProductoServiceImpl implements ProductoService{
     ObjectMapper jacksonMapper;
 
     @Autowired
-    public ProductoServiceImpl(ProductsRepository repository, CategoriesRepository categoryRepository, StorageService storageService,WebSocketConfig webSocketConfig) {
+    public ProductoServiceImpl(ProductsRepository repository, CategoriesRepository categoryRepository, StorageService storageService, WebSocketConfig webSocketConfig) {
         this.repository = repository;
         this.categoryRepository = categoryRepository;
         this.storageService = storageService;
