@@ -4,10 +4,9 @@ services:
     build:
       context: .
       dockerfile: dockerfile
-      target: jacocoweb
+      target: jacocoweb # eliges la imagen a crear
     volumes:
       - ./web/nginx/sites-jacoco:/etc/nginx/sites-available # archivos de configuración de hosts virtuales
-      - ./web/nginx/website-jacoco:/usr/share/nginx/html/ # directorio de los sitios web
     restart: always # reinicio automático
     networks:
       - webnet # red de contenedores
@@ -19,7 +18,6 @@ services:
       target: testweb
     volumes:
       - ./web/nginx/sites-test:/etc/nginx/sites-available # archivos de configuración de hosts virtuales
-      - ./web/nginx/website-test:/usr/share/nginx/html/# directorio de los sitios web
     restart: always # reinicio automático
     networks:
       - webnet # red de contenedores
@@ -60,7 +58,6 @@ services:
       dockerfile: dockerfile
       target: run
     volumes:
-      - Data:/app/data
       - ./storage-dir:/app/storage-dir
     restart: always
 
@@ -97,6 +94,24 @@ services:
       - ${REDIS_PORT}:6379
     networks:
       - webnet
+
+    # PostgresSQL
+  postgres:
+    image: postgres:12-alpine
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - webnet
+
 networks:
   webnet:
     driver: bridge
@@ -104,4 +119,4 @@ volumes:
   storage-dir:
   mongo-data:
   redis-data:
-  Data:
+  postgres-data:
