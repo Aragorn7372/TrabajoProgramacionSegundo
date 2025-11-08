@@ -63,7 +63,7 @@ public class Pedido {
     private Boolean isDeleted = false;
 
     @JsonProperty("id")
-    public String get_id() {
+    public String getIdString() {
         return id.toHexString();
     }
 

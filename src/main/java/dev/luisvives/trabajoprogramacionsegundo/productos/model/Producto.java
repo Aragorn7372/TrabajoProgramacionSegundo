@@ -31,10 +31,10 @@ public class Producto {
     private Long id;
     @Column(nullable = false)
     @NotBlank
-    private String name;
+    private String nombre;
     @Column(nullable = false)
     @Min(0)
-    private Double price;
+    private Double precio;
     @Column(nullable = false)
     @Min(0)
     private Integer cantidad;
