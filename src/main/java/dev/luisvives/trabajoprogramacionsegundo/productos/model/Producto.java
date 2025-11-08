@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 @Table(name="productos")
 @EntityListeners(AuditingEntityListener.class)
 public class Producto {
+    public static final String IMAGE_DEFAULT="default.png";
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -41,9 +42,12 @@ public class Producto {
     @NotBlank
     @Builder.Default
     private String imagen="default.png";
+    @Column(nullable = true)
+    private String descripcion;
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
+
     @Column(nullable = false)
     @CreatedDate
     @Builder.Default

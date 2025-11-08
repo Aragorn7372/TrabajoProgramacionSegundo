@@ -2,11 +2,17 @@ package org.example.funkoapi.Funko.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.DELETEResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.PATCHRequestDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPUTRequestDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Categoria;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
+import dev.luisvives.trabajoprogramacionsegundo.productos.repository.CategoriesRepository;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import dev.luisvives.trabajoprogramacionsegundo.productos.service.ProductoService;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.model.Tipo;
 import jakarta.persistence.criteria.Join;
 import lombok.val;
 
@@ -36,7 +42,7 @@ import java.util.logging.Logger;
 public class ProductoServiceImpl implements ProductoService{
     private final Logger log = Logger.getLogger(ProductoServiceImpl.class.getName());
     private final ProductsRepository repository;
-    private final CategoryRepository categoryRepository;
+    private final CategoriesRepository categoryRepository;
     private final StorageService storageService;
     //Se le inyecta el webSocket de notificaciones al servicio de Funkos
     //Configuración
@@ -47,7 +53,7 @@ public class ProductoServiceImpl implements ProductoService{
     ObjectMapper jacksonMapper;
 
     @Autowired
-    public ProductoServiceImpl(ProductsRepository repository, CategoryRepository categoryRepository, StorageService storageService,WebSocketConfig webSocketConfig) {
+    public ProductoServiceImpl(ProductsRepository repository, CategoriesRepository categoryRepository, StorageService storageService,WebSocketConfig webSocketConfig) {
         this.repository = repository;
         this.categoryRepository = categoryRepository;
         this.storageService = storageService;
@@ -140,7 +146,7 @@ public class ProductoServiceImpl implements ProductoService{
 
         if (existingCategory.isEmpty()){  //Si no existe, lanzamos una excepción
             log.warning("SERVICE: Se intentó crear (POST) una funko de una categoría inexistente");
-            throw new ProductoException.ValidationException(productoDto);
+            throw new ProductoException.ValidationException(productoDto.getCategory());
         };//Que el ExceptionHandler transformará en 400 Bad Request
 
         //En caso de que NO viole la integridad referencial
@@ -201,71 +207,67 @@ public class ProductoServiceImpl implements ProductoService{
         productoModel.setFechaCreacion(foundProducto.get().());
 
         //Le asignamos el objeto categoría correspondiente
-        productoModel.setCategory(existingCategory.get());
+        productoModel.setCategoria(existingCategory.get());
 
         //Actualizamos
-        Funko updatedFunko = repository.save(productoModel);
+        Producto updatedProductos = repository.save(productoModel);
 
         //Enviamos la notificación de actualización del Funko
-        onChange(Tipo.UPDATE, updatedFunko);
+        onChange(Tipo.UPDATE, updatedProductos);
 
         //Lo mapeamos de nuevo a DTO antes de devolverlo
-        log.info("SERVICE: Funko con id " + updatedFunko.getId() + " actualizado (PUT) correctamente");
-        return FunkoMapper.modelToGenericResponseDTO(updatedFunko);
+        log.info("SERVICE: Funko con id " + updatedProductos.getId() + " actualizado (PUT) correctamente");
+        return ProductoMapper.modelToGenericResponseDTO(updatedProductos);
     }
 
     @Override
     @CacheEvict(key = "#result.id")
-    public GENERICResponseDTO patch(Long id, PATCHRequestDTO funkoDTO) {
+    public GENERICResponseDTO patch(Long id, PATCHRequestDTO productoDTO) {
         log.info("SERVICE: Haciendo PATCH al Funko con id: " +id);
 
         //Comprobamos si existe (por id) antes de hacer patch
-        Optional<Funko> foundFunko = repository.findById(id);
+        Optional<Producto> foundProducto = repository.findById(id);
 
-        if (foundFunko.isEmpty()) {
+        if (foundProducto.isEmpty()) {
             log.warning("SERVICE: No se encontró Funko con id: " + id);
-            throw new FunkoNotFoundException(id); //Si no existe, lanzamos una excepción
+            throw new ProductoException.NotFoundException(id); //Si no existe, lanzamos una excepción
         } //Gracias al ExceptionHandler, esa excepción se transforma en un 404 NotFound
 
         //Si existe, comprobamos qué campos del dto venían con valores y los cambiamos en el funko que vamos a patchear
-        if (funkoDTO.getUuid() != null) {
-            foundFunko.get().setUuid(UUID.fromString(funkoDTO.getUuid()));
+
+
+        if (productoDTO.getName() != null) {
+            foundProducto.get().setName(productoDTO.getName());
         }
-        if (funkoDTO.getName() != null) {
-            foundFunko.get().setName(funkoDTO.getName());
+        if (productoDTO.getPrice() != null) {
+            foundProducto.get().setPrice(productoDTO.getPrice());
         }
-        if (funkoDTO.getPrice() != null) {
-            foundFunko.get().setPrice(funkoDTO.getPrice());
-        }
-        if (funkoDTO.getCategory() != null) {
+        if (productoDTO.getCategory() != null) {
 
             //INTEGRIDAD REFERENCIAL: No podemos actualizar un Funko con una categoría que no exista
-            var existingCategory = categoryRepository.findByNameIgnoreCase(funkoDTO.getCategory());
+            var existingCategory = categoryRepository.findByNameIgnoreCase(productoDTO.getCategory());
             if (existingCategory.isEmpty()){ //Si no existe, lanzamos una excepción
                 log.warning("SERVICE: Se intentó actualizar (PATCH) un funko asignándole una categoría inexistente");
-                throw new FunkoValidationException(funkoDTO.getCategory());
+                throw new ProductoException.ValidationException(productoDTO.getCategory());
             } //Que el ExceptionHandler transformará en 400 Bad Request
 
             //Le asignamos la categoría rescatada del repositorio de categorías a partir del nombre de categoría
             //incluido en el DTO al funko que vamos a actualizar
-            foundFunko.get().setCategory(existingCategory.get());
+            foundProducto.get().setCategoria(existingCategory.get());
         }
-        if (funkoDTO.getReleaseDate() != null) {
-            foundFunko.get().setReleaseDate(LocalDate.parse(funkoDTO.getReleaseDate()));
-        }
-        if (funkoDTO.getImage() != null) {
-            foundFunko.get().setImage(funkoDTO.getImage());
+        if (productoDTO.getImage() != null) {
+            foundProducto.get().setImagen(productoDTO.getImage());
         }
 
         //Hacemos patch
-        Funko updatedFunko = repository.save(foundFunko.get());
+        Producto updatedProducto = repository.save(foundProducto.get());
 
         //Enviamos la notificación de actualización del Funko
-        onChange(Tipo.UPDATE, updatedFunko);
+        onChange(Tipo.UPDATE, updatedProducto);
 
         //Lo mapeamos y devolvemos
-        log.info("SERVICE: Funko con id " + updatedFunko.getId() + " actualizado (PATCH) correctamente");
-        return FunkoMapper.modelToGenericResponseDTO(updatedFunko);
+        log.info("SERVICE: Funko con id " + updatedProducto.getId() + " actualizado (PATCH) correctamente");
+        return ProductoMapper.modelToGenericResponseDTO(updatedProducto);
     }
 
     @Override
@@ -274,11 +276,11 @@ public class ProductoServiceImpl implements ProductoService{
         log.info("SERVICE: Eliminando Funko con id: " + id);
 
         //Comprobamos si existe el Funko a borrar
-        Optional<Funko> foundFunko = repository.findById(id);
+        Optional<Producto> foundFunko = repository.findById(id);
 
         if (foundFunko.isEmpty()) {
             log.warning("SERVICE: No se encontró Funko con id: " + id);
-            throw new FunkoNotFoundException(id); //Si no existe, lanzamos una excepción
+            throw new ProductoException.NotFoundException("SERVICE: No se encontró Funko con id: " + id); //Si no existe, lanzamos una excepción
         } //Gracias al ExceptionHandler, esa excepción se transforma en un 404 NotFound
 
         //Si existe, lo borramos
@@ -288,34 +290,34 @@ public class ProductoServiceImpl implements ProductoService{
         onChange(Tipo.DELETE, foundFunko.get());
 
         //Mapeamos el Funko eliminado a DTO para incluirlo en el DELETE Response DTO
-        GENERICResponseDTO deletedFunkoDTO =  FunkoMapper.modelToGenericResponseDTO(foundFunko.get());
+        GENERICResponseDTO deletedProductoDTO =  ProductoMapper.modelToGenericResponseDTO(foundFunko.get());
 
         //Creamos y devolvemos el DTO personalizado para los delete con el mensaje y el funko eliminado
-        return new DELETEResponseDTO("Funko eliminado correctamente", deletedFunkoDTO);
+        return new DELETEResponseDTO("Funko eliminado correctamente", deletedProductoDTO);
     }
 
     @Override
     public GENERICResponseDTO updateImage(Long id, MultipartFile image) {
-        val foundFunko = repository.findById(id).orElseThrow(() -> new FunkoNotFoundException(id));
+        val foundProducto = repository.findById(id).orElseThrow(() -> new ProductoException.NotFoundException("producto no encontrado con id: "+id));
         log.info("Actualizando imagen de producto por id: " + id);
 
         // Borramos la imagen anterior si existe y no es la de por defecto, porque si la borramos todos lo que tengan el placeholder se quedarían sin la imagen
-        if (foundFunko.getImage() != null && !foundFunko.getImage().equals(Funko.IMAGE_DEFAULT)) {
-            storageService.delete(foundFunko.getImage());
+        if (foundProducto.getImagen() != null && !foundProducto.getImagen().equals(Producto.IMAGE_DEFAULT)) {
+            storageService.delete(foundProducto.getImagen());
         }
         String imageStored = storageService.store(image);
         String imageUrl = imageStored; //storageService.getUrl(imageStored); // Si quiero la url completa
         // Clonamos el producto con la nueva imagen, porque inmutabilidad de los objetos
-        Funko funkoToUpdate = Funko.builder()
-                .id(foundFunko.getId())
-                .uuid(foundFunko.getUuid())
-                .name(foundFunko.getName())
-                .price(foundFunko.getPrice())
-                .category(foundFunko.getCategory())
-                .releaseDate(foundFunko.getReleaseDate())
+        Producto funkoToUpdate = Producto.builder()
+                .id(foundProducto.getId())
+
+                .name(foundProducto.getName())
+                .price(foundProducto.getPrice())
+                .category(foundProducto.getCategory())
+                .releaseDate(foundProducto.getReleaseDate())
                 .image(imageUrl)
-                .createdAt(foundFunko.getCreatedAt())
-                .updatedAt(foundFunko.getUpdatedAt()) // Luego lo cambia el auditor de springboot
+                .createdAt(foundProducto.getCreatedAt())
+                .updatedAt(foundProducto.getUpdatedAt()) // Luego lo cambia el auditor de springboot
                 .build();
 
         // Lo guardamos en el repositorio
