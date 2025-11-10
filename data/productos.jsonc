@@ -1,0 +1,103 @@
+// Cuerpos de petición de ejemplo para la API de Productos
+// Nota: Este archivo usa comentarios (JSONC).
+{
+  // --- Peticiones POST (Crear Producto) ---
+  // DTO: POSTandPUTProductoRequestDTO
+  // Endpoint: POST /productos
+  "POST_Producto_Examples": [
+
+    // Ejemplo 1: Creación de un producto completo
+    {
+      "name": "Laptop Ultraligera Pro",
+      "price": 1499.99,
+      "category": "TECNOLOGIA",
+      "description": "Portátil de 14 pulgadas con procesador de última generación y 32GB de RAM.",
+      "image": "laptop_pro_x1.png"
+    },
+
+    // Ejemplo 2: Creación de un producto con campos opcionales (description, image) nulos/omitidos
+    {
+      "name": "Ratón Óptico USB",
+      "price": 19.95,
+      "category": "PERIFERICOS"
+    },
+
+    // Ejemplo 3: Creación de otro producto
+    {
+      "name": "Balón de Baloncesto Pro",
+      "price": 45.00,
+      "category": "DEPORTES",
+      "description": "Balón de cuero sintético, tamaño 7 oficial."
+    },
+
+    // Ejemplo 4: Petición inválida (precio negativo) para probar validaciones @Min
+    {
+      "name": "Producto Inválido",
+      "price": -10.00,
+      "category": "TECNOLOGIA"
+    },
+
+    // Ejemplo 5: Petición inválida (nombre en blanco) para probar validaciones @NotBlank
+    {
+      "name": "",
+      "price": 99.00,
+      "category": "TECNOLOGIA"
+    },
+
+    // Ejemplo 6: Petición inválida (precio nulo) para probar validaciones @NotNull
+    {
+      "name": "Producto sin Precio",
+      "price": null,
+      "category": "HOGAR"
+    }
+  ],
+
+  // --- Petición PUT (Actualizar Producto) ---
+  // DTO: POSTandPUTProductoRequestDTO (el mismo que POST)
+  // Endpoint: PUT /productos/{id}
+  "PUT_Producto_Example": {
+    "name": "Laptop Ultraligera Pro (Modelo Actualizado)",
+    "price": 1549.00,
+    "category": "TECNOLOGIA",
+    "description": "Versión actualizada con CPU mejorada y 1TB SSD.",
+    "image": "laptop_pro_x2.png"
+  },
+
+  // --- Peticiones PATCH (Actualizar Parcialmente Producto) ---
+  // DTO: PATCHProductoRequestDTO
+  // Endpoint: PATCH /productos/{id}
+  "PATCH_Producto_Examples": [
+
+    // Ejemplo 1: Actualización parcial de precio y descripción
+    {
+      "price": 1450.00,
+      "description": "En oferta especial esta semana."
+    },
+
+    // Ejemplo 2: Actualización parcial, solo el nombre
+    {
+      "name": "Ratón Óptico (Nuevo Modelo)"
+    },
+
+    // Ejemplo 3: Actualización parcial, cambio de categoría e imagen
+    {
+      "category": "OFERTAS",
+      "image": "oferta_raton.jpg"
+    },
+
+    // Ejemplo 4: Actualización parcial inválida (precio negativo)
+    {
+      "price": -5.00
+    },
+
+    // Ejemplo 5: Actualización parcial inválida (nombre vacío)
+    {
+      "name": "   "
+    }
+  ],
+
+  // --- Peticiones GET y DELETE ---
+  "Info_GET_DELETE": {
+    "message": "Las operaciones GET (obtener) y DELETE (eliminar) no requieren un cuerpo de petición (request body)."
+  }
+}

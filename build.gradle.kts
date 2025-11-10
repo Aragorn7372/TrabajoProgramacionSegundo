@@ -34,8 +34,13 @@ dependencies {
     //test
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // 3. AÑADIR DEPENDENCIAS DE TESTCONTAINERS
+    testImplementation("org.testcontainers:testcontainers")
+    testImplementation("org.testcontainers:junit-jupiter")
+    testImplementation("org.testcontainers:postgresql")
+    //bbdd
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.h2database:h2") // base de datos a usar, puede ser otra
+    runtimeOnly("org.postgresql:postgresql")
     // Websocket
     implementation("org.springframework.boot:spring-boot-starter-websocket")
     // MongoDB
