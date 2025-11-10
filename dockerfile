@@ -10,6 +10,10 @@ COPY gradlew .
 COPY gradle gradle
 COPY src src
 
+# Configura la variable de entorno DOCKER_HOST, esto es para que el contenedor pueda comunicarse con el host
+# En Windows se usa host.docker.internal, en Linux y macOS se puede usar localhost
+ARG DOCKER_HOST_ARG=tcp://host.docker.internal:2375
+ENV DOCKER_HOST=$DOCKER_HOST_ARG
 # Compila y construye el proyecto, podemos evitar los test evitando con -x test, o cualquier otra tarea de gradle
 # RUN ./gradlew build -x test -x jacocoTestReport -x javadoc
 RUN ./gradlew build dokkaGenerate jacocoTestReport
