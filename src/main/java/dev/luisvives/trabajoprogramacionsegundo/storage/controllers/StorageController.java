@@ -1,10 +1,8 @@
-
 package dev.luisvives.trabajoprogramacionsegundo.storage.controllers;
 
 import dev.luisvives.trabajoprogramacionsegundo.storage.StorageService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -20,22 +18,48 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Controlador REST para la gestión de archivos en el sistema de almacenamiento.
+ * <p>
+ * Proporciona endpoints para subir, descargar, listar y eliminar archivos.
+ * Se comunica con el {@link StorageService} para realizar operaciones sobre los ficheros.
+ * </p>
+ *
+ * <p>
+ * Endpoints disponibles:
+ * <ul>
+ *     <li>GET /storage/{filename} → Obtener un archivo específico.</li>
+ *     <li>POST /storage → Subir un archivo.</li>
+ *     <li>GET /storage → Listar todos los archivos.</li>
+ *     <li>DELETE /storage/{filename} → Eliminar un archivo específico.</li>
+ * </ul>
+ * </p>
+ */
 @RestController
 @Slf4j
 @RequestMapping({"/storage", "/storage/"})
 public class StorageController {
+
+    /** Servicio que gestiona las operaciones sobre archivos */
     private final StorageService storageService;
 
+    /**
+     * Constructor con inyección de dependencias.
+     *
+     * @param storageService Servicio de almacenamiento
+     */
     @Autowired
     public StorageController(StorageService storageService) {
         this.storageService = storageService;
     }
 
     /**
-     * Obtiene un fichero del sistema de almacenamiento
+     * Obtiene un archivo del almacenamiento.
      *
      * @param filename Nombre del fichero a obtener
-     * @return Fichero
+     * @param request  Objeto HttpServletRequest para determinar el tipo de contenido
+     * @return ResponseEntity con el archivo y su tipo MIME
+     * @throws ResponseStatusException si no se puede determinar el tipo de fichero
      */
     @GetMapping(value = "{filename:.+}")
     @ResponseBody
@@ -58,6 +82,13 @@ public class StorageController {
                 .body(file);
     }
 
+    /**
+     * Subir un archivo al almacenamiento.
+     *
+     * @param file Archivo a subir
+     * @return ResponseEntity con el nombre almacenado y la URL del archivo
+     * @throws ResponseStatusException si el archivo está vacío
+     */
     @PostMapping()
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) {
         log.info("Subiendo fichero: " + file.getOriginalFilename());
@@ -76,7 +107,11 @@ public class StorageController {
                 ));
     }
 
-
+    /**
+     * Lista todos los archivos almacenados.
+     *
+     * @return ResponseEntity con una lista de nombres de archivos
+     */
     @GetMapping("")
     public ResponseEntity<List<String>> listAllFiles() {
         log.info("Listando todos los ficheros almacenados");
@@ -88,7 +123,12 @@ public class StorageController {
         return ResponseEntity.ok(files);
     }
 
-
+    /**
+     * Elimina un archivo específico del almacenamiento.
+     *
+     * @param filename Nombre del archivo a eliminar
+     * @return ResponseEntity con mensaje de confirmación y nombre del archivo eliminado
+     */
     @DeleteMapping("/{filename:.+}")
     public ResponseEntity<Map<String, String>> deleteFile(@PathVariable String filename) {
         log.info("Eliminando fichero: " + filename);
@@ -101,14 +141,17 @@ public class StorageController {
     }
 
     /*
-    El método se implementea así, pero no veo seguro dejar que una consulta a un endpoint borre todas las imágenes
-    @DeleteMapping("")
-    public ResponseEntity<Map<String, String>> deleteAllFiles() {
-        log.info("Eliminando todos los ficheros del almacenamiento");
-        storageService.deleteAll();
-
-        return ResponseEntity.ok(Map.of(
-                "message", "Todos los ficheros fueron eliminados correctamente"
-        ));
-    }*/
+     * Nota: Este método permite eliminar todos los archivos, pero se comenta
+     * por seguridad para evitar borrar todo el almacenamiento por accidente.
+     *
+     * @DeleteMapping("")
+     * public ResponseEntity<Map<String, String>> deleteAllFiles() {
+     *     log.info("Eliminando todos los ficheros del almacenamiento");
+     *     storageService.deleteAll();
+     *
+     *     return ResponseEntity.ok(Map.of(
+     *             "message", "Todos los ficheros fueron eliminados correctamente"
+     *     ));
+     * }
+     */
 }
