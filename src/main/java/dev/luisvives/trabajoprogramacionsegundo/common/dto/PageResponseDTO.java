@@ -9,7 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageResponseDTO <T> {
+public class PageProductosResponseDTO<T> {
     List<T> content;
     int totalPages; //Número total de páginas
     long totalElements; //Número total de Productos
