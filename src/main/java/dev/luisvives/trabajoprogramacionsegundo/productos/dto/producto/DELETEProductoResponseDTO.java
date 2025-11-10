@@ -27,7 +27,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor // Necesario para que Jackson pueda deserializar desde JSON.
-public class DELETEResponseDTO {
+public class DELETEProductoResponseDTO {
 
     /**
      * Mensaje informativo sobre el resultado de la operación de eliminación.

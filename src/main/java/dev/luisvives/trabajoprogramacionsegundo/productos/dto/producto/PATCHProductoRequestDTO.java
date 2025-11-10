@@ -4,52 +4,76 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
+/**
+ * DTO utilizado para actualizar parcialmente un producto.
+ * <p>
+ * Todos los campos son opcionales (pueden enviarse vacíos), y se actualizan
+ * únicamente aquellos que se incluyen en la petición.
+ * </p>
+ *
+ * <b>Campos:</b>
+ * <ul>
+ *   <li><b>name</b> (<code>String</code>): Nombre del producto.
+ *       <ul>
+ *         <li>Opcional: puede estar vacío.</li>
+ *         <li>Si se envía, no puede ser vacío ni contener solo espacios en blanco.</li>
+ *         <li>Validado con <code>@Pattern(regexp = "^(?!\\s*$).+")</code>.</li>
+ *       </ul>
+ *   </li>
+ *   <li><b>price</b> (<code>Double</code>): Precio del producto.
+ *       <ul>
+ *         <li>Opcional: puede estar vacío.</li>
+ *         <li>Si se envía, debe ser mayor o igual a 0.0.</li>
+ *         <li>Validado con <code>@Min(0)</code>.</li>
+ *       </ul>
+ *   </li>
+ *   <li><b>category</b> (<code>String</code>): Nombre de la categoría. Opcional.</li>
+ *   <li><b>description</b> (<code>String</code>): Descripción del producto. Opcional.</li>
+ *   <li><b>image</b> (<code>String</code>): Nombre de la imagen asociada.
+ *       <ul>
+ *         <li>No tiene validaciones de Jakarta, ya que inicialmente está vacío.</li>
+ *         <li>Se asigna un nombre posteriormente al guardar la imagen en la base de datos.</li>
+ *       </ul>
+ *   </li>
+ * </ul>
+ *
+ * <p><b>Notas:</b>
+ * <ul>
+ *   <li>Este DTO se usa en operaciones PATCH, por lo que todos los campos son opcionales.</li>
+ *   <li>Si se envía el nombre, no se permite que sea vacío o contenga solo espacios.</li>
+ * </ul>
+ * </p>
+ */
 @Data
-public class PATCHRequestDTO {
-    //Puede estar vacío
-    //OJO, luego nos tocará parsearlo de STRING a UUID
-    //Puede estar vacío
-    //En caso de que se envíe nombre, no nos vale como valor "" ni " "
+public class PATCHProductoRequestDTO {
+
+    /**
+     * Nombre del producto.
+     * Validación: no puede estar vacío ni solo espacios si se envía.
+     */
     @Pattern(regexp = "^(?!\\s*$).+", message = "El nombre no puede estar vacío si se envía")
     private String name;
-    //Puede estar vacío y su valor mínimo es 0.0
+
+    /**
+     * Precio del producto.
+     * Debe ser mayor o igual a 0 si se envía.
+     */
     @Min(value = 0, message = "El precio no puede ser negativo")
     private Double price;
-    //Puede estar vacío
+
+    /**
+     * Nombre de la categoría a la que pertenece el producto.
+     */
     private String category;
+
+    /**
+     * Descripción del producto.
+     */
     private String description;
-    private String image; // No tiene validaciones de jakarta porque es un campo que siempre
-    // esta vacio en su creacion por la necesidad de guardar primero la imagen
-    // en la base de datos para darle el nombre.
+
+    /**
+     * Nombre de la imagen asociada al producto.
+     * Inicialmente vacío y se asigna después de guardar la imagen en la base de datos.
+     */
+    private String image;
 }
-/*
-public class Producto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
-    @NotBlank
-    private String name;
-    @Column(nullable = false)
-    @Min(0)
-    private Double price;
-    @Column(nullable = false)
-    @Min(0)
-    private Integer cantidad;
-    @Column(nullable = false)
-    @NotBlank
-    @Builder.Default
-    private String imagen="default.png";
-    @ManyToOne
-    @JoinColumn(name = "categoria_id")
-    private Categoria categoria;
-    @Column(nullable = false)
-    @CreatedDate
-    @Builder.Default
-    private LocalDateTime fechaCreacion=LocalDateTime.now();
-    @Column(nullable = false)
-    @LastModifiedDate
-    @Builder.Default
-    private LocalDateTime fechaModificacion=LocalDateTime.now();
-}
- */

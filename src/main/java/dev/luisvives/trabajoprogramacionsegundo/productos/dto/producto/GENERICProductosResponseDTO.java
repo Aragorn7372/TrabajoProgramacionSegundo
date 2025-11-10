@@ -2,7 +2,7 @@ package dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto;
 
 import lombok.Data;
 /**
- * DTO genérico utilizado para representar la respuesta de un producto o entidad similar.
+ * DTO genérico utilizado para representar la respuesta de un producto.
  * <p>
  * Contiene información básica como el identificador, nombre, precio,
  * categoría, descripción e imagen asociada.
@@ -19,7 +19,7 @@ import lombok.Data;
  * </ul>
  */
 @Data
-public class GENERICResponseDTO {
+public class GENERICProductosResponseDTO {
 
     /**
      * Identificador único del elemento.

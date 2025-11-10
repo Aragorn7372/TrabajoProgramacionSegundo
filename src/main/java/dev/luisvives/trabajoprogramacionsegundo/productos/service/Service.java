@@ -1,6 +1,6 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.service;
 
-import java.util.List;
+
 
 public interface Service<R,D,ID,P,PA>{
 

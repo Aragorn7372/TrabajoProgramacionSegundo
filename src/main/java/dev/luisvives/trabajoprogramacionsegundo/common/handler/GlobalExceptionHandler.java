@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.common;
+package dev.luisvives.trabajoprogramacionsegundo.common.handler;
 
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;

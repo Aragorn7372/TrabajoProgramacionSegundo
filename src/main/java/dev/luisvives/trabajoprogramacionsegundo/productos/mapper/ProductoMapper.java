@@ -1,16 +1,23 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.mapper;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICResponseDTO;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPUTRequestDTO;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.PageResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICProductosResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPUTProductoRequestDTO;
+import dev.luisvives.trabajoprogramacionsegundo.common.dto.PageResponseDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import org.springframework.data.domain.Page;
-
-import java.time.LocalDate;
 import java.util.logging.Logger;
+
+/**
+ * mapper de productos que se encarga de traducir dtos a entidades y entidades a dtos
+ */
 public class ProductoMapper {
     private static final Logger log = Logger.getLogger(ProductoMapper.class.getName());
 
-    public static Producto postPutDTOToModel(POSTandPUTRequestDTO request) {
+    /**
+     * transforma un {@link POSTandPUTProductoRequestDTO} en un {@link Producto}
+     * @param request {@link POSTandPUTProductoRequestDTO} a transformar
+     * @return devuelve {@link Producto}
+     */
+    public static Producto postPutDTOToModel(POSTandPUTProductoRequestDTO request) {
         log.info("MAPPER: Pasando Funko de POST/PUT Request DTO a Modelo");
         var producto = new Producto();
 
@@ -24,24 +31,32 @@ public class ProductoMapper {
         return producto;
     }
 
-    public static GENERICResponseDTO modelToGenericResponseDTO(Producto producto) {
+    /**
+     *  Transforma un {@link Producto} en un {@link GENERICProductosResponseDTO}
+     * @param producto {@link Producto} a transformar
+     * @return devuelve {@link GENERICProductosResponseDTO}
+     */
+    public static GENERICProductosResponseDTO modelToGenericResponseDTO(Producto producto) {
         log.info("MAPPER: Pasando Funko de Modelo a Generic Response DTO");
 
-        GENERICResponseDTO productoDto = new GENERICResponseDTO();
-
+        GENERICProductosResponseDTO productoDto = new GENERICProductosResponseDTO();
         productoDto.setId(producto.getId());
-
         productoDto.setName(producto.getNombre());
         productoDto.setPrice(producto.getPrecio());
-        //OJO, al cliente solo le devolvemos el nombre de la categoría,
-        //no el objeto categoría completo
         productoDto.setCategory(producto.getCategoria().getName());
         productoDto.setDescripcion(producto.getDescripcion());
         productoDto.setImage(producto.getImagen());
         return productoDto;
     }
 
-    public static PageResponseDTO<GENERICResponseDTO> pageToDTO (Page<Producto> page, String sortBy, String direction) {
+    /**
+     * transforma una lista {@link Page} en un {@link PageResponseDTO}
+     * @param page elementos de la pagina
+     * @param sortBy como se ordena
+     * @param direction direccion de ordenacion
+     * @return devuelve el {@link PageResponseDTO} ya ordenado
+     */
+    public static PageResponseDTO<GENERICProductosResponseDTO> pageToDTO (Page<Producto> page, String sortBy, String direction) {
         return new PageResponseDTO<>(
                 page.getContent()
                         .stream()

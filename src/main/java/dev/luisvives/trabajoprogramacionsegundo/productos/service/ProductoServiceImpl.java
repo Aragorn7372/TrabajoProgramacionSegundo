@@ -2,16 +2,14 @@ package dev.luisvives.trabajoprogramacionsegundo.productos.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sun.nio.sctp.Notification;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketConfig;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketHandler;
-import dev.luisvives.trabajoprogramacionsegundo.notificaciones.dto.productos.ProductoNotificacionDto;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.mapper.NotificacionMapper;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Notificacion;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.DELETEResponseDTO;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICResponseDTO;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.PATCHRequestDTO;
-import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPUTRequestDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.DELETEProductoResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.GENERICProductosResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.PATCHProductoRequestDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPUTProductoRequestDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Categoria;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
@@ -33,10 +31,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -69,59 +65,37 @@ public class ProductoServiceImpl implements ProductoService{
         this.jacksonMapper = new ObjectMapper();
     }
 
-    //No se cachea
-   /* @Override
-    public List<GENERICResponseDTO> getAll() {
-        log.info("SERVICE: Buscando todos los Funkos");
 
-        return repository.findAll()
-                .stream()
-                .map(FunkoMapper::modelToGenericResponseDTO)
-                .toList();
-    }*/
 
     @Override
-    public Page<Producto> findAll(Optional<String> uuid,
-                                  Optional<String> name,
+    public Page<Producto> findAll(Optional<String> name,
                                   Optional<Double> maxPrice,
                                   Optional<String> category,
-                                  Optional<String> releaseDate,
                                   Pageable pageable) {
-
-        // Criterio de búsqueda por uuid
-        Specification<Producto> specUuidFunko = (root, query, criteriaBuilder) ->
-                uuid.map(u -> criteriaBuilder.equal(root.get("uuid"), UUID.fromString(u))) // Buscamos por UUID
-                        .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true))); // Si no hay UUID, no filtramos
-
         // Criterio de búsqueda por nombre
-        Specification<Producto> specNameFunko = (root, query, criteriaBuilder) ->
+        Specification<Producto> specNameProducto = (root, query, criteriaBuilder) ->
                 name.map(n -> criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + n.toLowerCase() + "%")) // Buscamos por nombre
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true))); // Si no hay nombre, no filtramos
 
         // Criterio de búsqueda por maxPrice, es decir tiene que ser menor o igual
-        Specification<Producto> specMaxPriceFunko = (root, query, criteriaBuilder) ->
+        Specification<Producto> specMaxPriceProducto = (root, query, criteriaBuilder) ->
                 maxPrice.map(p -> criteriaBuilder.lessThanOrEqualTo(root.get("price"), p))
                         .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
 
         // Criterio de búsqueda por categoría
-        Specification<Producto> specCategoryFunko = (root, query, criteriaBuilder) ->
+        Specification<Producto> specCategoryProducto = (root, query, criteriaBuilder) ->
                 category.map(c -> {
                     Join<Producto, Categoria> categoriaJoin = root.join("category"); // Join con category
                     return criteriaBuilder.like(criteriaBuilder.lower(categoriaJoin.get("name")), "%" + c.toLowerCase() + "%"); // Buscamos por nombre de la categoría
                 }).orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true))); // Si no hay categoría, no filtramos
 
         // Criterio de búsqueda por fecha de lanzamiento
-        Specification<Producto> specReleaseDateFunko = (root, query, criteriaBuilder) ->
-                releaseDate.map( r -> criteriaBuilder.equal(root.get("releaseDate"), LocalDate.parse(r)))
-                        .orElseGet(() -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
 
         // Combinamos las especificaciones
         Specification<Producto> criterio = Specification.allOf(
-                specUuidFunko,
-                specNameFunko,
-                specMaxPriceFunko,
-                specCategoryFunko,
-                specReleaseDateFunko
+                specNameProducto,
+                specMaxPriceProducto,
+                specCategoryProducto
         );
         return repository.findAll(criterio, pageable);
     }
@@ -130,7 +104,7 @@ public class ProductoServiceImpl implements ProductoService{
     //Recuperamos de la caché (si está)
     //Si no, buscamos en el repositorio y el resultado es guardado en la caché
     @Cacheable(key = "#id")
-    public GENERICResponseDTO getById(Long id) {
+    public GENERICProductosResponseDTO getById(Long id) {
         log.info("SERVICE: Buscando Funko con id: " + id);
 
         //Buscamos el Funko en el repositorio
@@ -145,7 +119,7 @@ public class ProductoServiceImpl implements ProductoService{
     }
 
     @Override
-    public GENERICResponseDTO save(POSTandPUTRequestDTO productoDto) {
+    public GENERICProductosResponseDTO save(POSTandPUTProductoRequestDTO productoDto) {
         log.info("SERVICE: Guardando Funko");
 
         //INTEGRIDAD REFERENCIAL: No podemos crear un Funko cuya categoría no exista
@@ -154,7 +128,7 @@ public class ProductoServiceImpl implements ProductoService{
         if (existingCategory.isEmpty()){  //Si no existe, lanzamos una excepción
             log.warning("SERVICE: Se intentó crear (POST) una funko de una categoría inexistente");
             throw new ProductoException.ValidationException(productoDto.getCategory());
-        };//Que el ExceptionHandler transformará en 400 Bad Request
+        }//Que el ExceptionHandler transformará en 400 Bad Request
 
         //En caso de que NO viole la integridad referencial
 
@@ -177,7 +151,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     @CacheEvict(key = "#result.id")
-    public GENERICResponseDTO update(Long id, POSTandPUTRequestDTO productoDto) {
+    public GENERICProductosResponseDTO update(Long id, POSTandPUTProductoRequestDTO productoDto) {
         log.info("SERVICE: Actualizando Funko con id: " +id);
 
         //Comprobamos si existe antes de actualizar
@@ -229,7 +203,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     @CacheEvict(key = "#result.id")
-    public GENERICResponseDTO patch(Long id, PATCHRequestDTO productoDTO) {
+    public GENERICProductosResponseDTO patch(Long id, PATCHProductoRequestDTO productoDTO) {
         log.info("SERVICE: Haciendo PATCH al Funko con id: " +id);
 
         //Comprobamos si existe (por id) antes de hacer patch
@@ -279,7 +253,7 @@ public class ProductoServiceImpl implements ProductoService{
 
     @Override
     @CacheEvict(key = "#id")
-    public DELETEResponseDTO deleteById(Long id) {
+    public DELETEProductoResponseDTO deleteById(Long id) {
         log.info("SERVICE: Eliminando Funko con id: " + id);
 
         //Comprobamos si existe el Funko a borrar
@@ -297,14 +271,14 @@ public class ProductoServiceImpl implements ProductoService{
         onChange(Tipo.DELETE, foundFunko.get());
 
         //Mapeamos el Funko eliminado a DTO para incluirlo en el DELETE Response DTO
-        GENERICResponseDTO deletedProductoDTO =  ProductoMapper.modelToGenericResponseDTO(foundFunko.get());
+        GENERICProductosResponseDTO deletedProductoDTO =  ProductoMapper.modelToGenericResponseDTO(foundFunko.get());
 
         //Creamos y devolvemos el DTO personalizado para los delete con el mensaje y el funko eliminado
-        return new DELETEResponseDTO("Funko eliminado correctamente", deletedProductoDTO);
+        return new DELETEProductoResponseDTO("Funko eliminado correctamente", deletedProductoDTO);
     }
 
     @Override
-    public GENERICResponseDTO updateImage(Long id, MultipartFile image) {
+    public GENERICProductosResponseDTO updateImage(Long id, MultipartFile image) {
         val foundProducto = repository.findById(id).orElseThrow(() -> new ProductoException.NotFoundException("producto no encontrado con id: "+id));
         log.info("Actualizando imagen de producto por id: " + id);
 
@@ -346,7 +320,7 @@ public class ProductoServiceImpl implements ProductoService{
 
         //Creamos la notificación que vamos a enviar
         try {
-            NotificacionMapper NotificationMapper = new NotificacionMapper();
+
             val notificacion =  Notificacion.builder()
                     .entity("Producto")
                     .type(tipo)
