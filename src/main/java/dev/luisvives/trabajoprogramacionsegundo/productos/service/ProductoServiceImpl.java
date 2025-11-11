@@ -35,7 +35,7 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 /**
- * Implementación del servicio de productos (Funkos).
+ * Implementación del servicio de productos (Producto).
  * <p>
  * Esta capa actúa como puente entre el controlador y los repositorios de productos y categorías.
  * Contiene la lógica de negocio, manejo de cache, validaciones, integridad referencial,
@@ -78,7 +78,7 @@ public class ProductoServiceImpl implements ProductoService {
 
     /** Mapper de Jackson para serializar objetos a JSON */
     ObjectMapper jacksonMapper;
-
+    ProductoMapper mapper;
     /**
      * Constructor que inyecta dependencias necesarias.
      *
@@ -91,13 +91,15 @@ public class ProductoServiceImpl implements ProductoService {
     public ProductoServiceImpl(ProductsRepository repository,
                                CategoriesRepository categoryRepository,
                                StorageService storageService,
-                               WebSocketConfig webSocketConfig) {
+                               WebSocketConfig webSocketConfig,
+                               ProductoMapper mapper) {
         this.repository = repository;
         this.categoryRepository = categoryRepository;
         this.storageService = storageService;
         this.webSocketConfig = webSocketConfig;
         this.webSocketService = webSocketConfig.webSocketProductosHandler();
         this.jacksonMapper = new ObjectMapper();
+        this.mapper = mapper;
     }
 
     /**
@@ -153,15 +155,15 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @Cacheable(key = "#id")
     public GENERICProductosResponseDTO getById(Long id) {
-        log.info("SERVICE: Buscando Funko con id: " + id);
+        log.info("SERVICE: Buscando Producto con id: " + id);
 
-        Producto foundFunko = repository.findById(id)
+        Producto productoFound = repository.findById(id)
                 .orElseThrow(() -> {
-                    log.warning("SERVICE: No se encontró Funko con id: " + id);
-                    return new ProductoException.NotFoundException("SERVICE: No se encontró Funko con id: " + id);
+                    log.warning("SERVICE: No se encontró Producto con id: " + id);
+                    return new ProductoException.NotFoundException("SERVICE: No se encontró Producto con id: " + id);
                 });
 
-        return ProductoMapper.modelToGenericResponseDTO(foundFunko);
+        return mapper.modelToGenericResponseDTO(productoFound);
     }
 
     /**
@@ -176,22 +178,22 @@ public class ProductoServiceImpl implements ProductoService {
      */
     @Override
     public GENERICProductosResponseDTO save(POSTandPUTProductoRequestDTO productoDto) {
-        log.info("SERVICE: Guardando Funko");
+        log.info("SERVICE: Guardando Producto");
 
         var existingCategory = categoryRepository.findByNameIgnoreCase(productoDto.getCategory());
         if (existingCategory.isEmpty()) {
-            log.warning("SERVICE: Se intentó crear un Funko de una categoría inexistente");
+            log.warning("SERVICE: Se intentó crear un Producto de una categoría inexistente");
             throw new ProductoException.ValidationException(productoDto.getCategory());
         }
 
-        Producto productoModel = ProductoMapper.postPutDTOToModel(productoDto);
+        Producto productoModel = mapper.postPutDTOToModel(productoDto);
         productoModel.setCategoria(existingCategory.get());
-        Producto savedFunko = repository.save(productoModel);
+        Producto savedProducto = repository.save(productoModel);
 
-        onChange(Tipo.CREATE, savedFunko);
+        onChange(Tipo.CREATE, savedProducto);
 
-        log.info("SERVICE: Funko con id " + savedFunko.getId() + " creado correctamente");
-        return ProductoMapper.modelToGenericResponseDTO(savedFunko);
+        log.info("SERVICE: Producto con id " + savedProducto.getId() + " creado correctamente");
+        return mapper.modelToGenericResponseDTO(savedProducto);
     }
 
     /**
@@ -206,7 +208,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @CacheEvict(key = "#result.id")
     public GENERICProductosResponseDTO update(Long id, POSTandPUTProductoRequestDTO productoDto) {
-        log.info("SERVICE: Actualizando Funko con id: " + id);
+        log.info("SERVICE: Actualizando Producto con id: " + id);
 
         Optional<Producto> foundProducto = repository.findById(id);
         if (foundProducto.isEmpty()) {
@@ -216,11 +218,11 @@ public class ProductoServiceImpl implements ProductoService {
 
         var existingCategory = categoryRepository.findByNameIgnoreCase(productoDto.getCategory());
         if (existingCategory.isEmpty()) {
-            log.warning("SERVICE: Intento de actualizar un Funko con categoría inexistente");
+            log.warning("SERVICE: Intento de actualizar un Producto con categoría inexistente");
             throw new ProductoException.ValidationException(productoDto.getCategory());
         }
 
-        Producto productoModel = ProductoMapper.postPutDTOToModel(productoDto);
+        Producto productoModel = mapper.postPutDTOToModel(productoDto);
         productoModel.setId(id);
         productoModel.setFechaCreacion(foundProducto.get().getFechaCreacion());
         productoModel.setCategoria(existingCategory.get());
@@ -229,8 +231,8 @@ public class ProductoServiceImpl implements ProductoService {
 
         onChange(Tipo.UPDATE, updatedProductos);
 
-        log.info("SERVICE: Funko con id " + updatedProductos.getId() + " actualizado correctamente");
-        return ProductoMapper.modelToGenericResponseDTO(updatedProductos);
+        log.info("SERVICE: Producto con id " + updatedProductos.getId() + " actualizado correctamente");
+        return mapper.modelToGenericResponseDTO(updatedProductos);
     }
 
     /**
@@ -245,12 +247,12 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @CacheEvict(key = "#result.id")
     public GENERICProductosResponseDTO patch(Long id, PATCHProductoRequestDTO productoDTO) {
-        log.info("SERVICE: Haciendo PATCH al Funko con id: " + id);
+        log.info("SERVICE: Haciendo PATCH al Producto con id: " + id);
 
         Optional<Producto> foundProducto = repository.findById(id);
         if (foundProducto.isEmpty()) {
-            log.warning("SERVICE: No se encontró Funko con id: " + id);
-            throw new ProductoException.NotFoundException("SERVICE: No se encontró Funko con id: " + id);
+            log.warning("SERVICE: No se encontró Producto con id: " + id);
+            throw new ProductoException.NotFoundException("SERVICE: No se encontró Producto con id: " + id);
         }
 
         if (productoDTO.getName() != null) foundProducto.get().setNombre(productoDTO.getName());
@@ -269,7 +271,7 @@ public class ProductoServiceImpl implements ProductoService {
         onChange(Tipo.UPDATE, updatedProducto);
 
         log.info("SERVICE: Funko con id " + updatedProducto.getId() + " actualizado (PATCH) correctamente");
-        return ProductoMapper.modelToGenericResponseDTO(updatedProducto);
+        return mapper.modelToGenericResponseDTO(updatedProducto);
     }
 
     /**
@@ -282,19 +284,19 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     @CacheEvict(key = "#id")
     public DELETEProductoResponseDTO deleteById(Long id) {
-        log.info("SERVICE: Eliminando Funko con id: " + id);
+        log.info("SERVICE: Eliminando Producto con id: " + id);
 
         Optional<Producto> foundFunko = repository.findById(id);
         if (foundFunko.isEmpty()) {
-            log.warning("SERVICE: No se encontró Funko con id: " + id);
-            throw new ProductoException.NotFoundException("SERVICE: No se encontró Funko con id: " + id);
+            log.warning("SERVICE: No se encontró Producto con id: " + id);
+            throw new ProductoException.NotFoundException("SERVICE: No se encontró Producto con id: " + id);
         }
 
         repository.delete(foundFunko.get());
         onChange(Tipo.DELETE, foundFunko.get());
 
-        GENERICProductosResponseDTO deletedProductoDTO = ProductoMapper.modelToGenericResponseDTO(foundFunko.get());
-        return new DELETEProductoResponseDTO("Funko eliminado correctamente", deletedProductoDTO);
+        GENERICProductosResponseDTO deletedProductoDTO = mapper.modelToGenericResponseDTO(foundFunko.get());
+        return new DELETEProductoResponseDTO("Producto eliminado correctamente", deletedProductoDTO);
     }
 
     /**
@@ -330,7 +332,7 @@ public class ProductoServiceImpl implements ProductoService {
         var updatedFunko = repository.save(funkoToUpdate);
         onChange(Tipo.UPDATE, updatedFunko);
 
-        return ProductoMapper.modelToGenericResponseDTO(updatedFunko);
+        return mapper.modelToGenericResponseDTO(updatedFunko);
     }
 
     /**

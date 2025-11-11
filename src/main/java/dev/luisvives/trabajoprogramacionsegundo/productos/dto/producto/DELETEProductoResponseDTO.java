@@ -1,6 +1,7 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor // Necesario para que Jackson pueda deserializar desde JSON.
+@Builder
 public class DELETEProductoResponseDTO {
 
     /**

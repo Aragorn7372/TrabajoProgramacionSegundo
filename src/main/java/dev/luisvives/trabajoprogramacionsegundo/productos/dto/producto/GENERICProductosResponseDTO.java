@@ -1,6 +1,10 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  * DTO genérico utilizado para representar la respuesta de un producto.
  * <p>
@@ -19,6 +23,9 @@ import lombok.Data;
  * </ul>
  */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class GENERICProductosResponseDTO {
 
     /**

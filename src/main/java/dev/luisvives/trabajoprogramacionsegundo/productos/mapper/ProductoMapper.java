@@ -4,11 +4,14 @@ import dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto.POSTandPU
 import dev.luisvives.trabajoprogramacionsegundo.common.dto.PageResponseDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Component;
+
 import java.util.logging.Logger;
 
 /**
  * mapper de productos que se encarga de traducir dtos a entidades y entidades a dtos
  */
+@Component
 public class ProductoMapper {
     private static final Logger log = Logger.getLogger(ProductoMapper.class.getName());
 
@@ -17,7 +20,7 @@ public class ProductoMapper {
      * @param request {@link POSTandPUTProductoRequestDTO} a transformar
      * @return devuelve {@link Producto}
      */
-    public static Producto postPutDTOToModel(POSTandPUTProductoRequestDTO request) {
+    public  Producto postPutDTOToModel(POSTandPUTProductoRequestDTO request) {
         log.info("MAPPER: Pasando Funko de POST/PUT Request DTO a Modelo");
         var producto = new Producto();
 
@@ -27,6 +30,7 @@ public class ProductoMapper {
         //categoría con el nombre que nos llega en el PostandPUTRequestDTO efectivamente existe
         producto.setDescripcion(request.getDescription());
         producto.setImagen(request.getImage());
+        producto.setCantidad(request.getCantidad());
 
         return producto;
     }
@@ -36,7 +40,7 @@ public class ProductoMapper {
      * @param producto {@link Producto} a transformar
      * @return devuelve {@link GENERICProductosResponseDTO}
      */
-    public static GENERICProductosResponseDTO modelToGenericResponseDTO(Producto producto) {
+    public  GENERICProductosResponseDTO modelToGenericResponseDTO(Producto producto) {
         log.info("MAPPER: Pasando Funko de Modelo a Generic Response DTO");
 
         GENERICProductosResponseDTO productoDto = new GENERICProductosResponseDTO();
@@ -56,11 +60,11 @@ public class ProductoMapper {
      * @param direction direccion de ordenacion
      * @return devuelve el {@link PageResponseDTO} ya ordenado
      */
-    public static PageResponseDTO<GENERICProductosResponseDTO> pageToDTO (Page<Producto> page, String sortBy, String direction) {
+    public  PageResponseDTO<GENERICProductosResponseDTO> pageToDTO (Page<Producto> page, String sortBy, String direction) {
         return new PageResponseDTO<>(
                 page.getContent()
                         .stream()
-                        .map(ProductoMapper::modelToGenericResponseDTO)
+                        .map(model -> modelToGenericResponseDTO(model))
                         .toList(),
                 page.getTotalPages(),
                 page.getTotalElements(),
