@@ -26,6 +26,7 @@ import java.util.logging.Logger;
 @RequestMapping("/productos")
 @RestController
 public class ProductoRestController {
+    private final ProductoMapper mapper;
     /**
      * Logger para la clase {@link ProductoRestController}.
      */
@@ -42,8 +43,9 @@ public class ProductoRestController {
      * @param service El servicio {@link ProductoService} a inyectar.
      */
     @Autowired
-    public ProductoRestController(ProductoService service) {
+    public ProductoRestController(ProductoService service, ProductoMapper productoMapper) {
         this.service = service;
+        this.mapper = productoMapper;
     }
 
     /**
@@ -79,7 +81,7 @@ public class ProductoRestController {
         Sort sort = direction.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         // Creamos cómo va a ser la paginación
         Pageable pageable = PageRequest.of(page, size, sort);
-        return ResponseEntity.ok(ProductoMapper.pageToDTO(service.findAll(name, maxPrice, category, pageable), sortBy, direction));
+        return ResponseEntity.ok(mapper.pageToDTO(service.findAll(name, maxPrice, category, pageable), sortBy, direction));
     }
    /* @GetMapping({"", "/"})
     public ResponseEntity<List<GENERICResponseDTO>> getAll() {
