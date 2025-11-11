@@ -1,11 +1,8 @@
 package dev.luisvives.trabajoprogramacionsegundo.pedidos.mappers;
 
-import dev.luisvives.trabajoprogramacionsegundo.common.email.EmailService;
-import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.request.PostAndPutRequestDto;
+import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.request.PostAndPutPedidoRequestDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.GenericPedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
-import dev.luisvives.trabajoprogramacionsegundo.pedidos.repository.PedidosRepository;
-import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -21,7 +18,7 @@ public class PedidosMapper {
         return response;
     }
 
-    public Pedido toModel(PostAndPutRequestDto pedido) {
+    public Pedido toModel(PostAndPutPedidoRequestDto pedido) {
         Pedido model =  new Pedido();
         model.setCliente(pedido.getCliente());
         model.setLineasPedido(pedido.getLineaPedido());

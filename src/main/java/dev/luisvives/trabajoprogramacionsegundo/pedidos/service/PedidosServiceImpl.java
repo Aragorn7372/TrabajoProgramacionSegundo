@@ -8,7 +8,7 @@ import dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketH
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.mapper.NotificacionMapper;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Notificacion;
 import dev.luisvives.trabajoprogramacionsegundo.notificaciones.models.Tipo;
-import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.request.PostAndPutRequestDto;
+import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.request.PostAndPutPedidoRequestDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.DeletePedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.GenericPedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoException;
@@ -95,12 +95,12 @@ public class PedidosServiceImpl implements PedidosService {
      * Guarda un nuevo pedido en la base de datos y, si tiene éxito, envía un email
      * de confirmación de manera asíncrona.
      *
-     * @param pedido El DTO de solicitud {@link PostAndPutRequestDto} que contiene los datos del pedido a guardar.
+     * @param pedido El DTO de solicitud {@link PostAndPutPedidoRequestDto} que contiene los datos del pedido a guardar.
      * @return Un {@link GenericPedidosResponseDto} con los datos del pedido guardado.
      */
     @Override
     @Transactional
-    public GenericPedidosResponseDto save(PostAndPutRequestDto pedido) {
+    public GenericPedidosResponseDto save(PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Guardando Pedido");
         validarPedio(pedido);
         val savedPedido = pedidosRepository.save(pedidosMapper.toModel(pedido));
@@ -115,13 +115,13 @@ public class PedidosServiceImpl implements PedidosService {
      * Actualiza un pedido existente identificado por su ID.
      *
      * @param id El {@link ObjectId} del pedido a actualizar.
-     * @param pedido El DTO de solicitud {@link PostAndPutRequestDto} con los nuevos datos.
+     * @param pedido El DTO de solicitud {@link PostAndPutPedidoRequestDto} con los nuevos datos.
      * @return Un {@link GenericPedidosResponseDto} con los datos del pedido actualizado.
      * @throws PedidoException.NotFoundException Si el pedido con el ID dado no es encontrado.
      */
     @Override
     @Transactional
-    public GenericPedidosResponseDto update(ObjectId id, PostAndPutRequestDto pedido) {
+    public GenericPedidosResponseDto update(ObjectId id, PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Actualizando pedido con id: " + id);
         validarPedio(pedido);
         val pedidoToUpdate = pedidosRepository.findById(id).orElseThrow(() -> new PedidoException.NotFoundException("Pedido no encontrado con id: " + id));
@@ -192,10 +192,10 @@ public class PedidosServiceImpl implements PedidosService {
     /**
      * Valida que todos los productos referenciados en las líneas de pedido existan.
      *
-     * @param pedido El DTO de solicitud {@link PostAndPutRequestDto} del pedido a validar.
+     * @param pedido El DTO de solicitud {@link PostAndPutPedidoRequestDto} del pedido a validar.
      * @throws PedidoException.NotFoundException Si alguno de los productos referenciados no es encontrado.
      */
-    private void validarPedio(PostAndPutRequestDto pedido) {
+    private void validarPedio(PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Validando Pedido");
         pedido.getLineaPedido().forEach(lineaPedido -> {
             var producto = productsRepository.findById(
