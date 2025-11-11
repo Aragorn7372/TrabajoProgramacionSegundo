@@ -1,9 +1,10 @@
 package dev.luisvives.trabajoprogramacionsegundo;
 
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -33,6 +34,14 @@ public abstract class BaseDatosTest {
                     .withDatabaseName("testdb")
                     .withUsername("testuser")
                     .withPassword("testpass");
+    @Container
+    static MongoDBContainer mongoDb = new MongoDBContainer("mongo:5.0")
+            .withReuse(true);
+
+    @Container
+    static GenericContainer<?> redis = new GenericContainer<>("redis:7-alpine")
+            .withExposedPorts(6379)
+            .withReuse(true);
 
     /**
      * Método estático para asegurar que el contenedor se inicia
@@ -58,5 +67,12 @@ public abstract class BaseDatosTest {
         registry.add("spring.datasource.username", postgresContainer::getUsername);
         registry.add("spring.datasource.password", postgresContainer::getPassword);
         registry.add("spring.datasource.driver-class-name", () -> "org.postgresql.Driver");
+        // MongoDB para Pedidos
+        registry.add("spring.data.mongodb.uri", mongoDb::getReplicaSetUrl);
+        registry.add("spring.data.mongodb.database", () -> "tienda_test");
+
+        // Redis para cache
+        registry.add("spring.redis.host", redis::getHost);
+        registry.add("spring.redis.port", redis::getFirstMappedPort);
     }
 }

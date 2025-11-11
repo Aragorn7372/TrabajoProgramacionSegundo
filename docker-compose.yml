@@ -60,7 +60,7 @@ services:
     volumes:
       - ./storage-dir:/app/storage-dir
     restart: always
-
+    env_file: .env
     depends_on:
       - mongo
       - redis

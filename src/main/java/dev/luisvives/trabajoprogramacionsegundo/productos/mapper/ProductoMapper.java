@@ -30,6 +30,7 @@ public class ProductoMapper {
         //categoría con el nombre que nos llega en el PostandPUTRequestDTO efectivamente existe
         producto.setDescripcion(request.getDescription());
         producto.setImagen(request.getImage());
+        producto.setCantidad(request.getCantidad());
 
         return producto;
     }

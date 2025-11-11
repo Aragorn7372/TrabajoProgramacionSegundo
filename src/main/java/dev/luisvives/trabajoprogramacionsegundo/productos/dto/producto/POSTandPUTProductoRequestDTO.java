@@ -86,4 +86,7 @@ public class POSTandPUTProductoRequestDTO {
      * Inicialmente vacío y se asigna tras guardar la imagen.
      */
     private String image;
+
+    @Min(value = 0, message = "La cantidad no puede ser inferior a 0")
+    private Integer cantidad;
 }
