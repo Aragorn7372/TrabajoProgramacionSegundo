@@ -1,22 +1,50 @@
--- Hacemos limpieza para que el script sea re-ejecutable (idempotente)
--- Borramos productos PRIMERO por la foreign key que apunta a categoria
-DELETE FROM productos;
+-- ---------------------------------
+-- 1. LIMPIEZA INICIAL (Idempotencia)
+-- ---------------------------------
+-- Borramos productos PRIMERO por la foreign key
+DROP TABLE IF EXISTS productos;
 -- Borramos categorías DESPUÉS
-DELETE FROM categoria;
+DROP TABLE IF EXISTS categoria;
 
 -- ---------------------------------
--- INSERCIÓN DE CATEGORÍAS
--- (Usando UUIDs fijos para poder referenciarlos)
+-- 2. CREACIÓN DE TABLAS
 -- ---------------------------------
+-- Creación de la tabla 'categoria'
+CREATE TABLE categoria (
+id UUID PRIMARY KEY,
+name VARCHAR(255) NOT NULL UNIQUE,
+fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
+fecha_modificacion TIMESTAMP NOT NULL DEFAULT NOW()
+);
+
+-- Creación de la tabla 'productos'
+CREATE TABLE productos (
+id BIGSERIAL PRIMARY KEY, -- BIGSERIAL es el equivalente a Long + @GeneratedValue(IDENTITY) en Postgres
+nombre VARCHAR(255) NOT NULL,
+precio DOUBLE PRECISION NOT NULL,
+cantidad INTEGER NOT NULL,
+imagen VARCHAR(255) NOT NULL DEFAULT 'default.png',
+descripcion TEXT, -- Usamos TEXT para descripciones más largas
+categoria_id UUID, -- Este es el tipo de la Foreign Key (debe coincidir con categoria.id)
+fecha_creacion TIMESTAMP NOT NULL DEFAULT NOW(),
+fecha_modificacion TIMESTAMP NOT NULL DEFAULT NOW(),
+
+    -- Definimos la Foreign Key
+    CONSTRAINT fk_categoria
+        FOREIGN KEY(categoria_id)
+            REFERENCES categoria(id)
+);
+
+-- ---------------------------------
+-- 3. INSERCIÓN DE DATOS (Tus datos)
+-- ---------------------------------
+-- INSERCIÓN DE CATEGORÍAS
 INSERT INTO categoria (id, name, fecha_creacion, fecha_modificacion) VALUES
 ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Muebles', NOW(), NOW()),
 ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', 'Videojuegos', NOW(), NOW()),
 ('a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', 'Libros', NOW(), NOW());
 
--- ---------------------------------
 -- INSERCIÓN DE PRODUCTOS (MUEBLES)
--- categoria_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'
--- ---------------------------------
 INSERT INTO productos (nombre, precio, cantidad, imagen, descripcion, categoria_id, fecha_creacion, fecha_modificacion) VALUES
 ('Silla de Oficina Ergonómica', 149.99, 25, 'silla_oficina.png', 'Silla cómoda con soporte lumbar ajustable.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', NOW(), NOW()),
 ('Mesa de Escritorio de Roble', 219.50, 10, 'mesa_roble.png', 'Escritorio espacioso de madera maciza de roble.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', NOW(), NOW()),
@@ -29,10 +57,7 @@ INSERT INTO productos (nombre, precio, cantidad, imagen, descripcion, categoria_
 ('Zapatero Alto', 65.00, 18, 'zapatero.png', 'Mueble zapatero estrecho para entrada.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', NOW(), NOW()),
 ('Sillón Relax Manual', 250.00, 7, 'sillon_relax.png', 'Sillón reclinable con reposapiés.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', NOW(), NOW());
 
--- ---------------------------------
 -- INSERCIÓN DE PRODUCTOS (VIDEOJUEGOS)
--- categoria_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12'
--- ---------------------------------
 INSERT INTO productos (nombre, precio, cantidad, imagen, descripcion, categoria_id, fecha_creacion, fecha_modificacion) VALUES
 ('Elden Ring (PS5)', 59.99, 150, 'elden_ring.png', 'Juego de rol de acción de FromSoftware.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', NOW(), NOW()),
 ('The Legend of Zelda: Tears of the Kingdom', 69.99, 200, 'zelda_totk.png', 'Aventura épica en Hyrule (Nintendo Switch).', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', NOW(), NOW()),
@@ -45,10 +70,7 @@ INSERT INTO productos (nombre, precio, cantidad, imagen, descripcion, categoria_
 ('FIFA 24 (EA Sports FC 24)', 69.90, 180, 'fc24.png', 'Simulador de fútbol.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', NOW(), NOW()),
 ('Red Dead Redemption 2', 45.50, 95, 'rdr2.png', 'Aventura de vaqueros en el salvaje oeste.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12', NOW(), NOW());
 
--- ---------------------------------
 -- INSERCIÓN DE PRODUCTOS (LIBROS)
--- categoria_id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13'
--- ---------------------------------
 INSERT INTO productos (nombre, precio, cantidad, imagen, descripcion, categoria_id, fecha_creacion, fecha_modificacion) VALUES
 ('Cien Años de Soledad', 19.95, 80, 'cien_anos.png', 'Novela de Gabriel García Márquez. Tapa dura.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', NOW(), NOW()),
 ('Dune (Saga Completa)', 120.00, 30, 'dune_saga.png', 'Box set con la saga de Frank Herbert.', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13', NOW(), NOW()),
