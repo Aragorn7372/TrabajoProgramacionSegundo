@@ -2,7 +2,10 @@ package dev.luisvives.trabajoprogramacionsegundo.productos.dto.producto;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO utilizado para actualizar parcialmente un producto.
@@ -45,6 +48,9 @@ import lombok.Data;
  * </p>
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class PATCHProductoRequestDTO {
 
     /**
