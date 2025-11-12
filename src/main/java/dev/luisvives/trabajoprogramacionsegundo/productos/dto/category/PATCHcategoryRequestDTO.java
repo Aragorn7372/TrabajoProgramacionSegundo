@@ -1,7 +1,10 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.dto.category;
 
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO utilizado para actualizar parcialmente una categoría.
@@ -12,7 +15,7 @@ import lombok.Data;
  *
  * <b>Campos:</b>
  * <ul>
- *   <li><b>name</b> (<code>String</code>): Nombre de la categoría.
+ *   <li><b>Name</b> (<code>String</code>): Nombre de la categoría.
  *       <ul>
  *         <li>Opcional: puede estar vacío.</li>
  *         <li>Si se envía, no puede ser vacío ni contener solo espacios en blanco.</li>
@@ -21,6 +24,9 @@ import lombok.Data;
  *   </li>
  * </ul>
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 public class PATCHcategoryRequestDTO {
 
