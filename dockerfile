@@ -9,7 +9,7 @@ COPY build.gradle.kts .
 COPY gradlew .
 COPY gradle gradle
 COPY src src
-
+COPY custom custom
 # Configura la variable de entorno DOCKER_HOST, esto es para que el contenedor pueda comunicarse con el host
 # En Windows se usa host.docker.internal, en Linux y macOS se puede usar localhost
 ARG DOCKER_HOST_ARG=tcp://host.docker.internal:2375
