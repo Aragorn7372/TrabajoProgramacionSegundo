@@ -2,6 +2,7 @@ package dev.luisvives.trabajoprogramacionsegundo.productos.service;
 
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.category.DELETEcategoryResponseDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.category.GENERICcategoryResponseDTO;
+import dev.luisvives.trabajoprogramacionsegundo.productos.dto.category.PATCHcategoryRequestDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.dto.category.POSTandPUTcategoryRequestDTO;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryNotFoundException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryValidationException;
@@ -50,6 +51,9 @@ class CategoriesServiceImplTest {
             .id(categoria.getId()).name(categoria.getName()).build();
 
     private final POSTandPUTcategoryRequestDTO categoriaRequestDtoPOSTandPUT = POSTandPUTcategoryRequestDTO.builder()
+            .name(categoria.getName()).build();
+
+    private final PATCHcategoryRequestDTO categoriaRequestDtoPATCH = PATCHcategoryRequestDTO.builder()
             .name(categoria.getName()).build();
 
     private final Producto producto = Producto.builder()
@@ -119,11 +123,12 @@ class CategoriesServiceImplTest {
         @Test
         void patch() {
             when(repository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
-            when(repository.findByNameIgnoreCase(categoria.getName())).thenReturn(Optional.of(categoria));
+            when(repository.findByNameIgnoreCase(categoria.getName())).thenReturn(Optional.empty());
             when(repository.save(any(Categoria.class))).thenReturn(categoria);
             when(categoriaMapper.modelToGenericResponseDTO(any(Categoria.class))).thenReturn(categoriaResponseDto);
-            when(categoriaMapper.postPutDTOToModel(categoriaRequestDtoPOSTandPUT)).thenReturn(categoria);
-            val result = categoriaServiceImpl.update(categoria.getId(), categoriaRequestDtoPOSTandPUT);
+
+            val result = categoriaServiceImpl.patch(categoria.getId(), categoriaRequestDtoPATCH);
+
             assertNotNull(result);
             assertEquals(categoriaResponseDto, result);
             verify(repository, times(1)).findById(categoria.getId());
@@ -227,10 +232,12 @@ class CategoriesServiceImplTest {
         }
 
         @Test
-        @DisplayName("update bad other categoria have that name")
+        @DisplayName("update lanza excepción si otra categoría tiene el mismo nombre (misma comparación de IDs)")
         void updateBadOtherCategoriaHasThatName() {
+            UUID otroId = UUID.randomUUID(); // id distinto al de la categoría original
+
             Categoria categoria2 = Categoria.builder()
-                    .id(UUID.randomUUID())
+                    .id(otroId)
                     .name(categoria.getName())
                     .fechaCreacion(categoria.getFechaCreacion())
                     .fechaModificacion(categoria.getFechaModificacion())
@@ -252,6 +259,54 @@ class CategoriesServiceImplTest {
             verify(repository, times(1)).findByNameIgnoreCase(categoria.getName());
             verify(repository, times(0)).save(categoria);
             verify(categoriaMapper, times(0)).modelToGenericResponseDTO(categoria);
+        }
+
+        @Test
+        @DisplayName("save bad categoria already exists")
+        void saveBadCategoriaAlreadyExists() {
+            when(repository.findByNameIgnoreCase(categoria.getName())).thenReturn(Optional.of(categoria));
+
+            val result = assertThrows(CategoryValidationException.class,
+                    () -> categoriaServiceImpl.save(categoriaRequestDtoPOSTandPUT));
+
+            assertEquals(categoria.getName(), result.getMessage(), "deberían ser iguales");
+
+            verify(repository, times(0)).save(any(Categoria.class));
+            verify(categoriaMapper, times(0)).modelToGenericResponseDTO(any(Categoria.class));
+        }
+
+        @Test
+        @DisplayName("patch lanza excepción si no existe la categoría")
+        void patchNotFound() {
+            when(repository.findById(categoria.getId())).thenReturn(Optional.empty());
+
+            val result = assertThrows(CategoryNotFoundException.class,
+                    () -> categoriaServiceImpl.patch(categoria.getId(), categoriaRequestDtoPATCH));
+
+            assertEquals(
+                    "Categoría con id " + categoria.getId() + " no encontrada",
+                    result.getMessage(),
+                    "deberían ser iguales"
+            );
+
+            verify(repository, times(1)).findById(categoria.getId());
+            verify(repository, times(0)).save(any(Categoria.class));
+        }
+
+        @Test
+        @DisplayName("patch lanza excepción si el nuevo nombre ya existe")
+        void patchBadNombreDuplicado() {
+            when(repository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
+            when(repository.findByNameIgnoreCase(categoriaRequestDtoPATCH.getName())).thenReturn(Optional.of(categoria));
+
+            val result = assertThrows(CategoryValidationException.class,
+                    () -> categoriaServiceImpl.patch(categoria.getId(), categoriaRequestDtoPATCH));
+
+            assertEquals(categoriaRequestDtoPATCH.getName(), result.getMessage(), "deberían ser iguales");
+
+            verify(repository, times(1)).findById(categoria.getId());
+            verify(repository, times(1)).findByNameIgnoreCase(categoriaRequestDtoPATCH.getName());
+            verify(repository, times(0)).save(any(Categoria.class));
         }
     }
 }
