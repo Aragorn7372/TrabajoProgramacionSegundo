@@ -3,6 +3,8 @@ package dev.luisvives.trabajoprogramacionsegundo.common.handler;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -105,6 +107,34 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ProductoException.ValidationException.class)
     public Map<String, String> handleBadPriceExceptions(ProductoException.ValidationException ex) {
         log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo ValidationException en 400 BAD Request");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo DataIntegrityViolation lanzadas por los servicios.
+     * Convierte NotFoundException en un 409 Conflict.
+     *
+     * @param ex Excepción personalizada que indica que se viola una integridad referencial.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public Map<String, String> handleDataIntegrityViolationExceptions(DataIntegrityViolationException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo DataIntegrityViolationdException en 409 Conflict");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo DataIntegrityViolation lanzadas por los servicios.
+     * Convierte NotFoundException en un 409 Conflict.
+     *
+     * @param ex Excepción personalizada que indica que se viola una integridad referencial.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Map<String, String> handleConstraintViolationExceptions(ConstraintViolationException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo DataIntegrityViolationdException en 409 Conflict");
         return Map.of("error", ex.getMessage());
     }
 }
