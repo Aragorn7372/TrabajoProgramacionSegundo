@@ -16,7 +16,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(webSocketProductosHandler(), "/ws" + "/productos");
-        registry.addHandler(webSocketProductosHandler(), "/ws" + "/pedidos");
+        registry.addHandler(webSocketPedidosHandler(), "/ws" + "/pedidos");
     }
 
     // Cada uno de los handlers como bean
