@@ -1,7 +1,10 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.dto.category;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * DTO utilizado para crear o actualizar una categoría mediante POST o PUT.
@@ -20,6 +23,9 @@ import lombok.Data;
  *   </li>
  * </ul>
  */
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Data
 public class POSTandPUTcategoryRequestDTO {
 
