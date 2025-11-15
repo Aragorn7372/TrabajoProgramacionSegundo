@@ -73,7 +73,7 @@ public class PedidosServiceImpl implements PedidosService {
      * @return Una {@link Page} de {@link GenericPedidosResponseDto} que contiene los pedidos.
      */
     @Override
-    public Page<GenericPedidosResponseDto> findAllByOrderByIdAsc(Pageable pageable) {
+    public Page<GenericPedidosResponseDto> findAll(Pageable pageable) {
         log.info("SERVICE: Buscando todos los pedidos");
         return pedidosRepository.findAll(pageable).map(pedidosMapper::toResponse);
     }

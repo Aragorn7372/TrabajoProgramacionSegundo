@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class PostAndPutPedidoRequestDto {
     @NotNull
+    private Long idUsuario;
+    @NotNull
     private Cliente cliente;
     @NotNull
     @NotEmpty
