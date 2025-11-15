@@ -14,7 +14,7 @@ public class CategoryNotFoundException extends CategoryException {
      * Subclase de excepciones de dominio que define la no existencia de una categoria por un, id
      * @param id
      */
-    public CategoryNotFoundException(UUID id) {
+    public CategoryNotFoundException(Long id) {
         super("Categoría con id " + id + " no encontrada");
     }
 

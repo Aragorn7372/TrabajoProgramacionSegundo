@@ -1,25 +1,20 @@
 package dev.luisvives.trabajoprogramacionsegundo.productos.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * Clase que representa una categoría de un producto en concreto.
  * <p>
  * <b>Campos:</b><br>
- * - <b>id</b> (<code>UUID</code>): Identificador único de la categoría.<br>
+ * - <b>id</b> (<code>Long</code>): Identificador único de la categoría.<br>
  * - <b>name</b> (<code>String</code>): Nombre único de la categoría.<br>
  * - <b>fechaCreacion</b> (<code>LocalDateTime</code>): Fecha y hora de creación de la categoría.<br>
  * - <b>fechaModificacion</b> (<code>LocalDateTime</code>): Fecha y hora de la última modificación de la categoría.<br>
@@ -28,45 +23,24 @@ import java.util.UUID;
  * @see Producto
  */
 
-@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "categoria")
+@EntityListeners(AuditingEntityListener.class)
 public class Categoria {
-
-    /**
-     * Identificador único de la categoría.
-     * Se genera automáticamente como un UUID al crear la instancia.
-     */
     @Id
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    /**
-     * Nombre único de la categoría.
-     * No puede estar en blanco ni repetirse.
-     */
-    @Column(unique = true, nullable = false)
-    @NotBlank
+    @Column(nullable=false)
     private String name;
 
-    /**
-     * Fecha y hora en que se creó la categoría.
-     * Se asigna automáticamente al momento de creación.
-     */
-    @Column(nullable = false)
     @CreatedDate
-    @Builder.Default
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
+    //Para que cuando se cree una Categoría, directamente, JPA se encarga de darle un valor
+    private LocalDateTime fechaCreacion;
 
-    /**
-     * Fecha y hora de la última modificación de la categoría.
-     * Se actualiza automáticamente cuando se modifica el registro.
-     */
-    @Column(nullable = false)
     @LastModifiedDate
-    @Builder.Default
-    private LocalDateTime fechaModificacion = LocalDateTime.now();
+    //Para que cuando se actualice una Categoría, directamente, JPA se encargue de darle un valor
+    private LocalDateTime fechaModificacion;
 }

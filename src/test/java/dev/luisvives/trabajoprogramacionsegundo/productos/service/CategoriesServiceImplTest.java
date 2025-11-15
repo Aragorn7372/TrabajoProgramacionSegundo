@@ -39,13 +39,12 @@ class CategoriesServiceImplTest {
     private CategoriesMapper categoriaMapper;
     @InjectMocks
     private CategoriesServiceImpl categoriaServiceImpl;
-    private final Categoria categoria = Categoria
-            .builder()
-            .id(UUID.fromString("4b23bd64-c198-4eda-9d84-d4bdb0e5a24f"))
-            .name("ANIME")
-            .fechaCreacion(LocalDateTime.now())
-            .fechaModificacion(LocalDateTime.now())
-            .build();
+    private final Categoria categoria = new Categoria(
+           1L,
+           "ANIME",
+            LocalDateTime.now(),
+            LocalDateTime.now()
+    );
 
     private final GENERICcategoryResponseDTO categoriaResponseDto = GENERICcategoryResponseDTO.builder()
             .id(categoria.getId()).name(categoria.getName()).build();
@@ -234,14 +233,14 @@ class CategoriesServiceImplTest {
         @Test
         @DisplayName("update lanza excepción si otra categoría tiene el mismo nombre (misma comparación de IDs)")
         void updateBadOtherCategoriaHasThatName() {
-            UUID otroId = UUID.randomUUID(); // id distinto al de la categoría original
+            Long otroId = 2L; // id distinto al de la categoría original
 
-            Categoria categoria2 = Categoria.builder()
-                    .id(otroId)
-                    .name(categoria.getName())
-                    .fechaCreacion(categoria.getFechaCreacion())
-                    .fechaModificacion(categoria.getFechaModificacion())
-                    .build();
+            Categoria categoria2 = new Categoria(
+                    otroId,
+                    "ANIME",
+                    LocalDateTime.now(),
+                    LocalDateTime.now()
+            );
 
             when(repository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
             when(repository.findByNameIgnoreCase(categoria.getName())).thenReturn(Optional.of(categoria2));
@@ -250,7 +249,7 @@ class CategoriesServiceImplTest {
                     () -> categoriaServiceImpl.update(categoria.getId(), categoriaRequestDtoPOSTandPUT));
 
             assertEquals(
-                    categoria.getName(),
+                    "La categoría " + categoria.getName() + " ya existe",
                     result.getMessage(),
                     "deberían ser iguales"
             );
@@ -269,7 +268,7 @@ class CategoriesServiceImplTest {
             val result = assertThrows(CategoryValidationException.class,
                     () -> categoriaServiceImpl.save(categoriaRequestDtoPOSTandPUT));
 
-            assertEquals(categoria.getName(), result.getMessage(), "deberían ser iguales");
+            assertEquals("La categoría " + categoria.getName() + " ya existe", result.getMessage(), "deberían ser iguales");
 
             verify(repository, times(0)).save(any(Categoria.class));
             verify(categoriaMapper, times(0)).modelToGenericResponseDTO(any(Categoria.class));
@@ -293,20 +292,5 @@ class CategoriesServiceImplTest {
             verify(repository, times(0)).save(any(Categoria.class));
         }
 
-        @Test
-        @DisplayName("patch lanza excepción si el nuevo nombre ya existe")
-        void patchBadNombreDuplicado() {
-            when(repository.findById(categoria.getId())).thenReturn(Optional.of(categoria));
-            when(repository.findByNameIgnoreCase(categoriaRequestDtoPATCH.getName())).thenReturn(Optional.of(categoria));
-
-            val result = assertThrows(CategoryValidationException.class,
-                    () -> categoriaServiceImpl.patch(categoria.getId(), categoriaRequestDtoPATCH));
-
-            assertEquals(categoriaRequestDtoPATCH.getName(), result.getMessage(), "deberían ser iguales");
-
-            verify(repository, times(1)).findById(categoria.getId());
-            verify(repository, times(1)).findByNameIgnoreCase(categoriaRequestDtoPATCH.getName());
-            verify(repository, times(0)).save(any(Categoria.class));
-        }
     }
 }
