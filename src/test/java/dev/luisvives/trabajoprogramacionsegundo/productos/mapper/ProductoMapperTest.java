@@ -9,11 +9,9 @@ import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,6 +38,7 @@ class ProductoMapperTest {
             .name(producto.getNombre())
             .price(producto.getPrecio())
             .image(producto.getImagen())
+            .cantidad(producto.getCantidad())
             .category(producto.getCategoria().getName())
             .descripcion(producto.getDescripcion())
             .build();
@@ -48,7 +47,7 @@ class ProductoMapperTest {
             .price(producto.getPrecio())
             .image(producto.getImagen())
             .category(producto.getCategoria().getName())
-            .description(producto.getDescripcion())
+            .descripcion(producto.getDescripcion())
             .cantidad(producto.getCantidad())
             .build();
     private final PATCHProductoRequestDTO productoPatchRequestDto = PATCHProductoRequestDTO.builder()
@@ -56,6 +55,7 @@ class ProductoMapperTest {
             .price(producto.getPrecio())
             .image(producto.getImagen())
             .category(producto.getCategoria().getName())
+            .cantidad(producto.getCantidad())
             .description(producto.getDescripcion())
             .build();
     private final DELETEProductoResponseDTO productoDelete = DELETEProductoResponseDTO.builder()
