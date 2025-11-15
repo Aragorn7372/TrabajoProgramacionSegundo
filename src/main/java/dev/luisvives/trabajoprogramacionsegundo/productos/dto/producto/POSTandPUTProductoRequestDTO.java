@@ -77,9 +77,9 @@ public class POSTandPUTProductoRequestDTO {
 
     /**
      * Descripción del producto.
-     * No puede estar vacía y puede requerir parseo a otro tipo en el futuro.
+     * Puede estar vacía y puede requerir parseo a otro tipo en el futuro.
      */
-    private String description;
+    private String descripcion;
 
     /**
      * Nombre o ruta de la imagen asociada al producto.

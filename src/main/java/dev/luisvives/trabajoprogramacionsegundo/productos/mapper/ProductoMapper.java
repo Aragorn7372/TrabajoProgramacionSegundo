@@ -21,14 +21,14 @@ public class ProductoMapper {
      * @return devuelve {@link Producto}
      */
     public  Producto postPutDTOToModel(POSTandPUTProductoRequestDTO request) {
-        log.info("MAPPER: Pasando Funko de POST/PUT Request DTO a Modelo");
+        log.info("MAPPER: Pasando Producto de POST/PUT Request DTO a Modelo");
         var producto = new Producto();
 
         producto.setNombre(request.getName());
         producto.setPrecio(request.getPrice());
         //Respecto a la categoría, se le asigna en el servicio tras combrobar que la
         //categoría con el nombre que nos llega en el PostandPUTRequestDTO efectivamente existe
-        producto.setDescripcion(request.getDescription());
+        producto.setDescripcion(request.getDescripcion());
         producto.setImagen(request.getImage());
         producto.setCantidad(request.getCantidad());
 
@@ -41,7 +41,7 @@ public class ProductoMapper {
      * @return devuelve {@link GENERICProductosResponseDTO}
      */
     public  GENERICProductosResponseDTO modelToGenericResponseDTO(Producto producto) {
-        log.info("MAPPER: Pasando Funko de Modelo a Generic Response DTO");
+        log.info("MAPPER: Pasando Producto de Modelo a Generic Response DTO");
 
         GENERICProductosResponseDTO productoDto = new GENERICProductosResponseDTO();
         productoDto.setId(producto.getId());
@@ -50,6 +50,7 @@ public class ProductoMapper {
         productoDto.setCategory(producto.getCategoria().getName());
         productoDto.setDescripcion(producto.getDescripcion());
         productoDto.setImage(producto.getImagen());
+        productoDto.setCantidad(producto.getCantidad());
         return productoDto;
     }
 

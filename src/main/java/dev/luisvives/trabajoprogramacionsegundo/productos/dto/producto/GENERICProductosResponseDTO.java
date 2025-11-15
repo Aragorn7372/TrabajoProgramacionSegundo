@@ -44,6 +44,11 @@ public class GENERICProductosResponseDTO {
     private Double price;
 
     /**
+     * Cantidad de producto en stock
+     */
+    private Integer cantidad;
+
+    /**
      * Nombre de la categoría asociada.
      */
     private String category;

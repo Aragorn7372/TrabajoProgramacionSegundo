@@ -30,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -83,7 +82,7 @@ class ProductoServiceImplTest {
             .price(producto.getPrecio())
             .image(producto.getImagen())
             .category(producto.getCategoria().getName())
-            .description(producto.getDescripcion())
+            .descripcion(producto.getDescripcion())
             .build();
     private final PATCHProductoRequestDTO productoPatchRequestDto = PATCHProductoRequestDTO.builder()
             .name(producto.getNombre())
@@ -307,7 +306,7 @@ class ProductoServiceImplTest {
             when(repository.findById(1L)).thenReturn(Optional.of(producto));
             when(categoriaRepository.findByNameIgnoreCase(producto.getCategoria().getName())).thenReturn(Optional.empty());
             val result = assertThrows(ProductoException.ValidationException.class, () -> service.patch(1L,productoPatchRequestDto));
-            assertEquals("ANIME", result.getMessage(), "deberian ser iguales");
+            assertEquals("La categoría ANIME no existe.", result.getMessage(), "deberian ser iguales");
             verify(categoriaRepository, times(1)).findByNameIgnoreCase(producto.getCategoria().getName());
             verify(mapper, times(0)).modelToGenericResponseDTO(producto);
             verify(repository, times(0)).save(producto);
@@ -331,7 +330,7 @@ class ProductoServiceImplTest {
             when(categoriaRepository.findByNameIgnoreCase(producto.getCategoria().getName())).thenReturn(Optional.empty());
             val result=assertThrows(ProductoException.ValidationException.class, ()-> service.update(1L,productoRequestDto));
             assertAll(
-                    ()-> assertEquals(result.getMessage(),"ANIME","deberian ser iguales")
+                    ()-> assertEquals(result.getMessage(),"La categoría ANIME no existe.","deberian ser iguales")
             );
             verify(repository,times(1)).findById(1L);
             verify(categoriaRepository, times(1)).findByNameIgnoreCase(producto.getCategoria().getName());
@@ -345,7 +344,7 @@ class ProductoServiceImplTest {
             when(categoriaRepository.findByNameIgnoreCase(producto.getCategoria().getName())).thenReturn(Optional.empty());
             val result=assertThrows(ProductoException.ValidationException.class, ()-> service.save(productoRequestDto));
             assertAll(
-                    ()-> assertEquals(result.getMessage(),"ANIME","deberian ser iguales")
+                    ()-> assertEquals(result.getMessage(),"La categoría ANIME no existe.","deberian ser iguales")
             );
 
             verify(categoriaRepository, times(1)).findByNameIgnoreCase(producto.getCategoria().getName());

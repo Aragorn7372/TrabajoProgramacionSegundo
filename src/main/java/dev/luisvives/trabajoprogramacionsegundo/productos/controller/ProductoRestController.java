@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  * Controlador REST para gestionar las operaciones CRUD de la entidad Producto.
  * Expone los endpoints de la API bajo la ruta base "/productos".
  */
-@RequestMapping("/productos")
+@RequestMapping({"/productos", "/productos/"})
 @RestController
 public class ProductoRestController {
     private final ProductoMapper mapper;
