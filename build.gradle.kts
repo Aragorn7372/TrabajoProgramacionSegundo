@@ -41,7 +41,9 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:mongodb")
-
+    testImplementation("org.springframework.security:spring-security-test")
+    // JWT - using Auth0 JWT
+    implementation("com.auth0:java-jwt:4.4.0")
     //bbdd
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     runtimeOnly("org.postgresql:postgresql")
@@ -55,6 +57,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
 
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
     implementation(platform("org.jetbrains.dokka:org.jetbrains.dokka.gradle.plugin:2.1.0"))
 
 }
