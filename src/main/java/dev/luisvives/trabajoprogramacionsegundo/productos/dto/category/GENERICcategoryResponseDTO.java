@@ -12,6 +12,6 @@ import java.util.UUID;
 @Builder
 @Data
 public class GENERICcategoryResponseDTO {
-    private UUID id;
+    private Long id;
     private String name;
 }

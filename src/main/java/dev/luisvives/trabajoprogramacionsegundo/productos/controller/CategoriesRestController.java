@@ -34,7 +34,7 @@ public class CategoriesRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GENERICcategoryResponseDTO> getById(@PathVariable UUID id) {
+    public ResponseEntity<GENERICcategoryResponseDTO> getById(@PathVariable Long id) {
         log.info("CONTROLLER: Buscando Categoría con id: " + id);
 
         //La buscamos en el repositorio
@@ -57,7 +57,7 @@ public class CategoriesRestController {
     @PutMapping("/{id}")
     public ResponseEntity<GENERICcategoryResponseDTO> update(
             @Valid @RequestBody POSTandPUTcategoryRequestDTO categoryDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
-            @PathVariable UUID id) {
+            @PathVariable Long id) {
         log.info("CONTROLLER: Actualizando Categoría con id: " + id);
 
         //Actualizamos la Categoría en el repositorio
@@ -70,7 +70,7 @@ public class CategoriesRestController {
     @PatchMapping("/{id}")
     public ResponseEntity<GENERICcategoryResponseDTO> patch(
             @Valid @RequestBody PATCHcategoryRequestDTO categoryDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
-            @PathVariable UUID id) {
+            @PathVariable Long id) {
         log.info("CONTROLLER: Haciendo Patch a la Categoría con id: " + id);
 
         //Patcheamos la Categoría en el repositorio
@@ -81,7 +81,7 @@ public class CategoriesRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<DELETEcategoryResponseDTO> deleteById(@PathVariable UUID id) {
+    public ResponseEntity<DELETEcategoryResponseDTO> deleteById(@PathVariable Long id) {
         log.info("CONTROLLER: Eliminando Categoría con id: " + id);
 
         //Borramos la Categoría en el repositorio

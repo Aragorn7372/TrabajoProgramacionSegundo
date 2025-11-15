@@ -3,10 +3,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 /**
  * DTO utilizado para representar la respuesta de una operación de eliminación de categoría.
  * <p>

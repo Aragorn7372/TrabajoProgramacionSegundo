@@ -73,7 +73,7 @@ public class CategoriesServiceImpl implements CategoriesService {
      */
     @Override
     @Cacheable(key = "#id")
-    public GENERICcategoryResponseDTO getById(UUID id) {
+    public GENERICcategoryResponseDTO getById(Long id) {
         log.info("SERVICE: Buscando Categoría con id: " + id);
 
         Categoria foundCategory = repository.findById(id)
@@ -100,7 +100,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 
         if (sameNameCategory.isPresent()) {
             log.warning("SERVICE: Se intentó crear (POST) una categoría que ya existía");
-            throw new CategoryValidationException(categoryDTO.getName());
+            throw new CategoryValidationException("La categoría " + categoryDTO.getName() + " ya existe");
         }
 
         categoryDTO.setName(categoryDTO.getName().toUpperCase());
@@ -121,7 +121,7 @@ public class CategoriesServiceImpl implements CategoriesService {
      */
     @Override
     @CacheEvict(key = "#result.id")
-    public GENERICcategoryResponseDTO update(UUID id, POSTandPUTcategoryRequestDTO categoryDTO) {
+    public GENERICcategoryResponseDTO update(Long id, POSTandPUTcategoryRequestDTO categoryDTO) {
         log.info("SERVICE: Actualizando Categoría con id: " + id);
 
         Optional<Categoria> foundCategory = repository.findById(id);
@@ -134,7 +134,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 
         if (sameNameCategory.isPresent() && !sameNameCategory.get().getId().equals(id)) {
             log.warning("SERVICE: Se intentó actualizar (PUT) una categoría que ya existía");
-            throw new CategoryValidationException(categoryDTO.getName());
+            throw new CategoryValidationException("La categoría " + categoryDTO.getName() + " ya existe");
         }
 
         categoryDTO.setName(categoryDTO.getName().toUpperCase());
@@ -159,7 +159,7 @@ public class CategoriesServiceImpl implements CategoriesService {
      */
     @Override
     @CacheEvict(key = "#result.id")
-    public GENERICcategoryResponseDTO patch(UUID id, PATCHcategoryRequestDTO categoryDTO) {
+    public GENERICcategoryResponseDTO patch(Long id, PATCHcategoryRequestDTO categoryDTO) {
         log.info("SERVICE: Haciendo PATCH a la Categoría con id: " + id);
 
         Optional<Categoria> foundCategory = repository.findById(id);
@@ -172,9 +172,9 @@ public class CategoriesServiceImpl implements CategoriesService {
         if (categoryDTO.getName() != null) {
 
             var sameNameCategory = repository.findByNameIgnoreCase(categoryDTO.getName());
-            if (sameNameCategory.isPresent()) {
+            if (sameNameCategory.isPresent() && !sameNameCategory.get().getId().equals(id)) {
                 log.warning("SERVICE: Se intentó actualizar (PATCH) una categoría que ya existía");
-                throw new CategoryValidationException(categoryDTO.getName());
+                throw new CategoryValidationException("La categoría " + categoryDTO.getName() + " ya existe");
             }
 
             foundCategory.get().setName(categoryDTO.getName().toUpperCase());
@@ -193,7 +193,7 @@ public class CategoriesServiceImpl implements CategoriesService {
      */
     @Override
     @CacheEvict(key = "#id")
-    public DELETEcategoryResponseDTO deleteById(UUID id) {
+    public DELETEcategoryResponseDTO deleteById(Long id) {
         log.info("SERVICE: Eliminando Categoría con id: " + id);
 
         Optional<Categoria> foundCategory = repository.findById(id);

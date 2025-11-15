@@ -42,8 +42,8 @@ class CategoriesRestControllerTest {
 
     private GENERICcategoryResponseDTO cat;
 
-    private final String VALID_UUID_STRING = "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11";
-    private final UUID VALID_UUID_OBJ = UUID.fromString(VALID_UUID_STRING);
+    private final Long validId = 1L;
+
 
 
     @BeforeEach
@@ -51,7 +51,7 @@ class CategoriesRestControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(categoryController).build();
 
         cat = new GENERICcategoryResponseDTO();
-        cat.setId(VALID_UUID_OBJ);
+        cat.setId(validId);
         cat.setName("ANIME");
     }
 
@@ -64,18 +64,18 @@ class CategoriesRestControllerTest {
         mockMvc.perform(get("/categories"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("ANIME"))
-                .andExpect(jsonPath("$[0].id").value(VALID_UUID_STRING));
+                .andExpect(jsonPath("$[0].id").value(validId));
     }
 
     // 🔹 GET /categories/{id}
     @Test
     @DisplayName("GET /categories/{id} devuelve la categoría por id")
     void getById() throws Exception {
-        when(categoryService.getById(VALID_UUID_OBJ)).thenReturn(cat);
+        when(categoryService.getById(validId)).thenReturn(cat);
 
-        mockMvc.perform(get("/categories/" + VALID_UUID_STRING))
+        mockMvc.perform(get("/categories/" + validId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(VALID_UUID_STRING))
+                .andExpect(jsonPath("$.id").value(validId))
                 .andExpect(jsonPath("$.name").value("ANIME"));
     }
 
@@ -92,7 +92,7 @@ class CategoriesRestControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(VALID_UUID_STRING))
+                .andExpect(jsonPath("$.id").value(validId))
                 .andExpect(jsonPath("$.name").value("ANIME"));
     }
 
@@ -103,13 +103,13 @@ class CategoriesRestControllerTest {
         POSTandPUTcategoryRequestDTO dto = new POSTandPUTcategoryRequestDTO();
         dto.setName("movies");
 
-        when(categoryService.update(eq(VALID_UUID_OBJ), any(POSTandPUTcategoryRequestDTO.class))).thenReturn(cat);
+        when(categoryService.update(eq(validId), any(POSTandPUTcategoryRequestDTO.class))).thenReturn(cat);
 
-        mockMvc.perform(put("/categories/" + VALID_UUID_STRING)
+        mockMvc.perform(put("/categories/" + validId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(VALID_UUID_STRING))
+                .andExpect(jsonPath("$.id").value(validId))
                 .andExpect(jsonPath("$.name").value("ANIME"));
     }
 
@@ -120,13 +120,13 @@ class CategoriesRestControllerTest {
         PATCHcategoryRequestDTO dto = new PATCHcategoryRequestDTO();
         dto.setName("games");
 
-        when(categoryService.patch(eq(VALID_UUID_OBJ), any(PATCHcategoryRequestDTO.class))).thenReturn(cat);
+        when(categoryService.patch(eq(validId), any(PATCHcategoryRequestDTO.class))).thenReturn(cat);
 
-        mockMvc.perform(patch("/categories/" + VALID_UUID_STRING)
+        mockMvc.perform(patch("/categories/" + validId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(mapper.writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(VALID_UUID_STRING))
+                .andExpect(jsonPath("$.id").value(validId))
                 .andExpect(jsonPath("$.name").value("ANIME"));
     }
 
@@ -139,12 +139,12 @@ class CategoriesRestControllerTest {
                 cat
         );
 
-        when(categoryService.deleteById(VALID_UUID_OBJ)).thenReturn(resp);
+        when(categoryService.deleteById(validId)).thenReturn(resp);
 
-        mockMvc.perform(delete("/categories/" + VALID_UUID_STRING))
+        mockMvc.perform(delete("/categories/" + validId))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Categoría eliminada correctamente"))
-                .andExpect(jsonPath("$.deletedCategory.id").value(VALID_UUID_STRING))
+                .andExpect(jsonPath("$.deletedCategory.id").value(validId))
                 .andExpect(jsonPath("$.deletedCategory.name").value("ANIME"));
     }
 

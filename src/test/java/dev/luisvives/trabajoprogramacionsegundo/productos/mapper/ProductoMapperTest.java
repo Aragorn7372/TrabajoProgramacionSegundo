@@ -18,13 +18,12 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductoMapperTest {
-    private final Categoria categoria= Categoria
-            .builder()
-            .id(UUID.fromString("4b23bd64-c198-4eda-9d84-d4bdb0e5a24f"))
-            .name("ANIME")
-            .fechaCreacion(LocalDateTime.now())
-            .fechaModificacion(LocalDateTime.now())
-            .build();
+    private final Categoria categoria= new Categoria(
+            1L,
+            "ANIME",
+            LocalDateTime.now(),
+            LocalDateTime.now()
+    );
     private final Producto producto = Producto.builder()
             .id(1L)
             .nombre("hola")

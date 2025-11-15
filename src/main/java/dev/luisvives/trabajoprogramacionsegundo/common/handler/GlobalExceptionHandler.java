@@ -1,6 +1,8 @@
 package dev.luisvives.trabajoprogramacionsegundo.common.handler;
 
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoException;
+import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryNotFoundException;
+import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryValidationException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
@@ -135,6 +137,34 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public Map<String, String> handleConstraintViolationExceptions(ConstraintViolationException ex) {
         log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo DataIntegrityViolationdException en 409 Conflict");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo NotFoundException lanzadas por los servicios.
+     * Convierte NotFoundException en un 404 Not Found.
+     *
+     * @param ex Excepción personalizada que indica que un recurso no fue encontrado.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CategoryNotFoundException.class)
+    public Map<String, String> handleCategoryNotFoundExceptions(CategoryNotFoundException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo NotFoundException en 404 Not Found");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo ValidationException lanzadas por los servicios.
+     * Convierte ValidationException en un 400 Bad Request.
+     *
+     * @param ex Excepción personalizada que indica que la solicitud fue mal formulada o construida.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(CategoryValidationException.class)
+    public Map<String, String> handleBadPriceExceptions(CategoryValidationException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo ValidationException en 400 BAD Request");
         return Map.of("error", ex.getMessage());
     }
 }
