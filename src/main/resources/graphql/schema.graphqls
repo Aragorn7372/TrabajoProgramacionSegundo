@@ -1,0 +1,44 @@
+# Clases
+type Producto {
+    id: ID!
+    name: String!
+    price: Float!
+    cantidad: Int!
+    category: String!
+    descripcion: String!
+    image: String!
+}
+
+type Categoria{
+    id: ID!
+    name: String!
+}
+
+type PageProductoResponse {
+    content: [Producto!]!
+    totalPages: Int!
+    totalElements: Int!
+    pageSize: Int!
+    pageNumber: Int!
+    totalPageElements: Int!
+    empty: Boolean!
+    first: Boolean!
+    last: Boolean!
+    sortBy: String!
+    direction: String!
+}
+
+# Querys
+type Query {
+    getProductoById(id: ID!): Producto
+    getAllProductos(
+        maxPrice: Float,
+        name: String,
+        category: String,
+        page: Int = 0,
+        size: Int = 10,
+        sortBy: String = "id",
+        direction: String = "asc"): PageProductoResponse!
+    getCategoriaById(id: ID!): Categoria
+    getAllCategorias: [Categoria]!
+}

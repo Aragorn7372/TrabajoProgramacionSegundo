@@ -61,31 +61,44 @@ public class ProductoServiceImpl implements ProductoService {
 
     private final Logger log = Logger.getLogger(ProductoServiceImpl.class.getName());
 
-    /** Repositorio de productos para operaciones CRUD */
+    /**
+     * Repositorio de productos para operaciones CRUD
+     */
     private final ProductsRepository repository;
 
-    /** Repositorio de categorías para validaciones de integridad referencial */
+    /**
+     * Repositorio de categorías para validaciones de integridad referencial
+     */
     private final CategoriesRepository categoryRepository;
 
-    /** Servicio de almacenamiento para manejar imágenes */
+    /**
+     * Servicio de almacenamiento para manejar imágenes
+     */
     private final StorageService storageService;
 
-    /** Configuración del WebSocket para notificaciones */
+    /**
+     * Configuración del WebSocket para notificaciones
+     */
     private final WebSocketConfig webSocketConfig;
 
-    /** Servicio WebSocket específico para productos */
+    /**
+     * Servicio WebSocket específico para productos
+     */
     WebSocketHandler webSocketService;
 
-    /** Mapper de Jackson para serializar objetos a JSON */
+    /**
+     * Mapper de Jackson para serializar objetos a JSON
+     */
     ObjectMapper jacksonMapper;
     ProductoMapper mapper;
+
     /**
      * Constructor que inyecta dependencias necesarias.
      *
-     * @param repository       Repositorio de productos
+     * @param repository         Repositorio de productos
      * @param categoryRepository Repositorio de categorías
-     * @param storageService   Servicio de almacenamiento de imágenes
-     * @param webSocketConfig  Configuración de WebSocket para notificaciones
+     * @param storageService     Servicio de almacenamiento de imágenes
+     * @param webSocketConfig    Configuración de WebSocket para notificaciones
      */
     @Autowired
     public ProductoServiceImpl(ProductsRepository repository,
@@ -202,7 +215,7 @@ public class ProductoServiceImpl implements ProductoService {
      * @param id          ID del producto a actualizar
      * @param productoDto DTO con los datos nuevos
      * @return DTO genérico del producto actualizado
-     * @throws ProductoException.NotFoundException si no existe el producto
+     * @throws ProductoException.NotFoundException   si no existe el producto
      * @throws ProductoException.ValidationException si la categoría no existe
      */
     @Override
