@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions;
+package dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions.auth;
 
 
 import org.springframework.http.HttpStatus;

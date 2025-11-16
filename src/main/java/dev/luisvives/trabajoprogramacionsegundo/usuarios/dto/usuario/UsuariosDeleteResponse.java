@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto;
+package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

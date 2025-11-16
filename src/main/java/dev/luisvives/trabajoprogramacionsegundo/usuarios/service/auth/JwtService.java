@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.usuarios.service;
+package dev.luisvives.trabajoprogramacionsegundo.usuarios.service.auth;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

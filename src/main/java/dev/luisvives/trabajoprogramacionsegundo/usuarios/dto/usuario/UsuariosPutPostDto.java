@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto;
+package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto.usuario;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Pattern;

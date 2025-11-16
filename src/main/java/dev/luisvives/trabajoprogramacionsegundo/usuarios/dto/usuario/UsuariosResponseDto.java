@@ -1,4 +1,4 @@
-package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto;
+package dev.luisvives.trabajoprogramacionsegundo.usuarios.dto.usuario;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,7 +12,5 @@ import lombok.NoArgsConstructor;
 public class UsuariosResponseDto {
     private String nombre;
     private String email;
-    private String password;
     private String rol;
-
 }
