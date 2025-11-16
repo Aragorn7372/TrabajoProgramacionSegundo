@@ -183,7 +183,7 @@ public class ProductoServiceImpl implements ProductoService {
         var existingCategory = categoryRepository.findByNameIgnoreCase(productoDto.getCategory());
         if (existingCategory.isEmpty()) {
             log.warning("SERVICE: Se intentó crear un Producto de una categoría inexistente");
-            throw new ProductoException.ValidationException(productoDto.getCategory());
+            throw new ProductoException.ValidationException("La categoría " + productoDto.getCategory() + " no existe.");
         }
 
         Producto productoModel = mapper.postPutDTOToModel(productoDto);
@@ -219,7 +219,7 @@ public class ProductoServiceImpl implements ProductoService {
         var existingCategory = categoryRepository.findByNameIgnoreCase(productoDto.getCategory());
         if (existingCategory.isEmpty()) {
             log.warning("SERVICE: Intento de actualizar un Producto con categoría inexistente");
-            throw new ProductoException.ValidationException(productoDto.getCategory());
+            throw new ProductoException.ValidationException("La categoría " + productoDto.getCategory() + " no existe.");
         }
 
         Producto productoModel = mapper.postPutDTOToModel(productoDto);
@@ -261,7 +261,7 @@ public class ProductoServiceImpl implements ProductoService {
             var existingCategory = categoryRepository.findByNameIgnoreCase(productoDTO.getCategory());
             if (existingCategory.isEmpty()) {
                 log.warning("SERVICE: Intento de patch con categoría inexistente");
-                throw new ProductoException.ValidationException(productoDTO.getCategory());
+                throw new ProductoException.ValidationException("La categoría " + productoDTO.getCategory() + " no existe.");
             }
             foundProducto.get().setCategoria(existingCategory.get());
         }
@@ -310,7 +310,7 @@ public class ProductoServiceImpl implements ProductoService {
     @Override
     public GENERICProductosResponseDTO updateImage(Long id, MultipartFile image) {
         val foundProducto = repository.findById(id)
-                .orElseThrow(() -> new ProductoException.NotFoundException("producto no encontrado con id: " + id));
+                .orElseThrow(() -> new ProductoException.NotFoundException("Producto no encontrado con id: " + id));
         log.info("Actualizando imagen de producto por id: " + id);
 
         if (foundProducto.getImagen() != null && !foundProducto.getImagen().equals(Producto.IMAGE_DEFAULT)) {

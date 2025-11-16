@@ -13,13 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CategoriesMapperTest {
     private CategoriesMapper categoriaMapper=new CategoriesMapper();
-    private final Categoria categoria= Categoria
-            .builder()
-            .id(UUID.fromString("4b23bd64-c198-4eda-9d84-d4bdb0e5a24f"))
-            .name("ANIME")
-            .fechaCreacion(LocalDateTime.now())
-            .fechaModificacion(LocalDateTime.now())
-            .build();
+    private final Categoria categoria= new Categoria(
+            1L,
+            "ANIME",
+            LocalDateTime.now(),
+            LocalDateTime.now()
+    );
     private final GENERICcategoryResponseDTO categoriaResponseDto= GENERICcategoryResponseDTO.builder().id(categoria.getId()).name(categoria.getName()).build();
     private final POSTandPUTcategoryRequestDTO categoriaRequestDto= POSTandPUTcategoryRequestDTO.builder().name(categoria.getName()).build();
     @Test

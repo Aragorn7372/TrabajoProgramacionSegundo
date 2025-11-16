@@ -13,6 +13,6 @@ import java.util.UUID;
  * @see Categoria
  */
 @Repository
-public interface CategoriesRepository extends JpaRepository<Categoria, UUID> {
+public interface CategoriesRepository extends JpaRepository<Categoria, Long> {
     Optional<Categoria> findByNameIgnoreCase(@NotBlank(message = "La categoría no puede estar vacía") String category);
 }

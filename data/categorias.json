@@ -1,0 +1,78 @@
+{
+  "post_put_requests": {
+    "descripcion": "Cuerpos para peticiones POST (Crear) y PUT (Actualizar Total). Usan 'POSTandPUTcategoryRequestDTO'. El campo 'name' es obligatorio (@NotBlank).",
+    "validos": [
+      {
+        "escenario": "Crear/Actualizar Categoría Válida 1",
+        "body": {
+          "name": "Electrónica"
+        }
+      },
+      {
+        "escenario": "Crear/Actualizar Categoría Válida 2",
+        "body": {
+          "name": "Ropa y Accesorios"
+        }
+      },
+      {
+        "escenario": "Crear/Actualizar Válido (con espacios extra que @NotBlank permite)",
+        "body": {
+          "name": " Hogar "
+        }
+      }
+    ],
+    "invalidos": [
+      {
+        "escenario": "Inválido - 'name' nulo (Falla @NotBlank)",
+        "body": {
+          "name": null
+        }
+      },
+      {
+        "escenario": "Inválido - 'name' vacío (Falla @NotBlank)",
+        "body": {
+          "name": ""
+        }
+      },
+      {
+        "escenario": "Inválido - 'name' solo con espacios (Falla @NotBlank)",
+        "body": {
+          "name": "   "
+        }
+      },
+      {
+        "escenario": "Inválido - Cuerpo vacío (Falla @NotBlank porque 'name' será null)",
+        "body": {}
+      }
+    ]
+  },
+  "patch_requests": {
+    "descripcion": "Cuerpos para peticiones PATCH (Actualización Parcial). Usan 'PATCHcategoryRequestDTO'. El campo 'name' es opcional, pero si se envía, no puede estar vacío ni ser solo espacios (@Pattern).",
+    "validos": [
+      {
+        "escenario": "PATCH Válido - Actualizando 'name'",
+        "body": {
+          "name": "Tecnología y Gadgets"
+        }
+      },
+      {
+        "escenario": "PATCH Válido - Cuerpo vacío (no se actualiza nada)",
+        "body": {}
+      }
+    ],
+    "invalidos": [
+      {
+        "escenario": "Inválido - 'name' enviado pero vacío (Falla @Pattern)",
+        "body": {
+          "name": ""
+        }
+      },
+      {
+        "escenario": "Inválido - 'name' enviado pero solo con espacios (Falla @Pattern)",
+        "body": {
+          "name": "  "
+        }
+      }
+    ]
+  }
+}

@@ -31,4 +31,13 @@ public sealed class PedidoException extends RuntimeException {
     public static final class BadPriceException extends PedidoException {
         public BadPriceException(String message) { super(message); }
     }
+
+    /**
+     * Subclase de excepciones de dominio que define un error al validar los campos de un pedido
+     * @see Pedido
+     */
+    public static final class ValidationException extends PedidoException {
+        public ValidationException(String message) { super(message); }
+    }
+
 }

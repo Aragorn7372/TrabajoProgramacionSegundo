@@ -68,6 +68,11 @@ public class PATCHProductoRequestDTO {
     private Double price;
 
     /**
+     * Cantidad de producto en stock
+     */
+    private Integer cantidad;
+
+    /**
      * Nombre de la categoría a la que pertenece el producto.
      */
     private String category;
@@ -82,4 +87,5 @@ public class PATCHProductoRequestDTO {
      * Inicialmente vacío y se asigna después de guardar la imagen en la base de datos.
      */
     private String image;
+
 }

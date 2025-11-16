@@ -13,14 +13,14 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Direccion;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.LineaPedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.repository.PedidosRepository;
-import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto; // Asumimos esta importación
+import dev.luisvives.trabajoprogramacionsegundo.pedidos.validator.PedidosValidator;
+import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
@@ -54,6 +54,8 @@ class PedidosServiceImplTest {
     private WebSocketHandler webSocketHandler;
     @Mock
     private Producto productoMock; // Mock para la validación de productos
+    @Mock
+    private PedidosValidator pedidosValidator;
 
     private PedidosServiceImpl pedidosServiceImpl;
 
@@ -84,7 +86,7 @@ class PedidosServiceImplTest {
     );
 
     private final PostAndPutPedidoRequestDto postAndPutRequestDto = new PostAndPutPedidoRequestDto(
-            cliente, lineasPedido
+            1L, cliente, lineasPedido
     );
 
     @BeforeEach
@@ -96,7 +98,8 @@ class PedidosServiceImplTest {
                 productsRepository,
                 emailService,
                 pedidosMapper,
-                webSocketConfig
+                webSocketConfig,
+                pedidosValidator
         );
     }
 
@@ -110,7 +113,7 @@ class PedidosServiceImplTest {
         when(pedidosMapper.toResponse(pedido)).thenReturn(pedidoResponse);
 
         // Act
-        Page<GenericPedidosResponseDto> result = pedidosServiceImpl.findAllByOrderByIdAsc(pageable);
+        Page<GenericPedidosResponseDto> result = pedidosServiceImpl.findAll(pageable);
 
         // Assert
         assertAll(

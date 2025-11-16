@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface PedidosService {
-    Page<GenericPedidosResponseDto> findAllByOrderByIdAsc(Pageable pageable);
+    Page<GenericPedidosResponseDto> findAll(Pageable pageable);
     GenericPedidosResponseDto findById(ObjectId id);
     GenericPedidosResponseDto save(PostAndPutPedidoRequestDto pedido);
     GenericPedidosResponseDto update(ObjectId id, PostAndPutPedidoRequestDto pedido);

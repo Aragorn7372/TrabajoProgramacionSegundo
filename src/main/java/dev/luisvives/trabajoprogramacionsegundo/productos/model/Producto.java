@@ -92,7 +92,7 @@ public class Producto {
     /**
      * Descripción opcional del producto.
      */
-    @Column(nullable = true)
+    @Column()
     private String descripcion;
 
     /**

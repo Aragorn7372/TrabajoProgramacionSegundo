@@ -15,6 +15,7 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoExcepti
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.mappers.PedidosMapper;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.repository.PedidosRepository;
+import dev.luisvives.trabajoprogramacionsegundo.pedidos.validator.PedidosValidator;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,7 @@ public class PedidosServiceImpl implements PedidosService {
     private WebSocketHandler webSocketService;
     private final WebSocketConfig webSocketConfig;
     private final PedidosMapper pedidosMapper;
+    private final PedidosValidator pedidosValidator;
 
     private ObjectMapper jacksonMapper = new ObjectMapper();
 
@@ -57,13 +59,14 @@ public class PedidosServiceImpl implements PedidosService {
      * @param pedidosMapper Mapper para la conversión entre DTOs y la entidad {@link Pedido}.
      */
     @Autowired
-    public PedidosServiceImpl(PedidosRepository pedidosRepository,  ProductsRepository productsRepository, OrderEmailService emailService, PedidosMapper pedidosMapper, WebSocketConfig webSocketConfig) {
+    public PedidosServiceImpl(PedidosRepository pedidosRepository, ProductsRepository productsRepository, OrderEmailService emailService, PedidosMapper pedidosMapper, WebSocketConfig webSocketConfig, PedidosValidator pedidosValidator) {
         this.pedidosRepository = pedidosRepository;
         this.productsRepository = productsRepository;
         this.emailService = emailService;
         this.pedidosMapper = pedidosMapper;
         this.webSocketConfig = webSocketConfig;
         this.webSocketService = webSocketConfig.webSocketPedidosHandler();
+        this.pedidosValidator = pedidosValidator;
     }
 
     /**
@@ -73,7 +76,7 @@ public class PedidosServiceImpl implements PedidosService {
      * @return Una {@link Page} de {@link GenericPedidosResponseDto} que contiene los pedidos.
      */
     @Override
-    public Page<GenericPedidosResponseDto> findAllByOrderByIdAsc(Pageable pageable) {
+    public Page<GenericPedidosResponseDto> findAll(Pageable pageable) {
         log.info("SERVICE: Buscando todos los pedidos");
         return pedidosRepository.findAll(pageable).map(pedidosMapper::toResponse);
     }
@@ -102,7 +105,7 @@ public class PedidosServiceImpl implements PedidosService {
     @Transactional
     public GenericPedidosResponseDto save(PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Guardando Pedido");
-        validarPedio(pedido);
+        validarPedido(pedido);
         val savedPedido = pedidosRepository.save(pedidosMapper.toModel(pedido));
         sendConfirmationEmailAsync(savedPedido);
 
@@ -123,7 +126,7 @@ public class PedidosServiceImpl implements PedidosService {
     @Transactional
     public GenericPedidosResponseDto update(ObjectId id, PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Actualizando pedido con id: " + id);
-        validarPedio(pedido);
+        validarPedido(pedido);
         val pedidoToUpdate = pedidosRepository.findById(id).orElseThrow(() -> new PedidoException.NotFoundException("Pedido no encontrado con id: " + id));
         pedidoToUpdate.setCliente(pedido.getCliente());
         pedidoToUpdate.setLineasPedido(pedido.getLineaPedido()); // Esto actualiza totalItems y total (el del precio)
@@ -195,13 +198,16 @@ public class PedidosServiceImpl implements PedidosService {
      * @param pedido El DTO de solicitud {@link PostAndPutPedidoRequestDto} del pedido a validar.
      * @throws PedidoException.NotFoundException Si alguno de los productos referenciados no es encontrado.
      */
-    private void validarPedio(PostAndPutPedidoRequestDto pedido) {
+    private void validarPedido(PostAndPutPedidoRequestDto pedido) {
         log.info("SERVICE: Validando Pedido");
+
         pedido.getLineaPedido().forEach(lineaPedido -> {
             var producto = productsRepository.findById(
                     lineaPedido.getIdProducto()).orElseThrow(() -> new PedidoException.NotFoundException("Producto no encontrado con id: " + lineaPedido.getIdProducto())
             );
         });
+
+        pedidosValidator.validarPedido(pedido);
     }
 
     /**

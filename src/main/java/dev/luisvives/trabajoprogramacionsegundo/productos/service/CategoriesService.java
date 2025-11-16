@@ -27,15 +27,15 @@ import java.util.UUID;
  * </p>
  */
 public interface CategoriesService extends Service<GENERICcategoryResponseDTO,DELETEcategoryResponseDTO,
-        UUID,POSTandPUTcategoryRequestDTO,PATCHcategoryRequestDTO>{
+        Long,POSTandPUTcategoryRequestDTO,PATCHcategoryRequestDTO>{
     /**
      * Lista de la categoría.
      * @return DTO con los datos del producto actualizado.
      */
     List<GENERICcategoryResponseDTO> getAll();
-    GENERICcategoryResponseDTO getById(UUID id);
+    GENERICcategoryResponseDTO getById(Long id);
     GENERICcategoryResponseDTO save(POSTandPUTcategoryRequestDTO categoryDTO);
-    GENERICcategoryResponseDTO update(UUID id, POSTandPUTcategoryRequestDTO categoryDTO);
-    GENERICcategoryResponseDTO patch(UUID id, PATCHcategoryRequestDTO categoryDTO);
-    DELETEcategoryResponseDTO deleteById(UUID id);
+    GENERICcategoryResponseDTO update(Long id, POSTandPUTcategoryRequestDTO categoryDTO);
+    GENERICcategoryResponseDTO patch(Long id, PATCHcategoryRequestDTO categoryDTO);
+    DELETEcategoryResponseDTO deleteById(Long id);
 }
