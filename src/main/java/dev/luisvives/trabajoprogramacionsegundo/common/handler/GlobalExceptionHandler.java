@@ -106,6 +106,20 @@ public class GlobalExceptionHandler {
      * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PedidoException.ValidationException.class)
+    public Map<String, String> handleValidationExceptions(PedidoException.ValidationException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo ValidationException en 400 BAD Request");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo ValidationException lanzadas por los servicios.
+     * Convierte ValidationException en un 400 Bad Request.
+     *
+     * @param ex Excepción personalizada que indica que la solicitud fue mal formulada o construida.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ProductoException.ValidationException.class)
     public Map<String, String> handleBadPriceExceptions(ProductoException.ValidationException ex) {
         log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo ValidationException en 400 BAD Request");

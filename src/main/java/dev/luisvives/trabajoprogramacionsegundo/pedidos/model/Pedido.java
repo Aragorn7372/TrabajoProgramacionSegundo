@@ -34,7 +34,7 @@ public class Pedido {
     @NotNull(message = "El id del usuario no puede ser nulo")
     private Long idUsuario;
 
-    @NotNull(message = "El id del cliente no puede ser nulo")
+    @NotNull(message = "El cliente no puede ser nulo")
     private Cliente cliente;
 
     @NotNull(message = "El pedido debe tener al menos una línea de pedido")
