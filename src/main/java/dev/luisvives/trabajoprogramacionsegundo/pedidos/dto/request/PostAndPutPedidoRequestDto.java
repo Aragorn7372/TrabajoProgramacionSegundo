@@ -14,12 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostAndPutPedidoRequestDto {
-    @NotNull
+    @NotNull(message = "El id del usuario no puede ser nulo")
     private Long idUsuario;
-    @NotNull
+    @NotNull(message = "El cliente no puede ser nulo")
     private Cliente cliente;
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "El pedido debe tener al menos una línea de pedido")
+    @NotEmpty(message = "El pedido debe tener al menos una línea de pedido")
     private List<LineaPedido> lineaPedido;
 }
 

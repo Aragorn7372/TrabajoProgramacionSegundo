@@ -13,6 +13,7 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Direccion;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.LineaPedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.repository.PedidosRepository;
+import dev.luisvives.trabajoprogramacionsegundo.pedidos.validator.PedidosValidator;
 import dev.luisvives.trabajoprogramacionsegundo.productos.model.Producto;
 import dev.luisvives.trabajoprogramacionsegundo.productos.repository.ProductsRepository;
 import org.bson.types.ObjectId;
@@ -53,6 +54,8 @@ class PedidosServiceImplTest {
     private WebSocketHandler webSocketHandler;
     @Mock
     private Producto productoMock; // Mock para la validación de productos
+    @Mock
+    private PedidosValidator pedidosValidator;
 
     private PedidosServiceImpl pedidosServiceImpl;
 
@@ -95,7 +98,8 @@ class PedidosServiceImplTest {
                 productsRepository,
                 emailService,
                 pedidosMapper,
-                webSocketConfig
+                webSocketConfig,
+                pedidosValidator
         );
     }
 
