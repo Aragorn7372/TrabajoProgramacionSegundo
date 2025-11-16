@@ -154,6 +154,9 @@ public class PedidosServiceImpl implements PedidosService {
 
         return new DeletePedidosResponseDto(pedidosMapper.toResponse(pedido), "Pedido con id: " + id + " eliminado correctamente.");
     }
+    public Page<GenericPedidosResponseDto> findPedidosByUserId(Long id, Pageable pageable) {
+        return pedidosRepository.findPedidosByIdsByIdUsuario(pageable).map(pedidosMapper::toResponse);
+    }
 
     /**
      * Envía email de confirmación en un hilo separado
@@ -246,4 +249,5 @@ public class PedidosServiceImpl implements PedidosService {
             log.error("SERVICE: Error al convertir la notificación a JSON");
         }
     }
+
 }

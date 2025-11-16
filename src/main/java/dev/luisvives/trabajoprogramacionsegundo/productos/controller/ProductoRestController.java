@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -117,6 +118,7 @@ public class ProductoRestController {
      * o una respuesta 400 Bad Request si la validación falla.
      */
     @PostMapping({"", "/"})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICProductosResponseDTO> save(
             @Valid @RequestBody POSTandPUTProductoRequestDTO productoDTO) { //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
         log.info("CONTROLLER: Guardando Producto");
@@ -137,6 +139,7 @@ public class ProductoRestController {
      * o una respuesta 400 Bad Request si la validación falla.
      */
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICProductosResponseDTO> update(
             @Valid @RequestBody POSTandPUTProductoRequestDTO productoDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
             @PathVariable Long id) {
@@ -160,6 +163,7 @@ public class ProductoRestController {
      * o una respuesta 400 Bad Request si la validación falla.
      */
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICProductosResponseDTO> patch(
             @Valid @RequestBody PATCHProductoRequestDTO productoDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
             @PathVariable Long id) {
@@ -182,6 +186,7 @@ public class ProductoRestController {
      * (gestionado por GlobalExceptionHandler).
      */
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DELETEProductoResponseDTO> deleteById(@PathVariable Long id) {
         log.info("CONTROLLER: Eliminando Producto con id: " + id);
 

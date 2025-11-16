@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,6 +46,7 @@ public class CategoriesRestController {
     }
 
     @PostMapping({"", "/"})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICcategoryResponseDTO> save(
             @Valid @RequestBody POSTandPUTcategoryRequestDTO categoryDTO) { //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
         log.info("CONTROLLER: Guardando Categoría");
@@ -55,6 +57,7 @@ public class CategoriesRestController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICcategoryResponseDTO> update(
             @Valid @RequestBody POSTandPUTcategoryRequestDTO categoryDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
             @PathVariable Long id) {
@@ -68,6 +71,7 @@ public class CategoriesRestController {
     }
 
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GENERICcategoryResponseDTO> patch(
             @Valid @RequestBody PATCHcategoryRequestDTO categoryDTO, //En caso de haber algún error de validación, devolvemos 400 BadRequest con el correspondiente mensaje de error
             @PathVariable Long id) {
@@ -81,6 +85,7 @@ public class CategoriesRestController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<DELETEcategoryResponseDTO> deleteById(@PathVariable Long id) {
         log.info("CONTROLLER: Eliminando Categoría con id: " + id);
 
