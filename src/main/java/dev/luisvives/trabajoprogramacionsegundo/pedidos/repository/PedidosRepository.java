@@ -1,6 +1,5 @@
 package dev.luisvives.trabajoprogramacionsegundo.pedidos.repository;
 
-import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.GenericPedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.Page;
@@ -12,7 +11,8 @@ import java.util.List;
 
 @Repository
 public interface PedidosRepository extends MongoRepository<Pedido, ObjectId> {
-    List<Pedido> findPedidosByIdsByIdUsuario(Long idUsuario);
 
-    Page<Pedido> findPedidosByIdsByIdUsuario(Pageable pageable);
+
+   List<Pedido> findPedidosByIdUsuario(Long idUsuario);
+    Page<Pedido> findPedidosByIdUsuario(Long idUsuario, Pageable pageable);
 }

@@ -4,6 +4,7 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.exceptions.PedidoExcepti
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryNotFoundException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.CategoryValidationException;
 import dev.luisvives.trabajoprogramacionsegundo.productos.exceptions.ProductoException;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions.usuarios.UserForbiddenException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -179,6 +180,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CategoryValidationException.class)
     public Map<String, String> handleBadPriceExceptions(CategoryValidationException ex) {
         log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo ValidationException en 400 BAD Request");
+        return Map.of("error", ex.getMessage());
+    }
+
+    /**
+     * Maneja las excepciones de tipo UserForbiddenException lanzadas por los servicios.
+     * Convierte UserForbiddenException en un 403 Forbidden.
+     *
+     * @param ex Excepción personalizada que indica que la solicitud fue rechazada por fata de autorización.
+     * @return Un mapa con un único elemento "error" con el mensaje de la excepción.
+     */
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(UserForbiddenException.class)
+    public Map<String, String> handleForbiddenExceptions(UserForbiddenException ex) {
+        log.info("MANEJADOR DE EXCEPCIONES: Convirtiendo UserForbiddenException en 403 Forbidden");
         return Map.of("error", ex.getMessage());
     }
 }

@@ -1,15 +1,18 @@
 package dev.luisvives.trabajoprogramacionsegundo;
 
 
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 
 /**
- * Clase base para tests de integración completos con @SpringBootTest.
+ * Clase base para tests de repositorio (JPA) con Testcontainers.
+ * Usa un singleton para mantener los contenedores vivos.
  */
-@SpringBootTest
-public abstract class BaseDatosTest {
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+public abstract class BaseRepositoryTest {
 
     // Obtener la instancia singleton
     private static final TestContainersConfig containers = TestContainersConfig.getInstance();

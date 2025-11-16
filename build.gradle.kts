@@ -124,7 +124,11 @@ tasks.named<JacocoReport>("jacocoTestReport") {
     classDirectories.setFrom(
         files(classDirectories.files.map {
             fileTree(it) {
-                include(
+                exclude(
+                    "**/config/**",
+                    "**/email/**",
+                    "**/notificaciones/**",
+                    "**/handler/**",
 
                 )
             }

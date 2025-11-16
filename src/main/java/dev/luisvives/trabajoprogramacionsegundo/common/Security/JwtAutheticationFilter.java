@@ -51,6 +51,8 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
         log.info("Se ha encontrado cabecera de autenticación, se procesa");
 
         jwt = authHeader.substring(7);
+        log.info("🎫 Token recibido (primeros 50 chars): {}", jwt.substring(0, Math.min(50, jwt.length())));
+        log.info("🎫 Token recibido (longitud): {} caracteres", jwt.length());
 
         try {
             userName = jwtService.extractUserName(jwt);

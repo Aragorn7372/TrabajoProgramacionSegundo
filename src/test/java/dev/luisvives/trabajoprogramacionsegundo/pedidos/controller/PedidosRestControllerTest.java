@@ -10,12 +10,13 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Cliente;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Direccion;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.LineaPedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.service.PedidosService;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.auth.JwtService;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.auth.UserServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-// Importa las auto-configuraciones que queremos excluir
 import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
@@ -25,6 +26,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoCo
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
@@ -33,62 +35,53 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-/**
- * Tests unitarios para PedidosRestController.
- * Se utiliza @WebMvcTest para cargar solo la capa web y @MockBean para simular
- * las dependencias (servicio y mapper).
- */
-// 1. SOLUCIÓN: Excluimos TODAS las auto-configuraciones de BBDD
 @WebMvcTest(
         controllers = PedidosRestController.class,
         excludeAutoConfiguration = {
-                // Excluir JPA y BBDD relacionales
                 DataSourceAutoConfiguration.class,
                 JpaRepositoriesAutoConfiguration.class,
                 HibernateJpaAutoConfiguration.class,
-                // Excluir MongoDB
                 MongoAutoConfiguration.class,
                 MongoDataAutoConfiguration.class,
                 MongoRepositoriesAutoConfiguration.class,
-                // Excluir Redis
                 RedisAutoConfiguration.class,
                 RedisRepositoriesAutoConfiguration.class
         }
 )
 class PedidosRestControllerTest {
 
-    // 2. SOLUCIÓN: Usamos el MockMvc inyectado por @WebMvcTest
     @Autowired
-    private MockMvc mockMvc; // Cliente para simular peticiones HTTP
+    private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper; // Para convertir objetos a/desde JSON
+    private ObjectMapper objectMapper;
 
-    // 3. SOLUCIÓN: Usamos @MockBean (el estándar)
-    /**
-     * Mockeamos JpaMappingContext para evitar el fallo de @EnableJpaAuditing.
-     * @WebMvcTest no carga la configuración de JPA, pero @EnableJpaAuditing (en la app principal)
-     * intenta crear un JpaAuditingHandler que depende de este contexto.
-     * Al mockearlo, satisfacemos la dependencia y el contexto puede arrancar.
-     */
     @MockitoBean
     private JpaMetamodelMappingContext jpaMetamodelMappingContext;
 
     @MockitoBean
-    private PedidosService pedidosService; // Mock del servicio
+    private PedidosService pedidosService;
 
     @MockitoBean
-    private PedidosMapper pedidosMapper; // Mock del mapper
+    private PedidosMapper pedidosMapper;
 
-    // --- Datos de prueba ---
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private UserServiceImpl userServiceImpl;
+
     private Cliente clienteTest;
     private LineaPedido lineaPedidoTest;
     private PostAndPutPedidoRequestDto pedidoRequestDto;
@@ -97,21 +90,17 @@ class PedidosRestControllerTest {
 
     @BeforeEach
     void setUp() {
-        // 4. SOLUCIÓN: Eliminamos MockMvcBuilders.standaloneSetup()
-        // @WebMvcTest ya configura mockMvc
-
         testId = new ObjectId();
 
         Direccion direccion = new Direccion("Calle Falsa", "123", "Springfield", "Provincia", "País", "12345");
         clienteTest = new Cliente("Homer Simpson", "homer@simpson.com", "600111222", direccion);
         lineaPedidoTest = new LineaPedido(2, 1L, 10.0, 20.0);
 
-        // 5. SOLUCIÓN: Corregimos DTO (asumiendo que NO lleva idUsuario)
         pedidoRequestDto = new PostAndPutPedidoRequestDto(1L, clienteTest, List.of(lineaPedidoTest));
 
         pedidoResponseDto = new GenericPedidosResponseDto(
-                testId, // El DTO de respuesta debe tener el ID como String
-                1L, // idUsuario
+                testId,
+                1L,
                 clienteTest,
                 List.of(lineaPedidoTest),
                 2,
@@ -119,22 +108,30 @@ class PedidosRestControllerTest {
         );
     }
 
-    // --- Tests para findAll (GET /pedidos) ---
-
     @Test
     @DisplayName("GET /pedidos - Obtener todos los pedidos paginados - OK")
     void findAll_ShouldReturnPagedPedidos() throws Exception {
-        // Arrange
         var responseList = List.of(pedidoResponseDto);
         var page = new PageImpl<>(responseList);
-        // 6. SOLUCIÓN: Corregimos DTO de Paginación
-        var pageDto = new PageResponseDTO<GenericPedidosResponseDto>(responseList, 1, 10L, 1, 1, 1, false, true, false, "id", "asc");
+        var pageDto = new PageResponseDTO<>(
+                responseList,
+                0,
+                10L,
+                1,
+                10,
+                responseList.size(),
+                false,
+                true,
+                false,
+                "id",
+                "asc"
+        );
 
         when(pedidosService.findAll(any(Pageable.class))).thenReturn(page);
         when(pedidosMapper.toPageDto(any(), eq("id"), eq("asc"))).thenReturn(pageDto);
 
-        // Act & Assert
         mockMvc.perform(get("/pedidos")
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
                         .param("page", "0")
                         .param("size", "10")
                         .param("sortBy", "id")
@@ -148,16 +145,13 @@ class PedidosRestControllerTest {
         verify(pedidosMapper).toPageDto(any(), eq("id"), eq("asc"));
     }
 
-    // --- Tests para findById (GET /pedidos/{id}) ---
-
     @Test
     @DisplayName("GET /pedidos/{id} - Obtener pedido por ID - OK")
     void findById_ShouldReturnPedido() throws Exception {
-        // Arrange
         when(pedidosService.findById(testId)).thenReturn(pedidoResponseDto);
 
-        // Act & Assert
         mockMvc.perform(get("/pedidos/{id}", testId.toHexString())
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -170,31 +164,29 @@ class PedidosRestControllerTest {
     @Test
     @DisplayName("GET /pedidos/{id} - Pedido no encontrado - Not Found (404)")
     void findById_WhenNotFound_ShouldReturnNotFound() throws Exception {
-        // Arrange
         var idInexistente = new ObjectId();
-        when(pedidosService.findById(idInexistente)).thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado"));
+        when(pedidosService.findById(idInexistente))
+                .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado"));
 
-        // Act & Assert
         mockMvc.perform(get("/pedidos/{id}", idInexistente.toHexString())
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
 
         verify(pedidosService).findById(idInexistente);
     }
 
-    // --- Tests para save (POST /pedidos) ---
-
     @Test
     @DisplayName("POST /pedidos - Crear nuevo pedido - Created (201)")
     void save_ShouldCreatePedido() throws Exception {
-        // Arrange
         when(pedidosService.save(any(PostAndPutPedidoRequestDto.class))).thenReturn(pedidoResponseDto);
 
-        // Act & Assert
         mockMvc.perform(post("/pedidos")
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
+                        .with(csrf()) // ✅ Token CSRF
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pedidoRequestDto)))
-                .andExpect(status().isCreated()) // HTTP 201
+                .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(testId.toHexString()))
                 .andExpect(jsonPath("$.cliente.email").value(clienteTest.email()));
@@ -205,29 +197,27 @@ class PedidosRestControllerTest {
     @Test
     @DisplayName("POST /pedidos - Petición inválida (Cliente Nulo) - Bad Request (400)")
     void save_WhenInvalid_ShouldReturnBadRequest() throws Exception {
-        // Arrange
-        // 7. SOLUCIÓN: Corregimos DTO inválido
-        var requestInvalido = new PostAndPutPedidoRequestDto(1L, null, List.of()); // Cliente nulo y lista vacía
+        var requestInvalido = new PostAndPutPedidoRequestDto(1L, null, List.of());
 
-        // Act & Assert
         mockMvc.perform(post("/pedidos")
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestInvalido)))
-                .andExpect(status().isBadRequest()); // HTTP 400
+                .andExpect(status().isBadRequest());
 
-        verify(pedidosService, never()).save(any()); // El servicio no debe ser llamado
+        verify(pedidosService, never()).save(any());
     }
-
-    // --- Tests para update (PUT /pedidos/{id}) ---
 
     @Test
     @DisplayName("PUT /pedidos/{id} - Actualizar pedido - OK")
     void update_ShouldUpdatePedido() throws Exception {
-        // Arrange
-        when(pedidosService.update(eq(testId), any(PostAndPutPedidoRequestDto.class))).thenReturn(pedidoResponseDto);
+        when(pedidosService.update(eq(testId), any(PostAndPutPedidoRequestDto.class)))
+                .thenReturn(pedidoResponseDto);
 
-        // Act & Assert
         mockMvc.perform(put("/pedidos/{id}", testId.toHexString())
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pedidoRequestDto)))
                 .andExpect(status().isOk())
@@ -240,13 +230,13 @@ class PedidosRestControllerTest {
     @Test
     @DisplayName("PUT /pedidos/{id} - Pedido no encontrado - Not Found (404)")
     void update_WhenNotFound_ShouldReturnNotFound() throws Exception {
-        // Arrange
         var idInexistente = new ObjectId();
         when(pedidosService.update(eq(idInexistente), any(PostAndPutPedidoRequestDto.class)))
                 .thenThrow(new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido no encontrado"));
 
-        // Act & Assert
         mockMvc.perform(put("/pedidos/{id}", idInexistente.toHexString())
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(pedidoRequestDto)))
                 .andExpect(status().isNotFound());
@@ -254,18 +244,15 @@ class PedidosRestControllerTest {
         verify(pedidosService).update(eq(idInexistente), any(PostAndPutPedidoRequestDto.class));
     }
 
-    // --- Tests para delete (DELETE /pedidos/{id}) ---
-
     @Test
     @DisplayName("DELETE /pedidos/{id} - Eliminar pedido - OK")
     void delete_ShouldDeletePedido() throws Exception {
-        // Arrange
-        // 8. SOLUCIÓN: Corregimos DTO de borrado
         var deleteResponse = new DeletePedidosResponseDto(pedidoResponseDto, "Pedido eliminado con éxito");
         when(pedidosService.delete(testId)).thenReturn(deleteResponse);
 
-        // Act & Assert
         mockMvc.perform(delete("/pedidos/{id}", testId.toHexString())
+                        .with(user("testuser").roles("ADMIN","USUARIO"))
+                        .with(csrf())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Pedido eliminado con éxito"));

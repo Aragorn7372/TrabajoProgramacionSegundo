@@ -5,9 +5,9 @@ import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.request.PostAndPutPe
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.DeletePedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.dto.response.GenericPedidosResponseDto;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.mappers.PedidosMapper;
-import dev.luisvives.trabajoprogramacionsegundo.pedidos.model.Pedido;
 import dev.luisvives.trabajoprogramacionsegundo.pedidos.service.PedidosServiceImpl;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.dto.usuario.*;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions.usuarios.UserForbiddenException;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.mapper.UsuariosMapper;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.model.Usuario;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.usuarios.UsuariosPedidosServiceImpl;
@@ -19,7 +19,6 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +31,7 @@ import java.util.Optional;
 @RestController
 @Slf4j
 @RequestMapping("/usuario")
-@PreAuthorize("hasRole('USUARIO')")
+//@PreAuthorize("hasRole('USUARIO')")
 public class UsuariosRestController {
     private final UsuariosPedidosServiceImpl usuariosService;
     private final PedidosServiceImpl pedidosService;
@@ -46,7 +45,7 @@ public class UsuariosRestController {
         this.pedidosMapper = pedidosMapper;
     }
     @GetMapping({"", "/"})
-
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<PageResponseDTO<UsuariosResponseDto>> findAll(
             @RequestParam(required = false)Optional<Boolean> isDeleted,
             @RequestParam(defaultValue = "0") int page,
@@ -117,7 +116,7 @@ public class UsuariosRestController {
         log.info("CONTROLLER: obtener pedido del usuario autenticado");
         val pedidos= pedidosService.findById(id);
         if (!usuario.getId().equals(pedidos.getIdUsuario())){
-            ResponseEntity.status(403).body("No puedes acceder al pedido de otro usuario");
+            throw new UserForbiddenException("No puedes acceder al pedido con un id de usuario distinto al tuyo");
         }
         return ResponseEntity.ok(pedidos);
     }
@@ -130,7 +129,7 @@ public class UsuariosRestController {
         log.info("CONTROLLER: guardar pedido del usuario autenticado");
         if (!usuario.getId().equals(postAndPutPedidoRequestDto.getIdUsuario())){
             log.warn("CONTROLLER: Usuario no aceptado");
-            ResponseEntity.status(403).body("No puedes acceder al pedido con un id de usuario distinto al tuyo");
+            throw new UserForbiddenException("No puedes acceder al pedido con un id de usuario distinto al tuyo");
         }
         return ResponseEntity.ok(pedidosService.save(postAndPutPedidoRequestDto));
     }

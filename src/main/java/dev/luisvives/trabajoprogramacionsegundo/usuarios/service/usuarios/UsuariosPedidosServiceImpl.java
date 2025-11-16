@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 @Slf4j
@@ -57,7 +58,7 @@ public class UsuariosPedidosServiceImpl implements UsuariosPedidosService{
             }
 
         );
-        val pedidos= pedidosRepository.findPedidosByIdsByIdUsuario(id).stream().map(p-> p.getId().toHexString()).toList();
+        val pedidos= pedidosRepository.findPedidosByIdUsuario(id).stream().map(p-> p.getId().toHexString()).toList();
         return usuariosMapper.usuariosAdminResponseDto(user,pedidos);
     }
 
@@ -96,7 +97,7 @@ public class UsuariosPedidosServiceImpl implements UsuariosPedidosService{
             log.info("User not found: "+id);
             return new UserNotFound("User not found:"+id);
         });
-        if (!pedidosRepository.findPedidosByIdsByIdUsuario(id).isEmpty()){
+        if (!pedidosRepository.findPedidosByIdUsuario(id).isEmpty()){
             log.info("User con pedidos");
             usuariosRepository.updateIsDeletedToTrueById(id);
             return UsuariosDeleteResponse.builder()
@@ -130,5 +131,9 @@ public class UsuariosPedidosServiceImpl implements UsuariosPedidosService{
                 .roles(usuariosPutPostDto.getRoles())
                 .build();
         return usuariosMapper.usuariosResponseDtoToUsuariosDto(usuariosRepository.save(usuariosMapper.postPutDtoToUsuario(usuariosPutPostDto)));
+    }
+
+    public List<Usuario> findAll() {
+        return usuariosRepository.findAllByIsDeletedFalse();
     }
 }

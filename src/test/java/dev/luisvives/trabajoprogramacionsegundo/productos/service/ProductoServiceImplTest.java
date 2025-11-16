@@ -276,7 +276,7 @@ class ProductoServiceImplTest {
 
         @Test
         @DisplayName("update good")
-        void updateFunko() {
+        void updateProducto() {
             when(categoriaRepository.findByNameIgnoreCase(producto.getCategoria().getName())).thenReturn(Optional.of(categoria));
             when(repository.findById(1L)).thenReturn(Optional.of(producto));
             when(repository.save(producto)).thenReturn(producto);
@@ -393,7 +393,7 @@ class ProductoServiceImplTest {
         }
     }
     @Test
-    @DisplayName("updateImage - Funko no encontrado")
+    @DisplayName("updateImage - Producto no encontrado")
     void updateImage_ProductoNotFound_ThrowsException() {
         // Arrange
 
@@ -412,7 +412,7 @@ class ProductoServiceImplTest {
         // Arrange
         producto.setImagen(null);
         MultipartFile mockImage = mock(MultipartFile.class);
-        String newImageName = "new_funko_image_3.png";
+        String newImageName = "new_producto_image_3.png";
         productoResponse.setImage(newImageName);
         when(repository.findById(1L)).thenReturn(Optional.of(producto));
         when(storageService.store(mockImage)).thenReturn(newImageName);
@@ -433,9 +433,9 @@ class ProductoServiceImplTest {
     @DisplayName("updateImage - Éxito, borra imagen anterior (imagen anterior distinta de default)")
     void updateImage_Success_PreviousImageExists() {
         // Arrange
-        producto.setImagen("old_funko_image.png");
+        producto.setImagen("old_producto_image.png");
         MultipartFile mockImage = mock(MultipartFile.class);
-        String newImageName = "new_funko_image_4.png";
+        String newImageName = "new_prodcuto_image_4.png";
         productoResponse.setImage(newImageName);
         when(repository.findById(1L)).thenReturn(Optional.of(producto));
         when(storageService.store(mockImage)).thenReturn(newImageName);
@@ -446,7 +446,7 @@ class ProductoServiceImplTest {
         GENERICProductosResponseDTO result = service.updateImage(1L, mockImage);
 
         // Assert
-        verify(storageService, times(1)).delete("old_funko_image.png");
+        verify(storageService, times(1)).delete("old_producto_image.png");
         verify(storageService).store(mockImage);
         verify(repository).save(any(Producto.class));
 

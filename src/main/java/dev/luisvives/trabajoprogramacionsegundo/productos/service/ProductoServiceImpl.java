@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -383,5 +384,9 @@ public class ProductoServiceImpl implements ProductoService {
         } catch (JsonProcessingException e) {
             log.severe("SERVICE: Error al convertir la notificación a JSON");
         }
+    }
+
+    public List<Producto> findByCreatedAtBetween(LocalDateTime ultimaEjecucion, LocalDateTime ahora) {
+        return repository.findAllByFechaCreacionBetween(ultimaEjecucion, ahora);
     }
 }

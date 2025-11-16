@@ -1,14 +1,14 @@
-
 package dev.luisvives.trabajoprogramacionsegundo.storage.controllers;
 
-
 import dev.luisvives.trabajoprogramacionsegundo.storage.StorageService;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.auth.JwtService;
+import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.auth.UserServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mock.web.MockMultipartFile;
@@ -34,9 +34,17 @@ class StorageControllerTest {
     @MockitoBean
     private StorageService storageService;
 
-    // Mock necesario si tienes @EnableJpaAuditing en tu aplicación
+
     @MockitoBean
     private org.springframework.data.jpa.mapping.JpaMetamodelMappingContext jpaMetamodelMappingContext;
+
+
+    @MockitoBean
+    private JwtService jwtService;
+
+
+    @MockitoBean
+    private UserServiceImpl userServiceImpl;
 
     private Path tempFile;
 
@@ -117,6 +125,7 @@ class StorageControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().bytes("fake-image-content".getBytes()));
     }
+
     @Test
     void testServeFile_withEmptyTempFile() throws Exception {
         // Creamos un archivo temporal vacío
@@ -132,7 +141,6 @@ class StorageControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().bytes(new byte[0])); // Comprobamos que el contenido es vacío
     }
-
 
     @Test
     void testServeFile_withTempTextFile() throws Exception {

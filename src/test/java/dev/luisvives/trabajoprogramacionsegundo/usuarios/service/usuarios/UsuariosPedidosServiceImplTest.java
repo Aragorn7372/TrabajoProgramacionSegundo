@@ -19,7 +19,6 @@ import dev.luisvives.trabajoprogramacionsegundo.usuarios.mapper.UsuariosMapper;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.model.Tipo;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.model.Usuario;
 import dev.luisvives.trabajoprogramacionsegundo.usuarios.repository.UsuariosRepository;
-import dev.luisvives.trabajoprogramacionsegundo.usuarios.service.usuarios.UsuariosPedidosServiceImpl;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -122,7 +121,7 @@ class UsuariosPedidosServiceImplTest {
     void findById_successful() {
         Long userId = usuario.getId();
         when(usuariosRepository.findById(userId)).thenReturn(Optional.of(usuario));
-        when(pedidosRepository.findPedidosByIdsByIdUsuario(userId)).thenReturn(List.of(pedido));
+        when(pedidosRepository.findPedidosByIdUsuario(userId)).thenReturn(List.of(pedido));
         when(usuariosMapper.usuariosAdminResponseDto(usuario, List.of(pedido.getId().toHexString())))
                 .thenReturn(usuariosAdminResponseDto);
 
@@ -130,7 +129,7 @@ class UsuariosPedidosServiceImplTest {
 
         assertSame(usuariosAdminResponseDto, result);
         verify(usuariosRepository).findById(userId);
-        verify(pedidosRepository).findPedidosByIdsByIdUsuario(userId);
+        verify(pedidosRepository).findPedidosByIdUsuario(userId);
         verify(usuariosMapper).usuariosAdminResponseDto(usuario, List.of(pedido.getId().toHexString()));
     }
 
@@ -238,7 +237,7 @@ class UsuariosPedidosServiceImplTest {
     void delete_whenHasPedidos_marksIsDeletedAndReturnsLogicalDeletionResponse() {
         Long userId = usuario.getId();
         when(usuariosRepository.findById(userId)).thenReturn(Optional.of(usuario));
-        when(pedidosRepository.findPedidosByIdsByIdUsuario(userId)).thenReturn(List.of(pedido));
+        when(pedidosRepository.findPedidosByIdUsuario(userId)).thenReturn(List.of(pedido));
         when(usuariosMapper.usuariosResponseDtoToUsuariosDto(usuario)).thenReturn(usuariosResponseDto);
 
         UsuariosDeleteResponse response = service.delete(userId);
@@ -262,7 +261,7 @@ class UsuariosPedidosServiceImplTest {
                 .build();
 
         when(usuariosRepository.findById(otherId)).thenReturn(Optional.of(otherUser));
-        when(pedidosRepository.findPedidosByIdsByIdUsuario(otherId)).thenReturn(List.of());
+        when(pedidosRepository.findPedidosByIdUsuario(otherId)).thenReturn(List.of());
         UsuariosResponseDto dto = UsuariosResponseDto.builder().build();
         when(usuariosMapper.usuariosResponseDtoToUsuariosDto(otherUser)).thenReturn(dto);
 

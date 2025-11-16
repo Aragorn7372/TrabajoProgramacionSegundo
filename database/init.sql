@@ -61,31 +61,34 @@ CREATE TABLE usuarios (
 -- ==========================================
 -- TABLA DE ROLES ASOCIADOS A CADA USUARIO
 -- ==========================================
-CREATE TABLE usuarios_tipo (
+CREATE TABLE usuario_tipo (
                                usuario_id BIGINT NOT NULL,
                                tipo VARCHAR(50) NOT NULL,  -- Guarda el nombre del Enum
                                CONSTRAINT fk_usuario_tipo FOREIGN KEY (usuario_id)
                                    REFERENCES usuarios (id)
                                    ON DELETE CASCADE
 );
-ALTER TABLE usuarios_tipo
+ALTER TABLE usuario_tipo
     ADD CONSTRAINT usuarios_tipo_unique UNIQUE (usuario_id, tipo);
 
-INSERT INTO usuarios (id, username, password, email, is_deleted, fecha_modificacion, fecha_creacion)
+INSERT INTO usuarios ( username, password, email, is_deleted, fecha_modificacion, fecha_creacion)
 VALUES
-    (1, 'juanperez', '$2a$12$OT0/dJ52EXI7KOCPIm.huehGVDJXgWgN2GCEAboj/q7YtV4hdyJw2', 'juanperez@example.com', false, NOW(), NOW()),
-    (2, 'maria_g', '$2a$12$3BY.t5v6NmclR6Q7aAXkQ.1Ybztfpzipk/vyftR0OotmO0J9JLb72', 'maria.garcia@example.com', false, NOW(), NOW()),
-    (3, 'carlos_r', '$2a$12$RDtfi9fX9et9svHFEXwwLubOaDQet3wWBH3OeGlNwrvIIJtKboE3i', 'carlos.ruiz@example.com', false, NOW(), NOW()),
-    (4, 'laura_s', '$2a$12$XX7wtgBUv56sNaL8XtRJ/.0/JbeqVcz5Aom5hff0z0TihcNGdaG0.', 'laura.sanchez@example.com', false, NOW(), NOW()),
-    (5, 'pedro_m', '$2a$12$tWy0BqfcKBMKcjig2YbuA.Vh/Ggy5EovgP1KW9bwdzZeTO8x/QXBS', 'pedro.martin@example.com', false, NOW(), NOW());
+    ( 'juanperez', '$2a$12$OT0/dJ52EXI7KOCPIm.huehGVDJXgWgN2GCEAboj/q7YtV4hdyJw2', 'juanperez@example.com', false, NOW(), NOW()),
+    ( 'maria_g', '$2a$12$3BY.t5v6NmclR6Q7aAXkQ.1Ybztfpzipk/vyftR0OotmO0J9JLb72', 'maria.garcia@example.com', false, NOW(), NOW()),
+    ( 'carlos_r', '$2a$12$RDtfi9fX9et9svHFEXwwLubOaDQet3wWBH3OeGlNwrvIIJtKboE3i', 'carlos.ruiz@example.com', false, NOW(), NOW()),
+    ( 'laura_s', '$2a$12$XX7wtgBUv56sNaL8XtRJ/.0/JbeqVcz5Aom5hff0z0TihcNGdaG0.', 'laura.sanchez@example.com', false, NOW(), NOW()),
+    ('pedro_m', '$2a$12$tWy0BqfcKBMKcjig2YbuA.Vh/Ggy5EovgP1KW9bwdzZeTO8x/QXBS', 'pedro.martin@example.com', false, NOW(), NOW()),
+    ('ADMIN','$2a$12$6ZgTPESRUI95KX5ie19IL.qaYQvCVsGRJNA46gd.7QqUzv/oqUVo6', 'admin.admin@example.com',false,NOW(),NOW());
 
-INSERT INTO usuarios_tipo (usuario_id, tipo)
+INSERT INTO usuario_tipo (usuario_id, tipo)
 VALUES
-    (1, 'USER'),
-    (2, 'USER'),
-    (3, 'USER'),
-    (4, 'USER'),
-    (5, 'USER');
+    (1, 'USUARIO'),
+    (2, 'USUARIO'),
+    (3, 'USUARIO'),
+    (4, 'USUARIO'),
+    (5, 'USUARIO'),
+    (6,'USUARIO'),
+    (6,'ADMIN');
 
 -- INSERCIÓN DE PRODUCTOS (MUEBLES)
 -- Usamos los IDs 1, 2, 3 que se acaban de autogenerar

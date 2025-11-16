@@ -155,7 +155,7 @@ public class PedidosServiceImpl implements PedidosService {
         return new DeletePedidosResponseDto(pedidosMapper.toResponse(pedido), "Pedido con id: " + id + " eliminado correctamente.");
     }
     public Page<GenericPedidosResponseDto> findPedidosByUserId(Long id, Pageable pageable) {
-        return pedidosRepository.findPedidosByIdsByIdUsuario(pageable).map(pedidosMapper::toResponse);
+        return pedidosRepository.findPedidosByIdUsuario(id,pageable).map(pedidosMapper::toResponse);
     }
 
     /**

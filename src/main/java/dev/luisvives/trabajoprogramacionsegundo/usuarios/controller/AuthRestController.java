@@ -20,12 +20,12 @@ public class AuthRestController {
     public AuthRestController(AuthServiceImpl authService) {
         this.authService = authService;
     }
-    @PostMapping("/singin")
+    @PostMapping("/signin")
     public ResponseEntity<JwtAuthResponse> signIn(@Valid @RequestBody SignInRequest signInRequest) {
         log.info("Iniciando el usuario");
         return ResponseEntity.ok(authService.login(signInRequest));
     }
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     public ResponseEntity<JwtAuthResponse> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         log.info("Iniciando el usuario");
         return ResponseEntity.ok(authService.register(signUpRequest));
