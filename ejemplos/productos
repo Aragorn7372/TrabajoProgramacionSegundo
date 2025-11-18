@@ -1,0 +1,1 @@
+npx wscat -c wss://localhost/ws/productos --no-check
