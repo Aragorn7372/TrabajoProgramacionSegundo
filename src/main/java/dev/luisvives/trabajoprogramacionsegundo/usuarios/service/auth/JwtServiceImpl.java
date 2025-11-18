@@ -24,18 +24,16 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUserName(String token) {
-        log.info("🔍 Extrayendo username del token");
-        log.info("🔍 Extrayendo username del token");
-        log.info("🎫 Token recibido (longitud): {} caracteres", token.length());
-        log.info("🎫 Token (primeros 50): {}", token.substring(0, Math.min(50, token.length())));
+        log.info(" Extrayendo username del token");
+
 
         try {
 
             String username = extractClaim(token, DecodedJWT::getSubject);
-            log.info("👤 Username extraído: {}", username);
+            log.info(" Username extraído: {}", username);
             return username;
         } catch (Exception e) {
-            log.error("❌ Error extrayendo username: {}", e.getMessage());
+            log.error("Error extrayendo username: {}", e.getMessage());
             return null;
         }
     }
@@ -52,17 +50,17 @@ public class JwtServiceImpl implements JwtService {
         Date now = new Date();
         Date expiration = new Date(now.getTime() + (1000 * jwtExpiration));
 
-        log.info("🔐 Generando token para usuario: {}", userDetails.getUsername());
+        log.info(" Generando token para usuario: {}", userDetails.getUsername());
 
         String token = JWT.create()
                 .withHeader(createHeader())
-                .withSubject(userDetails.getUsername())  // ✅ Aquí se guarda el username
+                .withSubject(userDetails.getUsername())
                 .withIssuedAt(now)
                 .withExpiresAt(expiration)
                 .withClaim("extraClaims", extra)
                 .sign(algorithm);
 
-        log.info("✅ Token generado con subject: {}", userDetails.getUsername());
+        log.info(" Token generado con subject: {}", userDetails.getUsername());
         return token;
     }
 
@@ -78,7 +76,7 @@ public class JwtServiceImpl implements JwtService {
         return header;
     }
 
-    // ✅ CORREGIDO: Usar el secreto directamente sin encoding extra
+
     private byte[] getSigningKey() {
         return jwtSigningKey.getBytes(StandardCharsets.UTF_8);
     }
@@ -86,7 +84,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         try {
-            log.info("🔍 Validando token para usuario: {}", userDetails.getUsername());
+            log.info(" Validando token para usuario: {}", userDetails.getUsername());
 
             final String username = extractUserName(token);
 
@@ -95,13 +93,13 @@ public class JwtServiceImpl implements JwtService {
                 return false;
             }
 
-            log.info("👤 Comparando - Token: '{}' vs Esperado: '{}'", username, userDetails.getUsername());
+            log.info(" Comparando - Token: '{}' vs Esperado: '{}'", username, userDetails.getUsername());
 
             boolean usernameMatches = username.equals(userDetails.getUsername());
             boolean tokenNotExpired = !isTokenExpired(token);
 
-            log.info("🔎 Username coincide: {}", usernameMatches);
-            log.info("🔎 Token no expirado: {}", tokenNotExpired);
+            log.info(" Username coincide: {}", usernameMatches);
+            log.info(" Token no expirado: {}", tokenNotExpired);
 
             boolean isValid = usernameMatches && tokenNotExpired;
 

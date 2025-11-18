@@ -31,13 +31,13 @@
 
 ---
 
-## 🚀 Características
+##  Características
 
 <table>
 <tr>
 <td width="50%">
 
-### 🔐 Gestión de Usuarios
+###  Gestión de Usuarios
 - Autenticación y autorización
 - CRUD completo
 - Gestión de perfiles
@@ -46,7 +46,7 @@
 </td>
 <td width="50%">
 
-### 📦 Gestión de Productos
+###  Gestión de Productos
 - Catálogo completo
 - Control de inventario
 - Imágenes y multimedia
@@ -57,7 +57,7 @@
 <tr>
 <td width="50%">
 
-### 🏷️ Gestión de Categorías
+###  Gestión de Categorías
 - Organización jerárquica
 - Clasificación inteligente
 - Filtros personalizados
@@ -66,7 +66,7 @@
 </td>
 <td width="50%">
 
-### 🛒 Gestión de Pedidos
+###  Gestión de Pedidos
 - Carrito de compras
 - Tracking de pedidos
 - Historial completo
@@ -76,19 +76,19 @@
 </tr>
 </table>
 
-### ✨ Características Adicionales
+### Características Adicionales
 
-- 🔄 **Despliegue Automático**: Docker Compose con un solo comando
-- 📊 **Reportes en Tiempo Real**: Cobertura de código con JaCoCo
-- 📚 **Documentación Automática**: Generada con Dokka
-- 🧪 **Página de Testing**: Interfaz web para pruebas sin Postman
-- 🎯 **API RESTful**: Siguiendo las mejores prácticas
-- 🔒 **Seguridad**: Implementación de Spring Security
-- ⚡ **Alto Rendimiento**: Optimizado para producción
+-  **Despliegue Automático**: Docker Compose con un solo comando
+-  **Reportes en Tiempo Real**: Cobertura de código con JaCoCo
+-  **Documentación Automática**: Generada con Dokka
+-  **Página de Testing**: Interfaz web para pruebas sin Postman
+-  **API RESTful**: Siguiendo las mejores prácticas
+-  **Seguridad**: Implementación de Spring Security
+-  **Alto Rendimiento**: Optimizado para producción
 
 ---
 
-## 🛠️ Stack Tecnológico
+##  Stack Tecnológico
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -111,14 +111,14 @@
 
 ---
 
-## 📋 Requisitos Previos
+##  Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalado:
 
-- ☕ **Java 25** o superior
-- 🔧 **Gradle 9.1**
-- 🐳 **Docker** y **Docker Compose**
-- 📦 **Git**
+-  **Java 25** o superior
+-  **Gradle 9.1**
+-  **Docker** y **Docker Compose**
+-  **Git**
 
 ### Verificar instalación
 
@@ -131,48 +131,48 @@ git --version     # Verificar Git
 
 ---
 
-## 🔧 Instalación y Configuración
+##  Instalación y Configuración
 
-### 1️⃣ Clonar el repositorio
+###  Clonar el repositorio
 
 ```bash
 git clone <url-del-repositorio>
 cd <nombre-del-proyecto>
 ```
 
-### 2️⃣ Compilar el proyecto
+###  Compilar el proyecto
 
 ```bash
 ./gradlew clean build
 ```
 
-### 3️⃣ Ejecutar tests
+###  Ejecutar tests
 
 ```bash
 ./gradlew test
 ```
 
-### 4️⃣ Generar reporte de cobertura
+###  Generar reporte de cobertura
 
 ```bash
 ./gradlew jacocoTestReport
 ```
 
-📊 **Reporte disponible en**: `build/reports/jacoco/test/html/index.html`
+ **Reporte disponible en**: `build/reports/jacoco/test/html/index.html`
 
-### 5️⃣ Generar documentación
+### Generar documentación
 
 ```bash
 ./gradlew dokkaHtml
 ```
 
-📚 **Documentación disponible en**: `build/dokka/html/index.html`
+ **Documentación disponible en**: `build/dokka/html/index.html`
 
 ---
 
-## 🐳 Despliegue con Docker
+##  Despliegue con Docker
 
-### 🚀 Inicio Rápido
+###  Inicio Rápido
 
 ```bash
 # Construir y levantar todos los servicios
@@ -185,7 +185,7 @@ docker-compose logs -f
 docker-compose down
 ```
 
-### 🔨 Construcción manual
+###  Construcción manual
 
 ```bash
 # Construir imagen
@@ -195,37 +195,37 @@ docker build -t api-gestion:latest .
 docker run -d -p 8080:8080 --name api-gestion api-gestion:latest
 ```
 
-### 📡 Servicios Disponibles
+###  Servicios Disponibles
 
 Una vez desplegado, accede a:
 
-| Servicio | URL | Descripción |
-|----------|-----|-------------|
-| 🌐 **API Principal** | `http://localhost:8080/api` | Endpoints REST |
-| 🧪 **Testing** | `http://localhost:8080/test` | Página de pruebas |
-| 📊 **Reportes** | `http://localhost:8080/reports` | Cobertura JaCoCo |
-| 📚 **Documentación** | `http://localhost:8080/doc` | Docs Dokka |
+| Servicio | URL                               | Descripción |
+|----------|-----------------------------------|-------------|
+|  **API Principal** | `https://www.tienda.com:3000/api` | Endpoints REST |
+|  **Testing** | `https://www.tienda.com/test`     | Página de pruebas |
+|  **Reportes** | `https://www.tienda.com/reports`  | Cobertura JaCoCo |
+|  **Documentación** | `https://www.tienda.com/doc`      | Docs Dokka |
 
 ---
 
-## 🌐 Servicios Web Automáticos
+##  Servicios Web Automáticos
 
-### 🧪 Página de Test
+###  Página de Test
 
-**URL**: `http://localhost:8080/test`
+**URL**: `https://www.tienda.com/test`
 
 <details>
 <summary><b>Ver características detalladas</b></summary>
 
 #### Funcionalidades:
 
-- ✅ **Interfaz Interactiva**: Formularios predefinidos para cada endpoint
-- 🔄 **Peticiones en Tiempo Real**: Visualiza requests y responses al instante
-- ✨ **Validación Automática**: Valida datos antes de enviar
-- 📝 **Ejemplos Incluidos**: Datos de prueba para cada operación
-- 🎯 **Testing Completo**: Prueba CRUD de usuarios, productos, categorías y pedidos
-- 📊 **Códigos HTTP**: Explicación de cada código de respuesta
-- 🎨 **UI Moderna**: Interfaz limpia y fácil de usar
+-  **Interfaz Interactiva**: Formularios predefinidos para cada endpoint
+-  **Peticiones en Tiempo Real**: Visualiza requests y responses al instante
+-  **Validación Automática**: Valida datos antes de enviar
+-  **Ejemplos Incluidos**: Datos de prueba para cada operación
+-  **Testing Completo**: Prueba CRUD de usuarios, productos, categorías y pedidos
+-  **Códigos HTTP**: Explicación de cada código de respuesta
+-  **UI Moderna**: Interfaz limpia y fácil de usar
 
 #### Casos de uso:
 
@@ -240,23 +240,23 @@ Una vez desplegado, accede a:
 
 ---
 
-### 📊 Reportes de Cobertura (JaCoCo)
+###  Reportes de Cobertura (JaCoCo)
 
-**URL**: `http://localhost/reports`
+**URL**: `https://www.tienda.com/report`
 
 <details>
 <summary><b>Ver características detalladas</b></summary>
 
 #### Contenido del Dashboard:
 
-- 📈 **Cobertura Total**: Porcentaje global del proyecto
-- 📦 **Por Paquetes**: Desglose por módulos
-- 📄 **Por Clases**: Análisis clase por clase
-- 🔍 **Líneas Detalladas**: Código cubierto vs no cubierto
-- 🌳 **Coverage de Branches**: Cobertura de condicionales
-- 📊 **Gráficos Visuales**: Representación gráfica de métricas
-- 🎨 **Código Coloreado**: Highlighting de líneas testeadas
-- 🔢 **Complejidad Ciclomática**: Métricas de complejidad
+-  **Cobertura Total**: Porcentaje global del proyecto
+-  **Por Paquetes**: Desglose por módulos
+-  **Por Clases**: Análisis clase por clase
+-  **Líneas Detalladas**: Código cubierto vs no cubierto
+-  **Coverage de Branches**: Cobertura de condicionales
+-  **Gráficos Visuales**: Representación gráfica de métricas
+-  **Código Coloreado**: Highlighting de líneas testeadas
+-  **Complejidad Ciclomática**: Métricas de complejidad
 
 #### Métricas incluidas:
 
@@ -276,47 +276,30 @@ Una vez desplegado, accede a:
 
 ---
 
-### 📚 Documentación Técnica (Dokka)
+###  Documentación Técnica (Dokka)
 
-**URL**: `http://localhost/doc`
+**URL**: `https://www.tienda.com/doc`
 
 <details>
 <summary><b>Ver características detalladas</b></summary>
 
 #### Documentación completa:
 
-- 📖 **Todas las Clases**: Controllers, Services, Repositories, Models
-- 🔍 **Métodos Detallados**: Públicos y privados
-- 📝 **Parámetros**: Tipos, descripciones y ejemplos
-- 🔄 **Valores de Retorno**: Qué devuelve cada método
-- ⚠️ **Excepciones**: Qué errores puede lanzar
-- 🗂️ **Estructura**: Organización de paquetes
-- 🔗 **Relaciones**: Dependencias entre clases
-- 🗃️ **Modelos de Datos**:
+-  **Todas las Clases**: Controllers, Services, Repositories, Models
+-  **Métodos Detallados**: Públicos y privados
+-  **Parámetros**: Tipos, descripciones y ejemplos
+-  **Valores de Retorno**: Qué devuelve cada método
+-  **Excepciones**: Qué errores puede lanzar
+-  **Estructura**: Organización de paquetes
+-  **Relaciones**: Dependencias entre clases
+-  **Modelos de Datos**:
     - Usuario (campos, validaciones, relaciones)
     - Producto (atributos, categorías, stock)
     - Categoría (jerarquía, productos asociados)
     - Pedido (items, estados, usuario)
 
-#### Navegación:
 
-```
-📚 Documentación
-├── 👤 Usuarios
-│   ├── UsuarioController
-│   ├── UsuarioService
-│   ├── UsuarioRepository
-│   └── Usuario (Model)
-├── 📦 Productos
-│   ├── ProductoController
-│   ├── ProductoService
-│   ├── ProductoRepository
-│   └── Producto (Model)
-├── 🏷️ Categorías
-│   └── ...
-└── 🛒 Pedidos
-    └── ...
-```
+
 
 **⚙️ Generación**: La documentación se compila automáticamente en el contenedor Docker usando Dokka.
 
@@ -324,86 +307,44 @@ Una vez desplegado, accede a:
 
 ---
 
-## 📚 Endpoints de la API
+##  Endpoints de la API
 
-### 👤 Usuarios
+###  Usuarios
 
 ```http
-GET    /usuarios          # Listar todos los usuarios
-GET    /usuarios/{id}     # Obtener usuario específico
-POST   /usuarios          # Crear nuevo usuario
-PUT    /usuarios/{id}     # Actualizar usuario
-DELETE /usuarios/{id}     # Eliminar usuario
+GET    /usuario                 # Listar todos los usuarios
+GET    /usuario/{id}            # Obtener usuario específico
+PUT    /usuario/{id}            # Actualizar usuario
+DELETE /usuario/{id}            # Eliminar usuario
+GET    /usuario/me              # obtiene el usuario del token
+PUT    /usuario/me              # actualiza el usuario del token
+DELETE /usuario/me              # elimina el usuario autenticado
+GET    /usuario/me/pedidos      # obtiene todos los pedidos del usuario autenticado
+GET    /usuario/me/pedidos/{id} # obtiene un pedido por id
+PUT    /usuario/me/pedidos/{id} # actualiza un pedido por id
+POST   /usuario/me/pedidos      # Guarda un pedido al usuario autorizado
+DELETE /usuario/me/pedidos/{id} # Elimina un pedido por id
 ```
 
-<details>
-<summary>Ver ejemplo de request/response</summary>
-
-```json
-// POST /usuarios
-{
-  "nombre": "Juan Pérez",
-  "email": "juan@example.com",
-  "password": "********",
-  "rol": "USUARIO"
-}
-
-// Response 201 Created
-{
-  "id": 1,
-  "nombre": "Juan Pérez",
-  "email": "juan@example.com",
-  "rol": "USUARIO",
-  "fechaCreacion": "2025-11-12T16:57:00Z"
-}
-```
-
-</details>
 
 ---
 
-### 📦 Productos
+###  Productos
 
 ```http
 GET    /productos         # Listar todos los productos
 GET    /productos/{id}    # Obtener producto específico
 POST   /productos         # Crear nuevo producto
+PATCH  /productos/{id}    # Actualiza un producto con algunas partes 
 PUT    /productos/{id}    # Actualizar producto
 DELETE /productos/{id}    # Eliminar producto
 ```
 
-<details>
-<summary>Ver ejemplo de request/response</summary>
 
-```json
-// POST /productos
-{
-  "nombre": "Laptop Pro",
-  "descripcion": "Laptop de alto rendimiento",
-  "precio": 1299.99,
-  "stock": 50,
-  "categoriaId": 2
-}
-
-// Response 201 Created
-{
-  "id": 1,
-  "nombre": "Laptop Pro",
-  "descripcion": "Laptop de alto rendimiento",
-  "precio": 1299.99,
-  "stock": 50,
-  "categoria": {
-    "id": 2,
-    "nombre": "Electrónica"
-  }
-}
-```
-
-</details>
 
 ---
 
-### 🏷️ Categorías
+###  Categorías
 
 ```http
 GET    /categorias        # Listar todas las categorías
@@ -415,7 +356,7 @@ DELETE /categorias/{id}   # Eliminar categoría
 
 ---
 
-### 🛒 Pedidos
+###  Pedidos
 
 ```http
 GET    /pedidos           # Listar todos los pedidos
@@ -425,48 +366,16 @@ PUT    /pedidos/{id}      # Actualizar pedido
 DELETE /pedidos/{id}      # Eliminar pedido
 ```
 
-<details>
-<summary>Ver ejemplo de request/response</summary>
-
-```json
-// POST /api/pedidos
-{
-  "usuarioId": 1,
-  "items": [
-    {
-      "productoId": 1,
-      "cantidad": 2,
-      "precioUnitario": 1299.99
-    }
-  ],
-  "total": 2599.98
-}
-
-// Response 201 Created
-{
-  "id": 1,
-  "usuario": {
-    "id": 1,
-    "nombre": "Juan Pérez"
-  },
-  "items": [...],
-  "total": 2599.98,
-  "estado": "PENDIENTE",
-  "fecha": "2025-11-12T16:57:00Z"
-}
-```
-
-</details>
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Página de Test Interactiva
 
 La aplicación incluye una **interfaz web completa** accesible en `/test`:
 
-#### 🎯 Características principales:
+####  Características principales:
 
 ```
 ✓ Sin necesidad de Postman o herramientas externas
@@ -478,103 +387,47 @@ La aplicación incluye una **interfaz web completa** accesible en `/test`:
 ✓ Historial de peticiones realizadas
 ```
 
-#### 🚀 Uso:
+####  Uso:
 
-1. Accede a `http://localhost:8080/test`
+1. Accede a `https://www.tienda.com/test`
 2. Selecciona el módulo a probar (Usuarios, Productos, etc.)
 3. Elige la operación (GET, POST, PUT, DELETE)
 4. Completa el formulario con datos de prueba
 5. Envía la petición y observa la respuesta
 
-> 💡 **Nota**: Esta página se genera y despliega **automáticamente** al ejecutar Docker, sin configuración adicional.
+>  **Nota**: Esta página se genera y despliega **automáticamente** al ejecutar Docker, sin configuración adicional.
+
 
 ---
 
-## 🏗️ Estructura del Proyecto
-
-```
-📁 proyecto-api/
-│
-├── 📂 src/
-│   ├── 📂 main/
-│   │   ├── 📂 java/com/api/gestion/
-│   │   │   ├── 📂 controllers/       # Controladores REST
-│   │   │   │   ├── UsuarioController.java
-│   │   │   │   ├── ProductoController.java
-│   │   │   │   ├── CategoriaController.java
-│   │   │   │   └── PedidoController.java
-│   │   │   │
-│   │   │   ├── 📂 models/            # Entidades JPA
-│   │   │   │   ├── Usuario.java
-│   │   │   │   ├── Producto.java
-│   │   │   │   ├── Categoria.java
-│   │   │   │   └── Pedido.java
-│   │   │   │
-│   │   │   ├── 📂 services/          # Lógica de negocio
-│   │   │   │   ├── UsuarioService.java
-│   │   │   │   ├── ProductoService.java
-│   │   │   │   ├── CategoriaService.java
-│   │   │   │   └── PedidoService.java
-│   │   │   │
-│   │   │   ├── 📂 repositories/      # Acceso a datos
-│   │   │   │   ├── UsuarioRepository.java
-│   │   │   │   ├── ProductoRepository.java
-│   │   │   │   ├── CategoriaRepository.java
-│   │   │   │   └── PedidoRepository.java
-│   │   │   │
-│   │   │   ├── 📂 dto/               # Data Transfer Objects
-│   │   │   ├── 📂 config/            # Configuraciones
-│   │   │   ├── 📂 exceptions/        # Manejo de errores
-│   │   │   └── 📂 security/          # Seguridad
-│   │   │
-│   │   └── 📂 resources/
-│   │       ├── 📂 static/
-│   │       │   ├── 📂 test/          # 🧪 Página de testing
-│   │       │   ├── 📂 reports/       # 📊 Reportes JaCoCo
-│   │       │   └── 📂 doc/           # 📚 Docs Dokka
-│   │       │
-│   │       └── application.properties
-│   │
-│   └── 📂 test/
-│       └── 📂 java/                  # Tests unitarios e integración
-│
-├── 📄 build.gradle.kts               # Configuración Gradle
-├── 📄 docker-compose.yml             # Orquestación Docker
-├── 📄 Dockerfile                     # Imagen Docker
-├── 📄 .gitignore
-└── 📄 README.md                      # Este archivo
-```
-
----
-
-## 🔄 Workflow de Despliegue Automático
+##  Workflow de Despliegue Automático
 
 ```mermaid
 graph LR
-    A[🔨 Build Gradle] --> B[🧪 Ejecutar Tests]
-    B --> C[📊 Generar JaCoCo]
-    C --> D[📚 Generar Dokka]
-    D --> E[🐳 Build Docker]
-    E --> F[🚀 Deploy Automático]
-    F --> G[✅ Servicios Disponibles]
+    A[Build Gradle] --> B[Ejecutar Tests]
+    B --> C[Generar JaCoCo]
+    C --> D[Generar Dokka]
+    D --> E[Build Docker]
+    E --> F[Deploy Automático]
+    F --> G[Servicios Disponibles]
 ```
 
 ### Proceso paso a paso:
 
-1. **🔨 Build del Proyecto**: Gradle compila el código fuente
-2. **🧪 Ejecución de Tests**: Se ejecutan todos los tests unitarios e integración
-3. **📊 Generación de Reportes**: JaCoCo genera reportes de cobertura
-4. **📚 Generación de Documentación**: Dokka crea la documentación del código
-5. **🐳 Construcción de Imagen**: Se empaqueta todo en un contenedor Docker
-6. **🚀 Despliegue Automático**: Docker Compose levanta todos los servicios
-7. **✅ Servicios Disponibles**: Test, Reports y Doc se sirven automáticamente
+1. **Build del Proyecto**: Gradle compila el código fuente
+2. **Ejecución de Tests**: Se ejecutan todos los tests unitarios e integración
+3. **Generación de Reportes**: JaCoCo genera reportes de cobertura
+4. **Generación de Documentación**: Dokka crea la documentación del código
+5. **Construcción de Imagen**: Se empaqueta todo en un contenedor Docker
+6. **Despliegue Automático**: Docker Compose levanta todos los servicios
+7. **Servicios Disponibles**: Test, Reports y Doc se sirven automáticamente
 
-> 🎯 **Todo este proceso es completamente automático** al ejecutar: `docker-compose up -d`
+>  **Todo este proceso es completamente automático** al ejecutar: `docker-compose up -d`
 
 ---
 
-## 👥 Equipo de Desarrollo
-
+##  Equipo de Desarrollo
+<div align="center">
 <table>
 <tr>
 <td align="center" width="25%">
@@ -607,44 +460,17 @@ graph LR
 </td>
 </tr>
 </table>
-
+</div>
 <div align="center">
 
-**🤝 Trabajando juntos para crear soluciones excepcionales**
+** Trabajando juntos para crear soluciones excepcionales**
 
 </div>
 
 ---
 
-## 🤝 Contribuciones
 
-¡Las contribuciones son bienvenidas! Sigue estos pasos:
-
-1. 🍴 **Fork** el proyecto
-2. 🌿 **Crea una rama** para tu feature
-   ```bash
-   git checkout -b feature/AmazingFeature
-   ```
-3. 💾 **Commit** tus cambios
-   ```bash
-   git commit -m 'Add some AmazingFeature'
-   ```
-4. 📤 **Push** a la rama
-   ```bash
-   git push origin feature/AmazingFeature
-   ```
-5. 🎉 **Abre un Pull Request**
-
-### 📝 Guía de Contribución
-
-- Sigue las convenciones de código del proyecto
-- Añade tests para nuevas funcionalidades
-- Actualiza la documentación si es necesario
-- Asegúrate de que todos los tests pasen
-
----
-
-## 📄 Licencia
+##  Licencia
 
 ```
 MIT License
@@ -664,7 +490,7 @@ in the Software without restriction...
 
 ---
 
-## 🐛 Reportar Issues
+##  Reportar Issues
 
 ¿Encontraste un bug? ¿Tienes una sugerencia?
 
@@ -673,48 +499,20 @@ in the Software without restriction...
 3. Incluye pasos para reproducir el problema
 4. Añade screenshots si es posible
 
----
 
-## 📞 Contacto y Soporte
-
-<div align="center">
-
-### 💬 ¿Necesitas ayuda?
-
-Para preguntas, sugerencias o soporte técnico:
-
-📧 Email: team@apigestion.com  
-💼 LinkedIn: [API Gestión Team]()  
-🐦 Twitter: [@apigestion]()  
-📖 Wiki: [Documentación completa]()
-
-</div>
 
 ---
 
-## 🎯 Roadmap
 
-- [x] ✅ Sistema de usuarios completo
-- [x] ✅ Gestión de productos y categorías
-- [x] ✅ Sistema de pedidos
-- [x] ✅ Despliegue automático con Docker
-- [ ] 🔄 Sistema de pagos integrado
-- [ ] 🔄 Notificaciones en tiempo real
-- [ ] 🔄 Dashboard administrativo
-- [ ] 🔄 API GraphQL
-- [ ] 🔄 Soporte multi-idioma
-- [ ] 🔄 App móvil
 
----
-
-## 📊 Estadísticas del Proyecto
+##  Estadísticas del Proyecto
 
 <div align="center">
 
 ![Lines of Code](https://img.shields.io/badge/Lines%20of%20Code-10K+-blue?style=flat-square)
-![Test Coverage](https://img.shields.io/badge/Coverage-85%25-brightgreen?style=flat-square)
+![Test Coverage](https://img.shields.io/badge/Coverage-93%25-brightgreen?style=flat-square)
 ![Build Status](https://img.shields.io/badge/Build-Passing-success?style=flat-square)
-![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
+![Version](https://img.shields.io/badge/Version-0.0.1-blue?style=flat-square)
 
 </div>
 
@@ -722,7 +520,7 @@ Para preguntas, sugerencias o soporte técnico:
 
 <div align="center">
 
-### 🌟 Si te gusta este proyecto, dale una estrella en GitHub
+###  Si te gusta este proyecto, dale una estrella en GitHub
 
 **Desarrollado con ☕ y ❤️ por el equipo de API Gestión**
 

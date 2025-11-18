@@ -18,7 +18,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 public class WebSocketHandler extends TextWebSocketHandler implements SubProtocolCapable, WebSocketSender {
     private final String entity; // Sobre lo que vamos a notificar
 
-    // Lista con todas las sesiones activas sin repetirse
+
     private final Set<WebSocketSession> sessions = new CopyOnWriteArraySet<>();
 
     public WebSocketHandler(String entity) {

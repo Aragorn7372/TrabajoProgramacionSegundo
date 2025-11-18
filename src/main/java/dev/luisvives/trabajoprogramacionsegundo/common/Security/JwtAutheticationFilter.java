@@ -41,7 +41,6 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
         UserDetails userDetails = null;
         String userName = null;
 
-        // Si no tenemos cabecera o no empieza por Bearer, no hacemos nada
         if (!StringUtils.hasText(authHeader) || !StringUtils.startsWithIgnoreCase(authHeader, "Bearer ")) {
             log.info("No se ha encontrado cabecera de autenticación, se ignora");
             filterChain.doFilter(request, response);
@@ -51,8 +50,8 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
         log.info("Se ha encontrado cabecera de autenticación, se procesa");
 
         jwt = authHeader.substring(7);
-        log.info("🎫 Token recibido (primeros 50 chars): {}", jwt.substring(0, Math.min(50, jwt.length())));
-        log.info("🎫 Token recibido (longitud): {} caracteres", jwt.length());
+        log.info(" Token recibido (primeros 50 chars): {}", jwt.substring(0, Math.min(50, jwt.length())));
+        log.info(" Token recibido (longitud): {} caracteres", jwt.length());
 
         try {
             userName = jwtService.extractUserName(jwt);
@@ -77,19 +76,15 @@ public class JwtAutheticationFilter extends OncePerRequestFilter {
             log.info("Usuario encontrado: {}", userDetails);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 log.info("JWT válido");
-                // Si es válido, lo autenticamos en el contexto de seguridad
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
-                // Añadimos los detalles de la petición
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // Lo añadimos al contexto de seguridad
                 context.setAuthentication(authToken);
-                // Y lo añadimos al contexto de seguridad
                 SecurityContextHolder.setContext(context);
             }
         }
-        // Y seguimos con la petición
+
         filterChain.doFilter(request, response);
     }
 }

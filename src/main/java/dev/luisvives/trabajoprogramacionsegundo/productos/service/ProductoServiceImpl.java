@@ -284,7 +284,7 @@ public class ProductoServiceImpl implements ProductoService {
         Producto updatedProducto = repository.save(foundProducto.get());
         onChange(Tipo.UPDATE, updatedProducto);
 
-        log.info("SERVICE: Funko con id " + updatedProducto.getId() + " actualizado (PATCH) correctamente");
+        log.info("SERVICE: Producto con id " + updatedProducto.getId() + " actualizado (PATCH) correctamente");
         return mapper.modelToGenericResponseDTO(updatedProducto);
     }
 
@@ -300,16 +300,16 @@ public class ProductoServiceImpl implements ProductoService {
     public DELETEProductoResponseDTO deleteById(Long id) {
         log.info("SERVICE: Eliminando Producto con id: " + id);
 
-        Optional<Producto> foundFunko = repository.findById(id);
-        if (foundFunko.isEmpty()) {
+        Optional<Producto> foundProducto = repository.findById(id);
+        if (foundProducto.isEmpty()) {
             log.warning("SERVICE: No se encontró Producto con id: " + id);
             throw new ProductoException.NotFoundException("SERVICE: No se encontró Producto con id: " + id);
         }
 
-        repository.delete(foundFunko.get());
-        onChange(Tipo.DELETE, foundFunko.get());
+        repository.delete(foundProducto.get());
+        onChange(Tipo.DELETE, foundProducto.get());
 
-        GENERICProductosResponseDTO deletedProductoDTO = mapper.modelToGenericResponseDTO(foundFunko.get());
+        GENERICProductosResponseDTO deletedProductoDTO = mapper.modelToGenericResponseDTO(foundProducto.get());
         return new DELETEProductoResponseDTO("Producto eliminado correctamente", deletedProductoDTO);
     }
 
@@ -332,7 +332,7 @@ public class ProductoServiceImpl implements ProductoService {
         }
 
         String imageStored = storageService.store(image);
-        Producto funkoToUpdate = Producto.builder()
+        Producto productoToUpdate = Producto.builder()
                 .id(foundProducto.getId())
                 .nombre(foundProducto.getNombre())
                 .precio(foundProducto.getPrecio())
@@ -343,7 +343,7 @@ public class ProductoServiceImpl implements ProductoService {
                 .fechaModificacion(foundProducto.getFechaModificacion())
                 .build();
 
-        var updatedFunko = repository.save(funkoToUpdate);
+        var updatedFunko = repository.save(productoToUpdate);
         onChange(Tipo.UPDATE, updatedFunko);
 
         return mapper.modelToGenericResponseDTO(updatedFunko);

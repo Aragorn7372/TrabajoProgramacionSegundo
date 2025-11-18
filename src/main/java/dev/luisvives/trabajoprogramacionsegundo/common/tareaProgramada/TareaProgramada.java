@@ -19,7 +19,7 @@ public class TareaProgramada {
     private final EmailServiceImpl emailService;
     private final UsuariosPedidosServiceImpl usersService;
 
-    // Guarda la última vez que se envió el email de novedades (inicialízala por defecto a -1 día)
+
     private LocalDateTime ultimaEjecucion = LocalDateTime.now().minusDays(1);
 
     @Autowired
@@ -35,8 +35,6 @@ public class TareaProgramada {
     @Scheduled(cron = "0 30 8 * * ?")
     public void enviarCorreoNovedades() {
         LocalDateTime ahora = LocalDateTime.now();
-
-        // Obtiene los productos creados entre la última ejecución y ahora
         List<Producto> nuevosProductos = productosService.findByCreatedAtBetween(ultimaEjecucion, ahora);
 
         if (!nuevosProductos.isEmpty()) {
@@ -55,19 +53,19 @@ public class TareaProgramada {
             html.append("</ul>");
             html.append("<p>Total de nuevos productos: <b>").append(nuevosProductos.size()).append("</b></p>");
 
-            // Obtener todos los usuarios y enviarles el correo
-            List<Usuario> usuarios = usersService.findAll(); // Asegúrate de tener este método
+
+            List<Usuario> usuarios = usersService.findAll();
             for (Usuario user : usuarios) {
                 if (user.getEmail() != null && !user.getEmail().isBlank()) {
                     Thread emailThread = getThread(user, html);
 
-                    // Iniciar el hilo (no bloqueante)
+
                     emailThread.start();
 
                 }
             }
         }
-        // Actualiza la fecha de última ejecución
+
         ultimaEjecucion = ahora;
     }
 
@@ -75,7 +73,7 @@ public class TareaProgramada {
         Thread emailThread = new Thread(() -> {
             try {
 
-                // Enviar el email
+
                 emailService.sendHtmlEmail(
                         user.getEmail(),
                         "Novedades de productos en la tienda",
@@ -87,9 +85,9 @@ public class TareaProgramada {
             }
         });
 
-        // Configurar el hilo
+
         emailThread.setName("EmailSender-Novedades-" + user.getId());
-        emailThread.setDaemon(true); // Para que no impida que la aplicación se cierre
+        emailThread.setDaemon(true);
         return emailThread;
     }
 }

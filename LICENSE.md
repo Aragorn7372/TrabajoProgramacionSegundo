@@ -26,9 +26,9 @@ SOFTWARE.
 
 ---
 
-## 📋 Términos de Uso
+##  Términos de Uso
 
-### ✅ Puedes:
+###  Puedes:
 
 - ✓ Usar este software comercialmente
 - ✓ Modificar el código fuente
@@ -36,13 +36,13 @@ SOFTWARE.
 - ✓ Usar el software con fines privados
 - ✓ Sublicenciar el código
 
-### ⚠️ Condiciones:
+###  Condiciones:
 
 - → Debes incluir el aviso de copyright original
 - → Debes incluir una copia de esta licencia
 - → Debes documentar los cambios significativos realizados
 
-### ❌ Limitaciones:
+###  Limitaciones:
 
 - ✗ El software se proporciona "tal cual", sin garantías
 - ✗ Los autores no son responsables de ningún daño
@@ -50,20 +50,22 @@ SOFTWARE.
 
 ---
 
-## 🤝 Contribuciones
+##  Contribuciones
 
 Las contribuciones a este proyecto se consideran bajo la misma licencia MIT.
 Al enviar un pull request, aceptas que tu código se licencie bajo estos términos.
 
 ---
 
-## 📞 Contacto
+##  Contacto
 
 Para preguntas sobre la licencia o permisos especiales:
 
-- **Email**: team@apigestion.com
-- **GitHub**: [github.com/Aragorn7372](https://github.com/Aragorn7372)
 
+- **GitHub**: [github.com/Aragorn7372](https://github.com/Aragorn7372)
+- **GitHub**: [github.com/Sggz221](https://github.com/Sggz221)
+- **GitHub**: [github.com/charlieecy](https://github.com/charlieecy)
+- **GitHub**: [github.com/AdrianHerSac](https://github.com/AdrianHerSac)
 ---
 
 **Fecha de última actualización**: 12 de noviembre de 2025
