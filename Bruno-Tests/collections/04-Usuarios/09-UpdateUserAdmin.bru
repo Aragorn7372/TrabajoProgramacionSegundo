@@ -1,0 +1,32 @@
+meta {
+  name: Update User (Admin)
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{baseUrl}}/usuario/{{targetUserId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "username": "UserUpdatedByAdmin{{targetUserId}}",
+    "email": "updated_by_admin{{targetUserId}}@example.com",
+    "password": "newPassword123",
+    "roles": [
+      "USUARIO"
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.nombre: eq UserUpdatedByAdmin{{targetUserId}}
+  res.body.email: eq updated_by_admin{{targetUserId}}@example.com
+}

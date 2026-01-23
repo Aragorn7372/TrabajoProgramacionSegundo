@@ -1,0 +1,20 @@
+meta {
+  name: Get Pedido By ID
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/pedidos/{{adminPedidoId}}
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{adminPedidoId}}
+  res.body.cliente.nombreCompleto: eq Admin Created Pedido
+}

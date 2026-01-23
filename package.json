@@ -1,0 +1,24 @@
+{
+  "name": "trabajoprogramacionsegundo",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:api": "cd Bruno-Tests/collections && bru run --env Local --insecure --sandbox=developer"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sggz221/TrabajoProgramacionSegundo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sggz221/TrabajoProgramacionSegundo/issues"
+  },
+  "homepage": "https://github.com/Sggz221/TrabajoProgramacionSegundo#readme",
+  "devDependencies": {
+    "@usebruno/cli": "^3.0.3"
+  }
+}

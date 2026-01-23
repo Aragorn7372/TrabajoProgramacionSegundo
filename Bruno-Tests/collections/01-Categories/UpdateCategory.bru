@@ -1,0 +1,33 @@
+meta {
+  name: Update Category
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/categories/{{categoryId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "name": "Category Updated"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{categoryId}}
+  res.body.name: eq CATEGORY UPDATED
+}
+
+script:post-response {
+  if (res.status === 200) {
+      bru.setEnvVar("categoryName", res.body.name);
+  }
+}

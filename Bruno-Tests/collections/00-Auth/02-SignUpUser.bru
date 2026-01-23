@@ -1,0 +1,36 @@
+meta {
+  name: SignUp User
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/auth/signup
+  body: json
+  auth: none
+}
+
+script:pre-request {
+  const id = Date.now();
+  bru.setVar("tempUser", "user" + id);
+  bru.setVar("tempEmail", "user" + id + "@test.com");
+}
+
+body:json {
+  {
+    "username": "{{tempUser}}",
+    "email": "{{tempEmail}}",
+    "password": "Password123!",
+    "passwordConfirm": "Password123!"
+  }
+}
+
+assert {
+  res.status: eq 200
+}
+
+script:post-response {
+  if (res.status === 200) {
+    bru.setEnvVar("authUserToken", res.body.token);
+  }
+}

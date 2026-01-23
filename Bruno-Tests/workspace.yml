@@ -1,0 +1,12 @@
+opencollection: 1.0.0
+info:
+  name: "Bruno-Tests"
+  type: workspace
+
+collections:
+  - name: "Mi API E2E"
+    path: "collections"
+
+specs:
+
+docs: ''

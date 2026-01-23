@@ -1,0 +1,2408 @@
+[
+  {
+    "iterationIndex": 0,
+    "results": [
+      {
+        "test": {
+          "filename": "00-Auth\\01-SignInAdmin.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/auth/signin",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"userNameOrEmail\": \"ADMIN\",\n  \"password\": \"admin\"\n}"
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJBRE1JTiIsImlhdCI6MTc2OTA4MTA3MiwiZXhwIjoxNzY5MTY3NDcyLCJleHRyYUNsYWltcyI6e319.8ft6xzzkiXpEQ-i6L1pCCO6LV_Dvv3OkNUkcnuSCnJM"
+          },
+          "url": "https://localhost/auth/signin",
+          "responseTime": 281
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "MeNqOOYoM5CjdNW21UsTR",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "DQqPYxMRvflJXhf_ee8Gl",
+            "lhsExpr": "res.body.token",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.3063959,
+        "name": "SignIn Admin",
+        "path": "00-Auth\\01-SignInAdmin",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "00-Auth\\02-SignUpUser.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/auth/signup",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"username\": \"user1769081080029\",\n  \"email\": \"user1769081080029@test.com\",\n  \"password\": \"Password123!\",\n  \"passwordConfirm\": \"Password123!\"\n}"
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMTc2OTA4MTA4MDAyOSIsImlhdCI6MTc2OTA4MTA3MiwiZXhwIjoxNzY5MTY3NDcyLCJleHRyYUNsYWltcyI6e319.bdFBYNK7iFyJHznanQ_Ko5SSgx5JEsLLOVNg4P9Quo0"
+          },
+          "url": "https://localhost/auth/signup",
+          "responseTime": 76
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "DrpPcu12563rDQ_IHw0Ap",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0801891,
+        "name": "SignUp User",
+        "path": "00-Auth\\02-SignUpUser",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "00-Auth\\03-GetMeCaptureId.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/usuario/me",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 34,
+            "username": "user1769081080029",
+            "email": "user1769081080029@test.com",
+            "tipo": [
+              "USUARIO"
+            ],
+            "isDeleted": false,
+            "pedidos": []
+          },
+          "url": "https://localhost/usuario/me",
+          "responseTime": 20
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "AAqs6PdPX26JVWxHRg9t3",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "nfd2E6yIWDe467KSLH3kk",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "isDefined",
+            "rhsOperand": "",
+            "operator": "isDefined",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0229654,
+        "name": "Get Me (Capture ID)",
+        "path": "00-Auth\\03-GetMeCaptureId",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "01-Categories\\GetAllCategories.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/categories",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": [
+            {
+              "id": 1,
+              "name": "MUEBLES"
+            },
+            {
+              "id": 2,
+              "name": "VIDEOJUEGOS"
+            },
+            {
+              "id": 3,
+              "name": "LIBROS"
+            }
+          ],
+          "url": "https://localhost/categories",
+          "responseTime": 15
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "WTeExsSO-4TKc84-4frXH",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "OpuMmXwbmBvY84mR3UQKV",
+            "lhsExpr": "res.body",
+            "rhsExpr": "isArray",
+            "rhsOperand": "",
+            "operator": "isArray",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0164116,
+        "name": "Get All Categories",
+        "path": "01-Categories\\GetAllCategories",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "01-Categories\\CreateCategory.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/categories",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"name\": \"Category Test Bruno\"\n}"
+        },
+        "response": {
+          "status": 201,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 13,
+            "name": "CATEGORY TEST BRUNO"
+          },
+          "url": "https://localhost/categories",
+          "responseTime": 23
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "iFwmD5jFh_jK0FkTZDsY0",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 201",
+            "rhsOperand": "201",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "3zCNCNW1YHEJJl9TaZUHz",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq CATEGORY TEST BRUNO",
+            "rhsOperand": "CATEGORY TEST BRUNO",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "uEIZ8qB1AruD0XBA1Uh1t",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "isDefined",
+            "rhsOperand": "",
+            "operator": "isDefined",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0268691,
+        "name": "Create Category",
+        "path": "01-Categories\\CreateCategory",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "01-Categories\\GetCategoryById.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/categories/13",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 13,
+            "name": "CATEGORY TEST BRUNO"
+          },
+          "url": "https://localhost/categories/13",
+          "responseTime": 21
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "4-SU0LBG64mdC0k39_Uik",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "ZWTrnPiNiHAyXFhY_PPcd",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{categoryId}}",
+            "rhsOperand": "{{categoryId}}",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "_re5mAKitWyKd21e4RZdx",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq CATEGORY TEST BRUNO",
+            "rhsOperand": "CATEGORY TEST BRUNO",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0237762,
+        "name": "Get Category By ID",
+        "path": "01-Categories\\GetCategoryById",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "01-Categories\\UpdateCategory.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/categories/13",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"name\": \"Category Updated\"\n}"
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 13,
+            "name": "CATEGORY UPDATED"
+          },
+          "url": "https://localhost/categories/13",
+          "responseTime": 33
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "AQyzziXDYR7X_Ax496h4d",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "22p6BoLbXDHLJzW23dmic",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{categoryId}}",
+            "rhsOperand": "{{categoryId}}",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "RPUz3Jb5H8sXe2ROoM8jv",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq CATEGORY UPDATED",
+            "rhsOperand": "CATEGORY UPDATED",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0348235,
+        "name": "Update Category",
+        "path": "01-Categories\\UpdateCategory",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "01-Categories\\PatchCategory.bru"
+        },
+        "request": {
+          "method": "PATCH",
+          "url": "https://localhost/categories/13",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"name\": \"Category Patched\"\n}"
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:32 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 13,
+            "name": "CATEGORY PATCHED"
+          },
+          "url": "https://localhost/categories/13",
+          "responseTime": 25
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "-GEVz4DLeThrcEZjAXOAc",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "jv-LBj3GhYVfWYwtqbDLK",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{categoryId}}",
+            "rhsOperand": "{{categoryId}}",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "Nopiq2JcPpLHwfN9J7wEg",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq CATEGORY PATCHED",
+            "rhsOperand": "CATEGORY PATCHED",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.025882,
+        "name": "Patch Category",
+        "path": "01-Categories\\PatchCategory",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "02-Productos\\GetAllProducts.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/productos?page=0&size=10&sortBy=id&direction=asc",
+          "headers": {}
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "content": [
+              {
+                "id": 1,
+                "name": "Silla de Oficina Ergonómica",
+                "price": 149.99,
+                "cantidad": 25,
+                "category": "MUEBLES",
+                "descripcion": "Silla cómoda con soporte lumbar ajustable.",
+                "image": "silla_oficina.png"
+              },
+              {
+                "id": 2,
+                "name": "Mesa de Escritorio de Roble",
+                "price": 219.5,
+                "cantidad": 10,
+                "category": "MUEBLES",
+                "descripcion": "Escritorio espacioso de madera maciza de roble.",
+                "image": "mesa_roble.png"
+              },
+              {
+                "id": 3,
+                "name": "Sofá Cama 3 Plazas",
+                "price": 399,
+                "cantidad": 5,
+                "category": "MUEBLES",
+                "descripcion": "Sofá convertible en cama, tapizado en tela gris.",
+                "image": "sofa_cama.png"
+              },
+              {
+                "id": 4,
+                "name": "Estantería de 5 Niveles",
+                "price": 89.9,
+                "cantidad": 30,
+                "category": "MUEBLES",
+                "descripcion": "Estantería metálica y de madera para almacenamiento.",
+                "image": "default.png"
+              },
+              {
+                "id": 5,
+                "name": "Lámpara de Pie LED",
+                "price": 59.95,
+                "cantidad": 15,
+                "category": "MUEBLES",
+                "descripcion": "Lámpara de diseño minimalista con luz LED regulable.",
+                "image": "lampara_pie.png"
+              },
+              {
+                "id": 6,
+                "name": "Cama Doble con Almacenamiento",
+                "price": 320,
+                "cantidad": 8,
+                "category": "MUEBLES",
+                "descripcion": "Estructura de cama con cajones inferiores.",
+                "image": "cama_doble.png"
+              },
+              {
+                "id": 7,
+                "name": "Armario Ropero 2 Puertas",
+                "price": 180.75,
+                "cantidad": 12,
+                "category": "MUEBLES",
+                "descripcion": "Armario básico color blanco con barra y estante.",
+                "image": "default.png"
+              },
+              {
+                "id": 8,
+                "name": "Mesa de Centro Elevable",
+                "price": 110,
+                "cantidad": 20,
+                "category": "MUEBLES",
+                "descripcion": "Mesa de centro con tapa elevable para portátil.",
+                "image": "mesa_centro.png"
+              },
+              {
+                "id": 9,
+                "name": "Zapatero Alto",
+                "price": 65,
+                "cantidad": 18,
+                "category": "MUEBLES",
+                "descripcion": "Mueble zapatero estrecho para entrada.",
+                "image": "zapatero.png"
+              },
+              {
+                "id": 10,
+                "name": "Sillón Relax Manual",
+                "price": 250,
+                "cantidad": 7,
+                "category": "MUEBLES",
+                "descripcion": "Sillón reclinable con reposapiés.",
+                "image": "sillon_relax.png"
+              }
+            ],
+            "totalPages": 3,
+            "totalElements": 30,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "totalPageElements": 10,
+            "empty": false,
+            "first": true,
+            "last": false,
+            "sortBy": "id",
+            "direction": "asc"
+          },
+          "url": "https://localhost/productos?page=0&size=10&sortBy=id&direction=asc",
+          "responseTime": 22
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "58sG7PgwgT07cuRkPo4z1",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "8sB3AV0iNu3sGl1xZ8RJL",
+            "lhsExpr": "res.body.content",
+            "rhsExpr": "isArray",
+            "rhsOperand": "",
+            "operator": "isArray",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0252231,
+        "name": "Get All Products",
+        "path": "02-Productos\\GetAllProducts",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "02-Productos\\CreateProduct.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/productos",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"name\": \"Producto Test Bruno 1769081080286\",\n  \"price\": 99.99,\n  \"cantidad\": 10,\n  \"category\": \"CATEGORY TEST BRUNO\",\n  \"image\": \"default.png\",\n  \"descripcion\": \"Descripción del producto de prueba\"\n}"
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "error": "La categoría CATEGORY TEST BRUNO no existe."
+          },
+          "url": "https://localhost/productos",
+          "responseTime": 31
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "yZ8GRyWlSu5dlYhvrJjFv",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 201",
+            "rhsOperand": "201",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 201"
+          },
+          {
+            "uid": "2og6nL4kMj-o_oB37JCEM",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq Producto Test Bruno {{uniqueSuffix}}",
+            "rhsOperand": "Producto Test Bruno {{uniqueSuffix}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 'Producto Test Bruno 1769081080286'"
+          },
+          {
+            "uid": "SOamPz6xfEdL4ogHpz-ss",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "isDefined",
+            "rhsOperand": "",
+            "operator": "isDefined",
+            "status": "fail",
+            "error": "expected undefined not to be undefined"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0377826,
+        "name": "Create Product",
+        "path": "02-Productos\\CreateProduct",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "02-Productos\\GetProductById.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/productos/{{productoId}}",
+          "headers": {}
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.079+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/productos/%7B%7BproductoId%7D%7D"
+          },
+          "url": "https://localhost/productos/%7B%7BproductoId%7D%7D",
+          "responseTime": 17
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "WJEeSxKNA6C8Sp0dSJ-4n",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          },
+          {
+            "uid": "Dvq2_q8lC3IGYOKn_coi0",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{productoId}}",
+            "rhsOperand": "{{productoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{productoId}}'"
+          },
+          {
+            "uid": "hibwE_ropEKRnuSRF3GbN",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq {{productoName}}",
+            "rhsOperand": "{{productoName}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{productoName}}'"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0205972,
+        "name": "Get Product By ID",
+        "path": "02-Productos\\GetProductById",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "02-Productos\\UpdateProduct.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/productos/{{productoId}}",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"name\": \"Producto Test Updated\",\n  \"price\": 109.99,\n  \"cantidad\": 20,\n  \"category\": \"CATEGORY TEST BRUNO\",\n  \"image\": \"product_updated.png\",\n  \"descripcion\": \"Descripción actualizada\"\n}"
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.108+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/productos/%7B%7BproductoId%7D%7D"
+          },
+          "url": "https://localhost/productos/%7B%7BproductoId%7D%7D",
+          "responseTime": 24
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "IR0mmDBKugmpUxw3xYJFD",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          },
+          {
+            "uid": "oBZbEsxyNJxpeJjHfmls7",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{productoId}}",
+            "rhsOperand": "{{productoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{productoId}}'"
+          },
+          {
+            "uid": "XY9LVsgKr6bXm4tYwCEK2",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq Producto Test Updated",
+            "rhsOperand": "Producto Test Updated",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 'Producto Test Updated'"
+          },
+          {
+            "uid": "-ky1hl_Dfb6qjnhlIkp5X",
+            "lhsExpr": "res.body.image",
+            "rhsExpr": "eq product_updated.png",
+            "rhsOperand": "product_updated.png",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 'product_updated.png'"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0282305,
+        "name": "Update Product",
+        "path": "02-Productos\\UpdateProduct",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "02-Productos\\PatchProduct.bru"
+        },
+        "request": {
+          "method": "PATCH",
+          "url": "https://localhost/productos/{{productoId}}",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"price\": 119.99\n}"
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.138+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/productos/%7B%7BproductoId%7D%7D"
+          },
+          "url": "https://localhost/productos/%7B%7BproductoId%7D%7D",
+          "responseTime": 22
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "8eHgAGRQ46CfFuR5ULqXn",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          },
+          {
+            "uid": "NX6v7PGfIdlHsQFeLdxfG",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{productoId}}",
+            "rhsOperand": "{{productoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{productoId}}'"
+          },
+          {
+            "uid": "IfUV2o-U-7bqD_y71wZ4k",
+            "lhsExpr": "res.body.precio",
+            "rhsExpr": "eq 119.99",
+            "rhsOperand": "119.99",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 119.99"
+          },
+          {
+            "uid": "DrN-hq7OaQjanTzGldQH4",
+            "lhsExpr": "res.body.name",
+            "rhsExpr": "eq {{productoName}}",
+            "rhsOperand": "{{productoName}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{productoName}}'"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0248729,
+        "name": "Patch Product",
+        "path": "02-Productos\\PatchProduct",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "03-Pedidos\\GetAllPedidos.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/pedidos?page=0&size=10&sortBy=id&direction=asc",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "content": [],
+            "totalPages": 0,
+            "totalElements": 0,
+            "pageSize": 10,
+            "pageNumber": 0,
+            "totalPageElements": 0,
+            "empty": true,
+            "first": true,
+            "last": true,
+            "sortBy": "id",
+            "direction": "asc"
+          },
+          "url": "https://localhost/pedidos?page=0&size=10&sortBy=id&direction=asc",
+          "responseTime": 22
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "iKGJP4-himbXdr6i2RHuK",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "wr40Rp8H74lhIWBQkL-qO",
+            "lhsExpr": "res.body.content",
+            "rhsExpr": "isArray",
+            "rhsOperand": "",
+            "operator": "isArray",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0227961,
+        "name": "Get All Pedidos",
+        "path": "03-Pedidos\\GetAllPedidos",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "03-Pedidos\\CreatePedido.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/pedidos",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"idUsuario\": 34,\n  \"cliente\": {\n    \"nombreCompleto\": \"Admin Created Pedido\",\n    \"email\": \"admin.pedido@example.com\",\n    \"telefono\": \"666000111\",\n    \"direccion\": {\n      \"calle\": \"Admin St\",\n      \"numero\": \"99\",\n      \"ciudad\": \"AdminCity\",\n      \"provincia\": \"AdminProv\",\n      \"pais\": \"AdminCountry\",\n      \"codigoPostal\": \"99999\"\n    }\n  },\n  \"lineaPedido\": [\n    {\n      \"cantidad\": 5,\n      \"idProducto\": {{productoId}},\n      \"precioProducto\": 50.0\n    }\n  ]\n}"
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.187+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/pedidos"
+          },
+          "url": "https://localhost/pedidos",
+          "responseTime": 19
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "guUQCcAexw8Zxo1d0g-5y",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 201",
+            "rhsOperand": "201",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 201"
+          },
+          {
+            "uid": "ks59yYWKkAPJDhaFMZPPb",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "isDefined",
+            "rhsOperand": "",
+            "operator": "isDefined",
+            "status": "fail",
+            "error": "expected undefined not to be undefined"
+          },
+          {
+            "uid": "v5jfqfiuRpPU8mRD3wcVw",
+            "lhsExpr": "res.body.cliente.nombreCompleto",
+            "rhsExpr": "eq Admin Created Pedido",
+            "rhsOperand": "Admin Created Pedido",
+            "operator": "eq",
+            "status": "fail",
+            "error": "Cannot read properties of undefined (reading 'nombreCompleto')"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0237462,
+        "name": "Create Pedido",
+        "path": "03-Pedidos\\CreatePedido",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "03-Pedidos\\GetPedidoById.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/pedidos/{{adminPedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.217+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/pedidos/%7B%7BadminPedidoId%7D%7D"
+          },
+          "url": "https://localhost/pedidos/%7B%7BadminPedidoId%7D%7D",
+          "responseTime": 27
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "qXl-MXPZGh7BOKDynfsb0",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          },
+          {
+            "uid": "-nwccRWkb_c_xcyoZ2HXe",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{adminPedidoId}}",
+            "rhsOperand": "{{adminPedidoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{adminPedidoId}}'"
+          },
+          {
+            "uid": "siRcvXx0K6MFHNw50ly4U",
+            "lhsExpr": "res.body.cliente.nombreCompleto",
+            "rhsExpr": "eq Admin Created Pedido",
+            "rhsOperand": "Admin Created Pedido",
+            "operator": "eq",
+            "status": "fail",
+            "error": "Cannot read properties of undefined (reading 'nombreCompleto')"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0286823,
+        "name": "Get Pedido By ID",
+        "path": "03-Pedidos\\GetPedidoById",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "03-Pedidos\\UpdatePedido.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/pedidos/{{adminPedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"idUsuario\": 34,\n  \"cliente\": {\n    \"nombreCompleto\": \"Admin Updated Pedido\",\n    \"email\": \"admin.updated@example.com\",\n    \"telefono\": \"666000222\",\n    \"direccion\": {\n      \"calle\": \"Admin St Updated\",\n      \"numero\": \"100\",\n      \"ciudad\": \"AdminCityUp\",\n      \"provincia\": \"AdminProvUp\",\n      \"pais\": \"AdminCountryUp\",\n      \"codigoPostal\": \"88888\"\n    }\n  },\n  \"lineaPedido\": [\n    {\n      \"cantidad\": 10,\n      \"idProducto\": {{productoId}},{{productoId}},\n      \"precioProducto\": 55.0\n    }\n  ]\n}"
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.261+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/pedidos/%7B%7BadminPedidoId%7D%7D"
+          },
+          "url": "https://localhost/pedidos/%7B%7BadminPedidoId%7D%7D",
+          "responseTime": 33
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "M-3AaRZsJA8xotgtdbzhI",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          },
+          {
+            "uid": "dUYjr9udmbqQxCyVdRK7I",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{adminPedidoId}}",
+            "rhsOperand": "{{adminPedidoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{adminPedidoId}}'"
+          },
+          {
+            "uid": "SmkF_H3V6pO60dqYzZwKs",
+            "lhsExpr": "res.body.cliente.nombreCompleto",
+            "rhsExpr": "eq Admin Updated Pedido",
+            "rhsOperand": "Admin Updated Pedido",
+            "operator": "eq",
+            "status": "fail",
+            "error": "Cannot read properties of undefined (reading 'nombreCompleto')"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0361872,
+        "name": "Update Pedido",
+        "path": "03-Pedidos\\UpdatePedido",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\01-GetAllUsers.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/usuario?page=0&size=20&sortBy=id&order=asc",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "content": [
+              {
+                "nombre": "juanperez",
+                "email": "juanperez@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "maria_g",
+                "email": "maria.garcia@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "carlos_r",
+                "email": "carlos.ruiz@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "laura_s",
+                "email": "laura.sanchez@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "pedro_m",
+                "email": "pedro.martin@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "ADMIN",
+                "email": "admin.admin@example.com",
+                "rol": "[ADMIN, USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin7",
+                "email": "updated_by_admin7@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "MyUpdatedProfile",
+                "email": "my.updated7@example.com",
+                "rol": "[]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin10",
+                "email": "updated_by_admin10@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin13",
+                "email": "updated_by_admin13@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin16",
+                "email": "updated_by_admin16@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin19",
+                "email": "updated_by_admin19@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin22",
+                "email": "updated_by_admin22@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin25",
+                "email": "updated_by_admin25@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin28",
+                "email": "updated_by_admin28@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "UserUpdatedByAdmin31",
+                "email": "updated_by_admin31@example.com",
+                "rol": "[USUARIO]"
+              },
+              {
+                "nombre": "user1769081080029",
+                "email": "user1769081080029@test.com",
+                "rol": "[USUARIO]"
+              }
+            ],
+            "totalPages": 1,
+            "totalElements": 17,
+            "pageSize": 20,
+            "pageNumber": 0,
+            "totalPageElements": 17,
+            "empty": false,
+            "first": true,
+            "last": true,
+            "sortBy": "id",
+            "direction": "asc"
+          },
+          "url": "https://localhost/usuario?page=0&size=20&sortBy=id&order=asc",
+          "responseTime": 61
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "0SEgYGIzyjThAtagK78de",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "21C6Zlv0INXON07V_Z6he",
+            "lhsExpr": "res.body.content",
+            "rhsExpr": "isArray",
+            "rhsOperand": "",
+            "operator": "isArray",
+            "status": "pass"
+          },
+          {
+            "uid": "c53101rnD9vYtSenySKMW",
+            "lhsExpr": "res.body.pageSize",
+            "rhsExpr": "eq 20",
+            "rhsOperand": "20",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0634227,
+        "name": "Get All Users",
+        "path": "04-Usuarios\\01-GetAllUsers",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\02-GetByIdAdmin.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/usuario/34",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "id": 34,
+            "username": "user1769081080029",
+            "email": "user1769081080029@test.com",
+            "tipo": [
+              "USUARIO"
+            ],
+            "isDeleted": false,
+            "pedidos": []
+          },
+          "url": "https://localhost/usuario/34",
+          "responseTime": 40
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "AxK-sU33exkfEMUiWjfPi",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "fOLOsz4ssu902APPKuJ4w",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{targetUserId}}",
+            "rhsOperand": "{{targetUserId}}",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "LsVEQFauJ0ANkJSKVecD0",
+            "lhsExpr": "res.body.username",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "pass"
+          },
+          {
+            "uid": "EemKUwiFRjwA1tRyTqoDT",
+            "lhsExpr": "res.body.email",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "pass"
+          },
+          {
+            "uid": "5q7v_osDy3XR7hv_BJKd4",
+            "lhsExpr": "res.body.email",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0422371,
+        "name": "Get User By Id (Admin)",
+        "path": "04-Usuarios\\02-GetByIdAdmin",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\09-UpdateUserAdmin.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/usuario/34",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"username\": \"UserUpdatedByAdmin34\",\n  \"email\": \"updated_by_admin34@example.com\",\n  \"password\": \"newPassword123\",\n  \"roles\": [\n    \"USUARIO\"\n  ]\n}"
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "nombre": "UserUpdatedByAdmin34",
+            "email": "updated_by_admin34@example.com",
+            "rol": "[USUARIO]"
+          },
+          "url": "https://localhost/usuario/34",
+          "responseTime": 116
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "ZshWWRsQK3Wlx3uOSGg5R",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "T_q8Zd8gMq_7R8La4DMNB",
+            "lhsExpr": "res.body.nombre",
+            "rhsExpr": "eq UserUpdatedByAdmin{{targetUserId}}",
+            "rhsOperand": "UserUpdatedByAdmin{{targetUserId}}",
+            "operator": "eq",
+            "status": "pass"
+          },
+          {
+            "uid": "byx2bhtzYSXJE0HgJiZ6W",
+            "lhsExpr": "res.body.email",
+            "rhsExpr": "eq updated_by_admin{{targetUserId}}@example.com",
+            "rhsOperand": "updated_by_admin{{targetUserId}}@example.com",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.1180134,
+        "name": "Update User (Admin)",
+        "path": "04-Usuarios\\09-UpdateUserAdmin",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\10-ReLoginUser.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/auth/signin",
+          "headers": {
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"userNameOrEmail\": \"UserUpdatedByAdmin34\",\n  \"password\": \"newPassword123\"\n}"
+        },
+        "response": {
+          "status": 403,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.536+00:00",
+            "status": 403,
+            "error": "Forbidden",
+            "path": "/auth/signin"
+          },
+          "url": "https://localhost/auth/signin",
+          "responseTime": 25
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "7oqbe-JA_gB79uVNgT9EU",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 403 to equal 200"
+          },
+          {
+            "uid": "7ygJ7rFwJAS1c2YhQ2fnp",
+            "lhsExpr": "res.body.token",
+            "rhsExpr": "isString",
+            "rhsOperand": "",
+            "operator": "isString",
+            "status": "fail",
+            "error": "expected undefined to be a string"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0289179,
+        "name": "Re-Login User",
+        "path": "04-Usuarios\\10-ReLoginUser",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\11-UpdateMe.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/usuario/me",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"username\": \"MyUpdatedProfile\",\n  \"email\": \"my.updated34@example.com\",\n  \"password\": \"newMyPassword123\",\n  \"oldPassword\": \"newPassword123\"\n}"
+        },
+        "response": {
+          "status": 409,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "error": "could not execute statement [ERROR: duplicate key value violates unique constraint \"usuarios_username_key\"\n  Detail: Key (username)=(MyUpdatedProfile) already exists.] [insert into usuarios (email,fecha_creacion,fecha_modificacion,is_deleted,password,username) values (?,?,?,?,?,?)]; SQL [insert into usuarios (email,fecha_creacion,fecha_modificacion,is_deleted,password,username) values (?,?,?,?,?,?)]; constraint [usuarios_username_key]"
+          },
+          "url": "https://localhost/usuario/me",
+          "responseTime": 200
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "8lNkWNJunxWXrUPNnKgJU",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 409 to equal 200"
+          },
+          {
+            "uid": "TfBrcsXQYG2SyfpPOljs1",
+            "lhsExpr": "res.body.nombre",
+            "rhsExpr": "eq MyUpdatedProfile",
+            "rhsOperand": "MyUpdatedProfile",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 'MyUpdatedProfile'"
+          },
+          {
+            "uid": "IFt7wVKvOp63cSNR5-Jmm",
+            "lhsExpr": "res.body.email",
+            "rhsExpr": "eq my.updated{{targetUserId}}@example.com",
+            "rhsOperand": "my.updated{{targetUserId}}@example.com",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal 'my.updated34@example.com'"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.2018236,
+        "name": "Update Me",
+        "path": "04-Usuarios\\11-UpdateMe",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\12-DeleteMe.bru"
+        },
+        "request": {
+          "method": "DELETE",
+          "url": "https://localhost/usuario/me",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "message": "usuario eliminado",
+            "usuario": {
+              "nombre": "user1769081080029",
+              "email": "user1769081080029@test.com",
+              "rol": "[USUARIO]"
+            }
+          },
+          "url": "https://localhost/usuario/me",
+          "responseTime": 31
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "Nb4xbWqtPWMc6CbRvTo6q",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0320981,
+        "name": "Delete Me",
+        "path": "04-Usuarios\\12-DeleteMe",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\05-GetMyPedidos.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/usuario/me/pedidos?page=0&size=10&sortBy=id&order=asc",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 401,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.815+00:00",
+            "status": 401,
+            "error": "Unauthorized",
+            "path": "/usuario/me/pedidos"
+          },
+          "url": "https://localhost/usuario/me/pedidos?page=0&size=10&sortBy=id&order=asc",
+          "responseTime": 14
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "OyXBhtRJqHTREyZKRBFLp",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 401 to equal 200"
+          },
+          {
+            "uid": "D5uGv0l2EavvzLSFztZ28",
+            "lhsExpr": "res.body.content",
+            "rhsExpr": "isArray",
+            "rhsOperand": "",
+            "operator": "isArray",
+            "status": "fail",
+            "error": "expected undefined to be an array"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0165242,
+        "name": "Get My Pedidos",
+        "path": "04-Usuarios\\05-GetMyPedidos",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\04-UserCreatePedido.bru"
+        },
+        "request": {
+          "method": "POST",
+          "url": "https://localhost/usuario/me/pedidos",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"idUsuario\": 34,\n  \"cliente\": {\n    \"nombreCompleto\": \"Test Pedido\",\n    \"email\": \"test.pedido@example.com\",\n    \"telefono\": \"666777888\",\n    \"direccion\": {\n      \"calle\": \"Calle Test\",\n      \"numero\": \"1\",\n      \"ciudad\": \"TestCity\",\n      \"provincia\": \"TestProv\",\n      \"pais\": \"TestCountry\",\n      \"codigoPostal\": \"12345\"\n    }\n  },\n  \"lineaPedido\": [\n    {\n      \"cantidad\": 1,\n      \"idProducto\": {{productoId}},\n      \"precioProducto\": 100.0\n    }\n  ]\n}"
+        },
+        "response": {
+          "status": 401,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.832+00:00",
+            "status": 401,
+            "error": "Unauthorized",
+            "path": "/usuario/me/pedidos"
+          },
+          "url": "https://localhost/usuario/me/pedidos",
+          "responseTime": 13
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "osVfnWlDVVJHhqiaeAr50",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 201",
+            "rhsOperand": "201",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 401 to equal 201"
+          },
+          {
+            "uid": "wBKqZPENs2CGjY8wJ1fhi",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "isDefined",
+            "rhsOperand": "",
+            "operator": "isDefined",
+            "status": "fail",
+            "error": "expected undefined not to be undefined"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0156411,
+        "name": "Create Pedido",
+        "path": "04-Usuarios\\04-UserCreatePedido",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\06-GetMyPedidoById.bru"
+        },
+        "request": {
+          "method": "GET",
+          "url": "https://localhost/usuario/me/pedidos/{{pedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 401,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.849+00:00",
+            "status": 401,
+            "error": "Unauthorized",
+            "path": "/usuario/me/pedidos/%7B%7BpedidoId%7D%7D"
+          },
+          "url": "https://localhost/usuario/me/pedidos/%7B%7BpedidoId%7D%7D",
+          "responseTime": 13
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "P-im1y6EZPYQk-9dssfv9",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 401 to equal 200"
+          },
+          {
+            "uid": "fWEhX6uZh2uIqiyGJIIrf",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{pedidoId}}",
+            "rhsOperand": "{{pedidoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{pedidoId}}'"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0141528,
+        "name": "Get My Pedido By ID",
+        "path": "04-Usuarios\\06-GetMyPedidoById",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\07-UserUpdatePedido.bru"
+        },
+        "request": {
+          "method": "PUT",
+          "url": "https://localhost/usuario/me/pedidos/{{pedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********",
+            "content-type": "application/json"
+          },
+          "data": "{\n  \"idUsuario\": 34,\n  \"cliente\": {\n    \"nombreCompleto\": \"Test Pedido Updated\",\n    \"email\": \"test.pedido.updated@example.com\",\n    \"telefono\": \"666777999\",\n    \"direccion\": {\n      \"calle\": \"Calle Test Update\",\n      \"numero\": \"2\",\n      \"ciudad\": \"UpdateCity\",\n      \"provincia\": \"UpdateProv\",\n      \"pais\": \"UpdateCountry\",\n      \"codigoPostal\": \"54321\"\n    }\n  },\n  \"lineaPedido\": [\n    {\n      \"cantidad\": 2,\n      \"idProducto\": {{productoId}},\n      \"precioProducto\": 100.0\n    }\n  ]\n}"
+        },
+        "response": {
+          "status": 401,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.867+00:00",
+            "status": 401,
+            "error": "Unauthorized",
+            "path": "/usuario/me/pedidos/%7B%7BpedidoId%7D%7D"
+          },
+          "url": "https://localhost/usuario/me/pedidos/%7B%7BpedidoId%7D%7D",
+          "responseTime": 14
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "Y5TqjLFl-SnLGi9696zDB",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 401 to equal 200"
+          },
+          {
+            "uid": "6eUDXsmN-7EFeIGYtql_d",
+            "lhsExpr": "res.body.id",
+            "rhsExpr": "eq {{pedidoId}}",
+            "rhsOperand": "{{pedidoId}}",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected undefined to equal '{{pedidoId}}'"
+          },
+          {
+            "uid": "f_hctecDISsGGqmm3rtAY",
+            "lhsExpr": "res.body.cliente.nombreCompleto",
+            "rhsExpr": "eq Test Pedido Updated",
+            "rhsOperand": "Test Pedido Updated",
+            "operator": "eq",
+            "status": "fail",
+            "error": "Cannot read properties of undefined (reading 'nombreCompleto')"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0159185,
+        "name": "Update Pedido",
+        "path": "04-Usuarios\\07-UserUpdatePedido",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "04-Usuarios\\08-UserDeletePedido.bru"
+        },
+        "request": {
+          "method": "DELETE",
+          "url": "https://localhost/usuario/me/profile/{{pedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 401,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.882+00:00",
+            "status": 401,
+            "error": "Unauthorized",
+            "path": "/usuario/me/profile/%7B%7BpedidoId%7D%7D"
+          },
+          "url": "https://localhost/usuario/me/profile/%7B%7BpedidoId%7D%7D",
+          "responseTime": 12
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "IqFLVvTotOCXkZHK2w1Vf",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 401 to equal 200"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0130866,
+        "name": "Delete Pedido",
+        "path": "04-Usuarios\\08-UserDeletePedido",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "99-Limpieza\\01-DeletePedidoAdmin.bru"
+        },
+        "request": {
+          "method": "DELETE",
+          "url": "https://localhost/pedidos/{{adminPedidoId}}",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.902+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/pedidos/%7B%7BadminPedidoId%7D%7D"
+          },
+          "url": "https://localhost/pedidos/%7B%7BadminPedidoId%7D%7D",
+          "responseTime": 17
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "-ieCZeFlI8IHEMd8tnGJN",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.018445,
+        "name": "Delete Pedido",
+        "path": "99-Limpieza\\01-DeletePedidoAdmin",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "99-Limpieza\\02-DeleteProduct.bru"
+        },
+        "request": {
+          "method": "DELETE",
+          "url": "https://localhost/productos/{{productoId}}",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 400,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "timestamp": "2026-01-22T11:24:33.921+00:00",
+            "status": 400,
+            "error": "Bad Request",
+            "path": "/productos/%7B%7BproductoId%7D%7D"
+          },
+          "url": "https://localhost/productos/%7B%7BproductoId%7D%7D",
+          "responseTime": 17
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "XJmktSw2rWfMm-IqR8Bo6",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "fail",
+            "error": "expected 400 to equal 200"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.0175362,
+        "name": "Delete Product",
+        "path": "99-Limpieza\\02-DeleteProduct",
+        "iterationIndex": 0
+      },
+      {
+        "test": {
+          "filename": "99-Limpieza\\03-DeleteCategory.bru"
+        },
+        "request": {
+          "method": "DELETE",
+          "url": "https://localhost/categories/13",
+          "headers": {
+            "Authorization": "Bearer ********"
+          }
+        },
+        "response": {
+          "status": 200,
+          "statusText": "",
+          "headers": {
+            "server": "nginx/1.26.3",
+            "date": "Thu, 22 Jan 2026 11:24:33 GMT",
+            "content-type": "application/json",
+            "transfer-encoding": "chunked",
+            "connection": "close",
+            "x-content-type-options": "nosniff",
+            "x-xss-protection": "0",
+            "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+            "pragma": "no-cache",
+            "expires": "0",
+            "x-frame-options": "DENY"
+          },
+          "data": {
+            "message": "Categoría eliminada correctamente",
+            "deletedCategory": {
+              "id": 13,
+              "name": "CATEGORY PATCHED"
+            }
+          },
+          "url": "https://localhost/categories/13",
+          "responseTime": 37
+        },
+        "error": null,
+        "status": "pass",
+        "assertionResults": [
+          {
+            "uid": "3MHKixoSHk5yd6qTrGw4P",
+            "lhsExpr": "res.status",
+            "rhsExpr": "eq 200",
+            "rhsOperand": "200",
+            "operator": "eq",
+            "status": "pass"
+          }
+        ],
+        "testResults": [],
+        "preRequestTestResults": [],
+        "postResponseTestResults": [],
+        "shouldStopRunnerExecution": false,
+        "runDuration": 0.038524,
+        "name": "Delete Category",
+        "path": "99-Limpieza\\03-DeleteCategory",
+        "iterationIndex": 0
+      }
+    ],
+    "summary": {
+      "totalRequests": 31,
+      "passedRequests": 15,
+      "failedRequests": 16,
+      "errorRequests": 0,
+      "skippedRequests": 0,
+      "totalAssertions": 76,
+      "passedAssertions": 36,
+      "failedAssertions": 40,
+      "totalTests": 0,
+      "passedTests": 0,
+      "failedTests": 0,
+      "totalPreRequestTests": 0,
+      "passedPreRequestTests": 0,
+      "failedPreRequestTests": 0,
+      "totalPostResponseTests": 0,
+      "passedPostResponseTests": 0,
+      "failedPostResponseTests": 0
+    }
+  }
+]

@@ -1,0 +1,33 @@
+meta {
+  name: Patch Category
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/categories/{{categoryId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "name": "Category Patched"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{categoryId}}
+  res.body.name: eq CATEGORY PATCHED
+}
+
+script:post-response {
+  if (res.status === 200) {
+      bru.setEnvVar("categoryName", res.body.name);
+  }
+}

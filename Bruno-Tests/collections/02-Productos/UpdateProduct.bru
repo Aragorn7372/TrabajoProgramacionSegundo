@@ -1,0 +1,39 @@
+meta {
+  name: Update Product
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/productos/{{productoId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "name": "Producto Test Updated",
+    "price": 109.99,
+    "cantidad": 20,
+    "category": "{{categoryName}}",
+    "image": "product_updated.png",
+    "descripcion": "Descripción actualizada"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{productoId}}
+  res.body.name: eq Producto Test Updated
+  res.body.image: eq product_updated.png
+}
+
+script:post-response {
+  if (res.status === 200) {
+      bru.setEnvVar("productoName", res.body.name);
+  }
+}

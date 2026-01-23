@@ -1,0 +1,20 @@
+meta {
+  name: Get All Users
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/usuario?page=0&size=20&sortBy=id&order=asc
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.content: isArray
+  res.body.pageSize: eq 20
+}

@@ -1,0 +1,30 @@
+meta {
+  name: SignIn Admin
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/auth/signin
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "userNameOrEmail": "ADMIN",
+    "password": "admin"
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.token: isString
+}
+
+script:post-response {
+  if (res.status === 200 && res.body.token) {
+    bru.setEnvVar("authAdminToken", res.body.token);
+    console.log("Token de Administrador guardado.");
+  }
+}

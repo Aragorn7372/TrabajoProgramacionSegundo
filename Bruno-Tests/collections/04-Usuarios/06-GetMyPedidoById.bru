@@ -1,0 +1,19 @@
+meta {
+  name: Get My Pedido By ID
+  type: http
+  seq: 11
+}
+
+get {
+  url: {{baseUrl}}/usuario/me/pedidos/{{pedidoId}}
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{pedidoId}}
+}

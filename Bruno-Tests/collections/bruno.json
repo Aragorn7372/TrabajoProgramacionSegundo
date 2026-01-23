@@ -1,0 +1,9 @@
+{
+  "name": "Mi API E2E",
+  "version": "1",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

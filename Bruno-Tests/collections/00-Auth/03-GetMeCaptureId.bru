@@ -1,0 +1,26 @@
+meta {
+  name: Get Me (Capture ID)
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/usuario/me
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: isDefined
+}
+
+script:post-response {
+  // Capturamos el ID del propio usuario
+  if (res.status === 200) {
+      bru.setEnvVar("targetUserId", res.body.id);
+  }
+}

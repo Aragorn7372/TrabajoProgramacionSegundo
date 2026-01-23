@@ -1,0 +1,15 @@
+meta {
+  name: Get All Categories
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/categories
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body: isArray
+}

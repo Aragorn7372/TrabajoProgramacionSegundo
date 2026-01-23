@@ -1,0 +1,47 @@
+meta {
+  name: Update Pedido
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{baseUrl}}/pedidos/{{adminPedidoId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "idUsuario": {{targetUserId}},
+    "cliente": {
+      "nombreCompleto": "Admin Updated Pedido",
+      "email": "admin.updated@example.com",
+      "telefono": "666000222",
+      "direccion": {
+        "calle": "Admin St Updated",
+        "numero": "100",
+        "ciudad": "AdminCityUp",
+        "provincia": "AdminProvUp",
+        "pais": "AdminCountryUp",
+        "codigoPostal": "88888"
+      }
+    },
+    "lineaPedido": [
+      {
+        "cantidad": 10,
+        "idProducto": {{productoId}},
+        "precioProducto": 55.0
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{adminPedidoId}}
+  res.body.cliente.nombreCompleto: eq Admin Updated Pedido
+}
