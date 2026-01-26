@@ -1,0 +1,18 @@
+meta {
+  name: Delete Pedido
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{baseUrl}}/pedidos/{{adminPedidoId}}
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+assert {
+  res.status: eq 200
+}

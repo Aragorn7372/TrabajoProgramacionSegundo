@@ -1,0 +1,22 @@
+meta {
+  name: Get User By Id (Admin)
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/usuario/{{targetUserId}}
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{targetUserId}}
+  res.body.username: isString
+  res.body.email: isString
+  res.body.email: isString
+}

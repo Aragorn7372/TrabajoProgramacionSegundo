@@ -1,0 +1,15 @@
+meta {
+  name: Get All Products
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/productos?page=0&size=10&sortBy=id&direction=asc
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.content: isArray
+}

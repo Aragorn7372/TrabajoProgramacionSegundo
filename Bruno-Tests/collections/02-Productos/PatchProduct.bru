@@ -1,0 +1,27 @@
+meta {
+  name: Patch Product
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/productos/{{productoId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "precio": 119.99
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{productoId}}
+  res.body.name: eq {{productoName}}
+}

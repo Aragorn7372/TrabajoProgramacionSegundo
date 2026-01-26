@@ -1,0 +1,52 @@
+meta {
+  name: Create Pedido
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{baseUrl}}/usuario/me/pedidos
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+body:json {
+  {
+    "idUsuario": {{targetUserId}},
+    "cliente": {
+      "nombreCompleto": "Test Pedido",
+      "email": "test.pedido@example.com",
+      "telefono": "666777888",
+      "direccion": {
+        "calle": "Calle Test",
+        "numero": "1",
+        "ciudad": "TestCity",
+        "provincia": "TestProv",
+        "pais": "TestCountry",
+        "codigoPostal": "12345"
+      }
+    },
+    "lineaPedido": [
+      {
+        "cantidad": 1,
+        "idProducto": {{productoId}},
+        "precioProducto": 100.0
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: isDefined
+}
+
+script:post-response {
+  if (res.status === 200) {
+      bru.setEnvVar("pedidoId", res.body.id);
+  }
+}

@@ -1,0 +1,34 @@
+meta {
+  name: Create Category
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/categories
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authAdminToken}}
+}
+
+body:json {
+  {
+    "name": "Category Test Bruno"
+  }
+}
+
+assert {
+  res.status: eq 201
+  res.body.name: eq CATEGORY TEST BRUNO
+  res.body.id: isDefined
+}
+
+script:post-response {
+  if (res.status === 201) {
+      bru.setEnvVar("categoryId", res.body.id);
+      bru.setEnvVar("categoryName", res.body.name);
+  }
+}

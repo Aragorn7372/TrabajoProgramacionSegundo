@@ -1,0 +1,18 @@
+meta {
+  name: Delete Me
+  type: http
+  seq: 8
+}
+
+delete {
+  url: {{baseUrl}}/usuario/me
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+assert {
+  res.status: eq 200
+}

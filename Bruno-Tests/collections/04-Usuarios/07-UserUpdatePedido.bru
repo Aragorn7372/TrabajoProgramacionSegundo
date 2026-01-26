@@ -1,0 +1,47 @@
+meta {
+  name: Update Pedido
+  type: http
+  seq: 12
+}
+
+put {
+  url: {{baseUrl}}/usuario/me/pedidos/{{pedidoId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+body:json {
+  {
+    "idUsuario": {{targetUserId}},
+    "cliente": {
+      "nombreCompleto": "Test Pedido Updated",
+      "email": "test.pedido.updated@example.com",
+      "telefono": "666777999",
+      "direccion": {
+        "calle": "Calle Test Update",
+        "numero": "2",
+        "ciudad": "UpdateCity",
+        "provincia": "UpdateProv",
+        "pais": "UpdateCountry",
+        "codigoPostal": "54321"
+      }
+    },
+    "lineaPedido": [
+      {
+        "cantidad": 2,
+        "idProducto": {{productoId}},
+        "precioProducto": 100.0
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 200
+  res.body.id: eq {{pedidoId}}
+  res.body.cliente.nombreCompleto: eq Test Pedido Updated
+}

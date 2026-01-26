@@ -1,0 +1,19 @@
+meta {
+  name: Get My Pedidos
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{baseUrl}}/usuario/me/pedidos?page=0&size=10&sortBy=id&order=asc
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{authUserToken}}
+}
+
+assert {
+  res.status: eq 200
+  res.body.content: isArray
+}
