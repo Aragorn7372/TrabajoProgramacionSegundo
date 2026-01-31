@@ -1,0 +1,37 @@
+<map id="Gráfico de jerarquía de clases" name="Gráfico de jerarquía de clases">
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,205,147,230"/>
+<area shape="rect" id="Node000001" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1pedidos_1_1exceptions_1_1PedidoException.html" title=" " alt="" coords="226,5,662,45"/>
+<area shape="poly" id="edge17_Node000000_Node000001" title=" " alt="" coords="85,191,102,159,125,121,156,85,193,55,225,40,227,45,196,60,160,89,130,125,106,162,90,193"/>
+<area shape="rect" id="Node000002" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1exceptions_1_1CategoryException.html" title=" " alt="" coords="219,69,669,109"/>
+<area shape="poly" id="edge18_Node000000_Node000002" title=" " alt="" coords="96,192,138,154,165,134,194,119,227,107,228,112,196,124,168,139,142,158,100,196"/>
+<area shape="rect" id="Node000004" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1exceptions_1_1CategoryValidationException.html" title=" " alt="" coords="219,133,669,173"/>
+<area shape="poly" id="edge20_Node000000_Node000004" title=" " alt="" coords="131,198,194,183,264,171,264,176,195,188,133,203"/>
+<area shape="rect" id="Node000005" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1exceptions_1_1ProductoException.html" title=" " alt="" coords="219,197,669,237"/>
+<area shape="poly" id="edge21_Node000000_Node000005" title=" " alt="" coords="160,215,219,215,219,220,160,220"/>
+<area shape="rect" id="Node000006" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1exceptions_1_1StorageException.html" title=" " alt="" coords="227,261,661,301"/>
+<area shape="poly" id="edge22_Node000000_Node000006" title=" " alt="" coords="133,231,195,247,264,259,264,264,194,252,131,236"/>
+<area shape="rect" id="Node000010" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1auth_1_1AuthException.html" title=" " alt="" coords="207,357,681,397"/>
+<area shape="poly" id="edge26_Node000000_Node000010" title=" " alt="" coords="101,238,143,276,196,311,258,337,323,355,321,360,257,342,193,316,140,280,98,242"/>
+<area shape="rect" id="Node000014" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1UsuariosExceptions.html" title=" " alt="" coords="195,549,693,589"/>
+<area shape="poly" id="edge30_Node000000_Node000014" title=" " alt="" coords="91,241,132,320,162,366,197,407,247,452,302,491,401,547,399,552,299,495,244,456,193,411,157,369,127,323,86,244"/>
+<area shape="rect" id="Node000003" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1exceptions_1_1CategoryNotFoundException.html" title=" " alt="" coords="766,69,1215,109"/>
+<area shape="poly" id="edge19_Node000002_Node000003" title=" " alt="" coords="682,87,766,87,766,92,682,92"/>
+<area shape="rect" id="Node000007" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1exceptions_1_1StorageBadRequest.html" title=" " alt="" coords="773,133,1208,173"/>
+<area shape="poly" id="edge23_Node000006_Node000007" title=" " alt="" coords="673,257,692,247,707,233,715,216,723,199,740,183,772,168,774,173,743,188,727,202,720,218,712,236,695,252,676,261"/>
+<area shape="rect" id="Node000008" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1exceptions_1_1StorageInternal.html" title=" " alt="" coords="773,197,1208,237"/>
+<area shape="poly" id="edge24_Node000006_Node000008" title=" " alt="" coords="629,257,819,235,819,240,629,262"/>
+<area shape="rect" id="Node000009" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1exceptions_1_1StorageNotFound.html" title=" " alt="" coords="773,261,1208,301"/>
+<area shape="poly" id="edge25_Node000006_Node000009" title=" " alt="" coords="675,279,773,279,773,284,675,284"/>
+<area shape="rect" id="Node000011" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1auth_1_1AuthSingInInvalid.html" title=" " alt="" coords="754,325,1227,365"/>
+<area shape="poly" id="edge27_Node000010_Node000011" title=" " alt="" coords="694,360,754,357,754,362,695,365"/>
+<area shape="rect" id="Node000012" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1auth_1_1UserDiferentPassword.html" title=" " alt="" coords="754,389,1227,429"/>
+<area shape="poly" id="edge28_Node000010_Node000012" title=" " alt="" coords="695,389,754,393,754,398,694,395"/>
+<area shape="rect" id="Node000013" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1auth_1_1UserEmailOrUsernameExists.html" title=" " alt="" coords="754,453,1227,493"/>
+<area shape="poly" id="edge29_Node000010_Node000013" title=" " alt="" coords="543,398,742,439,820,451,819,456,741,444,542,403"/>
+<area shape="rect" id="Node000015" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1IncorrectOldPassword.html" title=" " alt="" coords="741,517,1240,557"/>
+<area shape="poly" id="edge31_Node000014_Node000015" title=" " alt="" coords="707,551,741,549,741,555,707,557"/>
+<area shape="rect" id="Node000016" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1UserForbiddenException.html" title=" " alt="" coords="741,581,1240,621"/>
+<area shape="poly" id="edge32_Node000014_Node000016" title=" " alt="" coords="707,582,741,584,741,589,707,587"/>
+<area shape="rect" id="Node000017" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1UserNotFound.html" title=" " alt="" coords="741,645,1240,685"/>
+<area shape="poly" id="edge33_Node000014_Node000017" title=" " alt="" coords="543,590,742,631,820,643,819,648,741,636,542,595"/>
+</map>

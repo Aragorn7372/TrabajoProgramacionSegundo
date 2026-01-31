@@ -1,0 +1,9 @@
+<map id="dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketHandler" name="dev.luisvives.trabajoprogramacionsegundo.notificaciones.config.WebSocketHandler">
+<area shape="rect" id="Node000001" title=" " alt="" coords="496,47,939,87"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="141,5,312,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="326,25,518,45,518,50,325,31"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="151,55,303,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="317,65,496,65,496,70,317,70"/>
+<area shape="rect" id="Node000004" href="$interfacedev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1notificaciones_1_1config_1_1WebSocketSender.html" title=" " alt="" coords="5,105,448,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="412,100,545,85,546,90,412,106"/>
+</map>

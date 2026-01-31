@@ -1,0 +1,11 @@
+<map id="dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions.usuarios.UsuariosExceptions" name="dev.luisvives.trabajoprogramacionsegundo.usuarios.exceptions.usuarios.UsuariosExceptions">
+<area shape="rect" id="Node000001" title=" " alt="" coords="195,69,693,109"/>
+<area shape="rect" id="Node000003" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1IncorrectOldPassword.html" title=" " alt="" coords="741,5,1240,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="629,65,819,43,819,48,629,70"/>
+<area shape="rect" id="Node000004" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1UserForbiddenException.html" title=" " alt="" coords="741,69,1240,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="707,87,741,87,741,92,707,92"/>
+<area shape="rect" id="Node000005" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1usuarios_1_1exceptions_1_1usuarios_1_1UserNotFound.html" title=" " alt="" coords="741,133,1240,173"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="629,108,819,131,819,136,629,114"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,77,147,102"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="161,87,194,87,194,92,161,92"/>
+</map>

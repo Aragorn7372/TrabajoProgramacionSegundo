@@ -1,0 +1,5 @@
+<map id="Gráfico de jerarquía de clases" name="Gráfico de jerarquía de clases">
+<area shape="rect" id="Node000000" href="$interfacedev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1StorageService.html" title=" " alt="" coords="5,5,364,45"/>
+<area shape="rect" id="Node000001" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1storage_1_1FileSystemStorageService.html" title=" " alt="" coords="412,5,771,45"/>
+<area shape="poly" id="edge8_Node000000_Node000001" title=" " alt="" coords="378,23,411,23,411,28,378,28"/>
+</map>

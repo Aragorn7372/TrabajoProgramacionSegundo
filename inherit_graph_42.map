@@ -1,0 +1,7 @@
+<map id="Gráfico de jerarquía de clases" name="Gráfico de jerarquía de clases">
+<area shape="rect" id="Node000000" href="$interfacedev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1service_1_1Service.html" title=" " alt="" coords="5,5,431,75"/>
+<area shape="rect" id="Node000001" href="$interfacedev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1service_1_1ProductoService.html" title=" " alt="" coords="479,20,904,60"/>
+<area shape="poly" id="edge6_Node000000_Node000001" title=" " alt="" coords="445,37,478,37,478,43,445,43"/>
+<area shape="rect" id="Node000002" href="$classdev_1_1luisvives_1_1trabajoprogramacionsegundo_1_1productos_1_1service_1_1ProductoServiceImpl.html" title=" " alt="" coords="952,20,1377,60"/>
+<area shape="poly" id="edge7_Node000001_Node000002" title=" " alt="" coords="918,37,952,37,952,43,918,43"/>
+</map>
